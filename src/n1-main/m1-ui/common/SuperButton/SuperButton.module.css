@@ -1,0 +1,16 @@
+.default {
+    background: #3498db;
+    width: 130px;
+    padding: 4px 0;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.default:hover {
+    cursor: pointer;
+}
+
+
+.red {
+    background: red;
+}

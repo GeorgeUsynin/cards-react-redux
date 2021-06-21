@@ -1,0 +1,13 @@
+.header{
+    height: 80px;
+    background-color: wheat;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    grid-area: h;
+}
+
+.header a{
+    font-size: 20px;
+    text-decoration: none;
+}

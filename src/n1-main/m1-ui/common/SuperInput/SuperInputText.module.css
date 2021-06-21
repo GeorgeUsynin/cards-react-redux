@@ -1,0 +1,13 @@
+.superInput {
+    background-color: #3498db;
+    border-color: whitesmoke;
+}
+
+.errorInput {
+    border: 3px solid lime;
+    background: red;
+}
+
+.error {
+    color: red;
+}

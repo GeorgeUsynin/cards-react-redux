@@ -1,0 +1,13 @@
+.testComponentsContainer h1{
+    text-align: center;
+    color: lightsalmon;
+}
+
+.componentsContainer{
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+}
+.componentsContainer h2{
+    color: lightsalmon;
+}

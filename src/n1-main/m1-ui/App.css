@@ -1,0 +1,17 @@
+.app-wrapper{
+    display: grid;
+    grid-template-areas:
+    "h"
+    "c";
+    grid-template-rows: 80px 1fr;
+    width: 80%;
+    margin: 0 auto;
+    gap: 10px;
+}
+.app-wrapper-content{
+    grid-area: c;
+    background-color: lemonchiffon;
+}
+
+
+
