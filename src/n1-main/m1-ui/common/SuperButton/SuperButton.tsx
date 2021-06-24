@@ -10,7 +10,8 @@ type SuperButtonPropsType = DefaultButtonPropsType & {
 
 const SuperButton: React.FC<SuperButtonPropsType> = (
     {
-        red, className,
+        red,
+        className,
         ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
     }
 ) => {
