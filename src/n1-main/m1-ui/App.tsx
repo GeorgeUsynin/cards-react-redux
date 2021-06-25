@@ -13,6 +13,7 @@ import {TestComponents} from "./TestComponents/TestComponents";
 const App = () => {
     return (
         <div className='app-wrapper'>
+
             <Header/>
             <div className='app-wrapper-content'>
                 <Route path={'/login'} render={() => <Login/>}/>
