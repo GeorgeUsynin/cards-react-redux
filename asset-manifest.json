@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/cards-react-redux/static/css/main.e04cfea2.chunk.css",
-    "main.js": "/cards-react-redux/static/js/main.10b63997.chunk.js",
-    "main.js.map": "/cards-react-redux/static/js/main.10b63997.chunk.js.map",
+    "main.css": "/cards-react-redux/static/css/main.0b73d0bd.chunk.css",
+    "main.js": "/cards-react-redux/static/js/main.941c2338.chunk.js",
+    "main.js.map": "/cards-react-redux/static/js/main.941c2338.chunk.js.map",
     "runtime-main.js": "/cards-react-redux/static/js/runtime-main.98692f54.js",
     "runtime-main.js.map": "/cards-react-redux/static/js/runtime-main.98692f54.js.map",
     "static/js/2.9725d8b4.chunk.js": "/cards-react-redux/static/js/2.9725d8b4.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.9ff021f5.chunk.js": "/cards-react-redux/static/js/3.9ff021f5.chunk.js",
     "static/js/3.9ff021f5.chunk.js.map": "/cards-react-redux/static/js/3.9ff021f5.chunk.js.map",
     "index.html": "/cards-react-redux/index.html",
-    "static/css/main.e04cfea2.chunk.css.map": "/cards-react-redux/static/css/main.e04cfea2.chunk.css.map",
+    "static/css/main.0b73d0bd.chunk.css.map": "/cards-react-redux/static/css/main.0b73d0bd.chunk.css.map",
     "static/js/2.9725d8b4.chunk.js.LICENSE.txt": "/cards-react-redux/static/js/2.9725d8b4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.98692f54.js",
     "static/js/2.9725d8b4.chunk.js",
-    "static/css/main.e04cfea2.chunk.css",
-    "static/js/main.10b63997.chunk.js"
+    "static/css/main.0b73d0bd.chunk.css",
+    "static/js/main.941c2338.chunk.js"
   ]
 }
