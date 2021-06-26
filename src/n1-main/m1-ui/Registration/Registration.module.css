@@ -1,0 +1,71 @@
+.registrationContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	min-height: 530px;
+	background: #3498db;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	height: 440px;
+	width: 413px;
+	background-color: #ffffff;
+	border-radius: 8px;
+}
+
+.title {
+	margin: 0;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.input {
+	width: 270px;
+	height: 20px;
+	outline: 0;
+	border-width: 0 0 1px;
+	border-color: #24254A;
+	margin-bottom: 5px;
+}
+
+.inputTitle {
+	font-size: 12px;
+	color: #24254A;
+	opacity: .8;
+	padding: 3px 0;
+}
+
+.buttonsContainer {
+	display: flex;
+	justify-content: space-around;
+	width: 80%;
+}
+
+.cancelBtn {
+	width: 120px;
+	height: 36px;
+	color: #3498db;
+	background-color: #D7D8EF;
+	border: transparent;
+	border-radius: 30px;
+}
+
+.registerBtn {
+	width: 180px;
+	height: 36px;
+	color: #D7D8EF;
+	background-color: blue;
+	border: transparent;
+	border-radius: 30px;
+}
+
