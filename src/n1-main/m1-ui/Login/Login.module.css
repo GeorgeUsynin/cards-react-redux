@@ -1,0 +1,159 @@
+h1 {
+    margin-top: 0;
+}
+.loginContainer {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
+}
+
+.card {
+    position: absolute;
+    width: 413px;
+    height: 600px;
+    left: 434px;
+    top: 60px;
+    background: #F9F9FE;
+    border-radius: 8px;
+}
+.title {
+    position: absolute;
+    width: 163px;
+    height: 39px;
+    left: 125px;
+    top: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 39px;
+    color: #2D2E46;
+}
+
+.subtitle {
+    position: absolute;
+    width: 75px;
+    height: 33px;
+    left: 164px;
+    top: 96px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    text-align: right;
+    color: #2D2E46;
+}
+.titleEmail {
+    position: absolute;
+    left: 33px;
+    top: 167px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24254A;
+    opacity: 0.5;
+}
+.inputEmail {
+    position: absolute;
+    width: 347px;
+    left: 33px;
+    top: 185px;
+    border: none;
+    border-bottom: 1px solid rgba(36, 37, 74, 0.2);
+    background: transparent;
+    outline: none;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2D2E46;
+}
+
+.titlePassword {
+    position: absolute;
+    left: 33px;
+    top: 239px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24254A;
+    opacity: 0.5;
+}
+.inputPassword {
+    position: absolute;
+    width: 347px;
+    left: 33px;
+    top: 256px;
+    border: none;
+    border-bottom: 1px solid rgba(36, 37, 74, 0.2);
+    background: transparent;
+    outline: none;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2D2E46;
+}
+.checkbox {
+    position: absolute;
+    left: 33px;
+    top: 300px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 13px;
+    line-height: 24px;
+    color: rgba(45, 46, 70, 0.5);
+}
+.restorePassword {
+    position: absolute;
+    width: 101px;
+    height: 17px;
+    left: 261px;
+    top: 345px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+    text-align: center;
+    color: #2D2E46;
+}
+.button {
+    position: absolute;
+    width: 266px;
+    height: 36px;
+    left: 73px;
+    top: 444px;
+    background: #21268F;
+    box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #F9F9FE;
+}
+.newAccount {
+    position: absolute;
+    width: 150px;
+    height: 24px;
+    left: 131px;
+    top: 511px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #2D2E46;
+    opacity: 0.5;
+}
+.signUp {
+    position: absolute;
+    width: 57px;
+    height: 24px;
+    left: 178px;
+    top: 546px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+    color: #21268F;
+    text-decoration: none;
+}
