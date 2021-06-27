@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/cards-react-redux/static/css/main.a75ac17e.chunk.css",
-    "main.js": "/cards-react-redux/static/js/main.8ff23353.chunk.js",
-    "main.js.map": "/cards-react-redux/static/js/main.8ff23353.chunk.js.map",
-    "runtime-main.js": "/cards-react-redux/static/js/runtime-main.3310a2fc.js",
-    "runtime-main.js.map": "/cards-react-redux/static/js/runtime-main.3310a2fc.js.map",
-    "static/js/2.bb2eb727.chunk.js": "/cards-react-redux/static/js/2.bb2eb727.chunk.js",
-    "static/js/2.bb2eb727.chunk.js.map": "/cards-react-redux/static/js/2.bb2eb727.chunk.js.map",
-    "static/js/3.dfb25ebd.chunk.js": "/cards-react-redux/static/js/3.dfb25ebd.chunk.js",
-    "static/js/3.dfb25ebd.chunk.js.map": "/cards-react-redux/static/js/3.dfb25ebd.chunk.js.map",
+    "main.css": "/cards-react-redux/static/css/main.0507b567.chunk.css",
+    "main.js": "/cards-react-redux/static/js/main.10b63997.chunk.js",
+    "main.js.map": "/cards-react-redux/static/js/main.10b63997.chunk.js.map",
+    "runtime-main.js": "/cards-react-redux/static/js/runtime-main.98692f54.js",
+    "runtime-main.js.map": "/cards-react-redux/static/js/runtime-main.98692f54.js.map",
+    "static/js/2.9725d8b4.chunk.js": "/cards-react-redux/static/js/2.9725d8b4.chunk.js",
+    "static/js/2.9725d8b4.chunk.js.map": "/cards-react-redux/static/js/2.9725d8b4.chunk.js.map",
+    "static/js/3.9ff021f5.chunk.js": "/cards-react-redux/static/js/3.9ff021f5.chunk.js",
+    "static/js/3.9ff021f5.chunk.js.map": "/cards-react-redux/static/js/3.9ff021f5.chunk.js.map",
     "index.html": "/cards-react-redux/index.html",
-    "static/css/main.a75ac17e.chunk.css.map": "/cards-react-redux/static/css/main.a75ac17e.chunk.css.map",
-    "static/js/2.bb2eb727.chunk.js.LICENSE.txt": "/cards-react-redux/static/js/2.bb2eb727.chunk.js.LICENSE.txt"
+    "static/css/main.0507b567.chunk.css.map": "/cards-react-redux/static/css/main.0507b567.chunk.css.map",
+    "static/js/2.9725d8b4.chunk.js.LICENSE.txt": "/cards-react-redux/static/js/2.9725d8b4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.3310a2fc.js",
-    "static/js/2.bb2eb727.chunk.js",
-    "static/css/main.a75ac17e.chunk.css",
-    "static/js/main.8ff23353.chunk.js"
+    "static/js/runtime-main.98692f54.js",
+    "static/js/2.9725d8b4.chunk.js",
+    "static/css/main.0507b567.chunk.css",
+    "static/js/main.10b63997.chunk.js"
   ]
 }
