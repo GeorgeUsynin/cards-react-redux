@@ -20,7 +20,7 @@ const App = () => {
                 <Route path={'/profile'} render={() => <Profile/>}/>
                 <Route path={'/404'} render={() => <PageNotFound/>}/>
                 <Route path={'/restore_password'} render={() => <RestorePassword/>}/>
-                <Route path={'/new_password'} render={() => <NewPassword/>}/>
+                <Route path={'/new_password:token'} render={() => <NewPassword/>}/>
                 <Route path={'/test_components'} render={() => <TestComponents/>}/>
             </div>
         </div>
