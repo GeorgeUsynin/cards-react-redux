@@ -34,27 +34,35 @@ export const RestorePassword = () => {
                     ?
                     <CheckPassword email={email}/>
                     :
-                    <div>
+                    <div className={cls.card}>
 
-                        <h2>It-incubator</h2>
+                        <h2 className={cls.title}>It-incubator</h2>
 
                         <h3>Forgot your password?</h3>
 
-                        <SuperInputText value={email} onChangeText={onChangeEmail}/>
+                        <SuperInputText
+                            value={email}
+                            onChangeText={onChangeEmail}
+                            className={cls.inputEmail}
+                            placeholder={'Email'}
+                        />
 
                         <p>{error}</p>
 
-                        <p>Enter your email address and we will send you further instructions</p>
+                        <p className={`${cls.text} ${cls.firstAdvice}`}>Enter your email address and we will send
+                            you further
+                            instructions</p>
 
-                        <SuperButton onClick={onClickSend}>Send instructions</SuperButton>
+                        <SuperButton onClick={onClickSend} className={cls.button}>Send Instructions</SuperButton>
 
-                        <p>Did you remember your password?</p>
+                        <p className={`${cls.text} ${cls.secondAdvice}`}>Did you remember your password?</p>
 
-                        <NavLink to={'/login'}>Try logging in</NavLink>
+                        <div className={cls.reLogin}>
+                            <NavLink to={'/login'}>Try logging in</NavLink>
+                        </div>
 
                     </div>
             }
-
         </div>
     )
 }

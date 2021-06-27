@@ -4,13 +4,13 @@
     "h"
     "c";
     grid-template-rows: 80px 1fr;
-    width: 80%;
+    width: 1280px;
     margin: 0 auto;
     gap: 10px;
 }
 .app-wrapper-content{
     grid-area: c;
-    background-color: lemonchiffon;
+    width: 1280px;
 }
 
 
