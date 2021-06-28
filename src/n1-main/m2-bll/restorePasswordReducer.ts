@@ -1,7 +1,7 @@
 //types
 
 import {AppThunkType} from "./store";
-import {authApi} from "../m3-dal/api";
+import {authApi} from "../m3-dal/apiRestore";
 
 type InitialStateType = {
     showEmailCheck: boolean
@@ -68,21 +68,29 @@ export const restorePasswordReducer = (state: InitialStateType = initialState, a
 export const restorePassword = (email: string): AppThunkType => (dispatch) => {
     authApi.restorePassword(email)
         .then(res => {
-            res.data.error
+            dispatch(setShowEmailCheck(true))
+        })
+        .catch(err => {
+            const error = err.response
                 ?
-                setError(res.data.error)
+                err.response.data.error
                 :
-                setShowEmailCheck(true)
+                (err.message = ', more details in the console')
+            dispatch(setError(error))
         })
 }
 
 export const setNewPassword = (password: string, resetPasswordToken: string): AppThunkType => (dispatch) => {
     authApi.setNewPassword(password, resetPasswordToken)
         .then(res => {
-            res.data.info
+            dispatch(setIsNewPasswordCreated(true))
+        })
+        .catch(err => {
+            const error = err.response
                 ?
-                setIsNewPasswordCreated(true)
+                err.response.data.error
                 :
-                setError(res.data.error)
+                (err.message = ', more details in the console')
+            dispatch(setError(error))
         })
 }
