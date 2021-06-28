@@ -58,6 +58,7 @@
 	background-color: #D7D8EF;
 	border: transparent;
 	border-radius: 30px;
+	cursor: pointer;
 }
 
 .registerBtn {
@@ -67,5 +68,13 @@
 	background-color: blue;
 	border: transparent;
 	border-radius: 30px;
+	cursor: pointer;
 }
 
+.info {
+	height: 20px;
+}
+
+.error {
+	color: red;
+}
