@@ -69,6 +69,15 @@ h1 {
     line-height: 24px;
     color: #2D2E46;
 }
+.spanErrorEmail {
+    position: absolute;
+    left: 33px;
+    top: 210px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0);
+}
 
 .titlePassword {
     position: absolute;
@@ -94,6 +103,15 @@ h1 {
     line-height: 24px;
     color: #2D2E46;
 }
+.spanErrorPassword {
+    position: absolute;
+    left: 33px;
+    top: 280px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0);
+}
 .checkbox {
     position: absolute;
     left: 33px;
@@ -114,6 +132,7 @@ h1 {
     line-height: 17px;
     text-align: center;
     color: #2D2E46;
+    text-decoration: none;
 }
 .button {
     position: absolute;
