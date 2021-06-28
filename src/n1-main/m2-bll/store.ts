@@ -1,9 +1,9 @@
 import {applyMiddleware} from "redux";
 import {combineReducers, createStore} from "redux";
 import thunk, {ThunkAction} from "redux-thunk";
-import {authReducer} from "./authReducer";
-import {profileReducer} from "./profileReducer";
-import { registerReducer } from '../m1-ui/Registration/r-2-bll/b-2-redux/registerReducer'
+import {AuthActionsType, authReducer} from "./authReducer";
+import {ProfileActionsType, profileReducer} from "./profileReducer";
+import {RegisterActions, registerReducer} from './registerReducer'
 import {RestorePasswordActionsType, restorePasswordReducer} from "./restorePasswordReducer";
 
 
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
     register: registerReducer
 })
 
-export type AppActionsType = RestorePasswordActionsType
+export type AppActionsType = RestorePasswordActionsType | RegisterActions | AuthActionsType | ProfileActionsType
 
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 

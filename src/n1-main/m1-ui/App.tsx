@@ -3,13 +3,13 @@ import {Route} from 'react-router-dom';
 import './App.css';
 import {Header} from './Header/Header';
 import {Login} from "./Login/Login";
-import {Register} from "./Registration/r-1-ui/Register";
+import {Register} from "./Registration/Register";
 import {Profile} from "./Profile/Profile";
 import {PageNotFound} from "./PageNotFound/PageNotFound";
 import {RestorePassword} from "./RestorePassword/RestorePassword";
 import {NewPassword} from "./NewPassword/NewPassword";
 import {TestComponents} from "./TestComponents/TestComponents";
-import RegisterPage from './Registration/r-1-ui/RegisterPage'
+import RegisterPage from './Registration/RegisterPage'
 
 const App = () => {
     return (

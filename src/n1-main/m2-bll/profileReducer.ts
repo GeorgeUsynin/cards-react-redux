@@ -1,5 +1,4 @@
 import {LoginResponseType} from "../m3-dal/API";
-import {setIsLoggedInAC} from "./authReducer";
 
 const initialState = {
     informationAboutUser: {
@@ -30,7 +29,7 @@ type InitialStateType = typeof initialState
     error?: string
 }*/
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
     switch (action.type) {
         case 'profile/SET-INFORMATION-ABOUT-USER':
             return {...state, informationAboutUser: action.data}
@@ -42,4 +41,4 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 export const setInformationAboutUserAC = (data: LoginResponseType) =>
     ({type: 'profile/SET-INFORMATION-ABOUT-USER', data} as const)
 
-type ActionsType = ReturnType<typeof setInformationAboutUserAC>
+export type ProfileActionsType = ReturnType<typeof setInformationAboutUserAC>

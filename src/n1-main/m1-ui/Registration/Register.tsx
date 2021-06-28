@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import cls from './Register.module.css'
-import { register } from '../r-2-bll/registerThunk'
 import { useDispatch } from 'react-redux'
+import {register} from "../../m2-bll/registerReducer";
 
 interface IRegisterProps {
 

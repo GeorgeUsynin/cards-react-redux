@@ -75,7 +75,8 @@ export const restorePassword = (email: string): AppThunkType => (dispatch) => {
                 ?
                 err.response.data.error
                 :
-                (err.message = ', more details in the console')
+                (err.message + ', more details in the console')
+            debugger
             dispatch(setError(error))
         })
 }
@@ -83,6 +84,7 @@ export const restorePassword = (email: string): AppThunkType => (dispatch) => {
 export const setNewPassword = (password: string, resetPasswordToken: string): AppThunkType => (dispatch) => {
     authApi.setNewPassword(password, resetPasswordToken)
         .then(res => {
+            debugger
             dispatch(setIsNewPasswordCreated(true))
         })
         .catch(err => {
@@ -90,7 +92,7 @@ export const setNewPassword = (password: string, resetPasswordToken: string): Ap
                 ?
                 err.response.data.error
                 :
-                (err.message = ', more details in the console')
+                (err.message + ', more details in the console')
             dispatch(setError(error))
         })
 }
