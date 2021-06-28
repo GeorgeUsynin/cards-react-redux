@@ -13,6 +13,7 @@ export const Profile = () => {
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>
     }
+
     return (
         <div className={cls.profileContainer}>
             <h1>Profile</h1>
