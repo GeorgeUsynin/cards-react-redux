@@ -1,0 +1,11 @@
+.superInput {
+    /*background-color: #3498db;
+    border-color: whitesmoke;*/
+}
+
+.errorInput {
+    background: rgba(243, 6, 6, 0.1);
+}
+.error {
+    color: rgba(243, 6, 6, 0.3);
+}
