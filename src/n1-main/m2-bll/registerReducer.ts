@@ -47,7 +47,7 @@ export const register =
             console.log(res)
             dispatch(registerSome(true))
         } catch (e) {
-            const error = e.error.response.data.error
+            const error = e.response.data.error
             console.log(error)
         }
     }
