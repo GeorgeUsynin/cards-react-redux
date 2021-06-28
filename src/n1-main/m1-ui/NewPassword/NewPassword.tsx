@@ -9,6 +9,7 @@ import {setNewPassword} from "../../m2-bll/restorePasswordReducer";
 
 
 export const NewPassword = () => {
+    debugger
 
     const isNewPasswordCreated = useSelector<AppRootStateType, boolean>(state => state.restorePassword.isNewPasswordCreated)
 
@@ -16,7 +17,7 @@ export const NewPassword = () => {
 
     const dispatch = useDispatch()
 
-    const {token} = useParams<{ token?: string }>();
+    const {token} = useParams<{ token: string }>();
 
     const [password, setPassword] = useState('')
 
@@ -32,7 +33,6 @@ export const NewPassword = () => {
     if (isNewPasswordCreated) {
         return <Redirect to={'/login'}/>
     }
-
 
     return (
         <div className={cls.newPasswordContainer}>
