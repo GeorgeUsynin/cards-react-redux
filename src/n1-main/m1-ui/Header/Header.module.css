@@ -1,5 +1,6 @@
 .header{
     height: 80px;
+    width: 1280px;
     background-color: wheat;
     display: flex;
     justify-content: space-evenly;
