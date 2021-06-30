@@ -1,35 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import cls from './Register.module.css'
-import { useDispatch } from 'react-redux'
-import {register} from "../../m2-bll/registerReducer";
+import { useDispatch, useSelector } from 'react-redux'
+import { register, setRegisterError, setRegisterLoading } from '../../m2-bll/registerReducer'
+import { AppRootStateType } from '../../m2-bll/store'
+import preloader from '../common/preloader/Spinner-2.gif'
 
-interface IRegisterProps {
-
-}
-
-export const Register: React.FC<IRegisterProps> = ({}) => {
-  // const emailInputRef = React.useRef<HTMLInputElement>(null)
-  // const passwordInputRef = React.useRef<HTMLInputElement>(null)
-  // const confirmPassInputRef = React.useRef<HTMLInputElement>(null)
-  
+export const Register: React.FC = () => {
   const dispatch = useDispatch()
+  const error = useSelector<AppRootStateType, string | null>(state => state.register.error)
+  const isFetching = useSelector<AppRootStateType, boolean>(state => state.register.isFetching)
   
   let [email, setEmail] = useState<string>('')
   let [pass, setPass] = useState<string>('')
   let [confirmPass, setConfirmPass] = useState<string>('')
-  let [error, setError] = useState<string | null>(null)
+  
+  useEffect(() => {
+    const error = null
+    dispatch(setRegisterError(error))
+  }, [dispatch])
   
   const cancelHandler = () => {
     console.log('cancel')
   }
   const registerHandler = () => {
-    debugger
-    console.log('register')
+    dispatch(setRegisterLoading(true))
     if (pass === confirmPass) {
       dispatch(register(email, pass))
-      setError(null)
     } else {
-      setError('password don\'t match')
+      dispatch(setRegisterError('password don\'t match'))
     }
   }
   
@@ -41,22 +39,27 @@ export const Register: React.FC<IRegisterProps> = ({}) => {
         <div className={cls.form}>
           <label>
             <div className={cls.inputTitle}>Email</div>
-            <input className={cls.input} type="email"  value={email}
+            <input className={cls.input} type="email" value={email}
                    onChange={(e) => setEmail(e.currentTarget.value)}/>
           </label>
           <label>
             <div className={cls.inputTitle}>Password</div>
-            <input className={cls.input} type="password"  value={pass}
+            <input className={cls.input} type="password" value={pass}
                    onChange={(e) => setPass(e.currentTarget.value)}/>
           </label>
           <label>
             <div className={cls.inputTitle}>Confirm Password</div>
-            <input className={cls.input} type="password"  value={confirmPass}
+            <input className={cls.input} type="password" value={confirmPass}
                    onChange={(e) => setConfirmPass(e.currentTarget.value)}/>
           </label>
         </div>
         <div className={cls.info}>
-          {error && <div className={cls.error}>{error}</div>}
+          {
+            isFetching ?
+              <div>
+                <img className={cls.loader} src={preloader} alt='preloader'/>
+              </div>
+              : error ? <div className={cls.error}>{error}</div> : null}
         </div>
         <div className={cls.buttonsContainer}>
           <button className={cls.cancelBtn} onClick={cancelHandler}>Cancel
