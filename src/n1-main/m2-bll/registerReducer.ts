@@ -1,54 +1,86 @@
-import {RegisterAPI} from "../m3-dal/registerAPI";
-import {AppThunkType} from "./store";
+import { RegisterAPI } from '../m3-dal/registerAPI'
+import { AppThunkType } from './store'
 
-export const REGISTER_LOADING = 'REGISTER/LOADING';
-export const REGISTER_ERROR = 'REGISTER/ERROR';
-export const REGISTER_SUCCESS = 'REGISTER/SUCCESS';
-
-export const REGISTER = 'REGISTER/SOME';
+export const REGISTER_LOADING = 'REGISTER/LOADING'
+export const REGISTER_ERROR = 'REGISTER/ERROR'
+export const REGISTER_SUCCESS = 'REGISTER/SUCCESS'
 
 type InitialStateType = {
-    isRegistered: boolean
+  isRegistered: boolean,
+  error: string | null,
+  isFetching: boolean
 }
 
-export const registerInitialState: InitialStateType = { // blank
-    isRegistered: false
-};
+export const registerInitialState: InitialStateType = {
+  isRegistered: false,
+  error: null,
+  isFetching: false,
+}
 
 
-export type RegisterActions = ReturnType<typeof registerSome>;
+export type RegisterActions = ReturnType<typeof setRegisterSuccess
+  | typeof setRegisterError
+  | typeof setRegisterLoading>;
 
-export const registerSome = (isRegistered: boolean) => {
-    return {
-        type: REGISTER,
-        isRegistered
-    } as const
+export const setRegisterSuccess = (isRegistered: boolean) => {
+  return {
+    type: REGISTER_SUCCESS,
+    isRegistered,
+  } as const
+}
+
+export const setRegisterError = (error: string | null) => {
+  return {
+    type: REGISTER_ERROR,
+    error,
+  } as const
+}
+
+export const setRegisterLoading = (isFetching: boolean) => {
+  return {
+    type: REGISTER_LOADING,
+    isFetching,
+  } as const
 }
 
 export const registerReducer = (state = registerInitialState, action: RegisterActions): InitialStateType => {
-    switch (action.type) {
-        case REGISTER: { // blank
-            return {
-                ...state,
-                isRegistered: action.isRegistered
-            }
-        }
-        default: {
-            return state;
-        }
+  switch (action.type) {
+    case REGISTER_SUCCESS: {
+      return {
+        ...state,
+        isRegistered: action.isRegistered,
+      }
     }
-};
+    case REGISTER_ERROR: {
+      return {
+        ...state,
+        error: action.error,
+      }
+    }
+    case REGISTER_LOADING: {
+      return {
+        ...state,
+        isFetching: action.isFetching,
+      }
+    }
+    default: {
+      return state
+    }
+  }
+}
 
 
 export const register =
-    (email: string, password: string): AppThunkType => async (dispatch) => {
-        try {
-            let res = await RegisterAPI.register(email, password)
-            console.log(res)
-            dispatch(registerSome(true))
-        } catch (e) {
-            const error = e.response.data.error
-            console.log(error)
-        }
-    }
+  (email: string, password: string): AppThunkType => async (dispatch) => {
 
+    // dispatch(setRegisterLoading(true))
+    try {
+      await RegisterAPI.register(email, password)
+      dispatch(setRegisterLoading(false))
+      dispatch(setRegisterSuccess(true))
+    } catch (e) {
+      const error = e.response.data.error
+      dispatch(setRegisterLoading(false))
+      dispatch(setRegisterError(error))
+    }
+  }
