@@ -1,14 +1,23 @@
 import React from 'react'
 import cls from './Profile.module.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {LoginResponseType} from "../../m3-dal/API";
-import {Redirect} from "react-router-dom";
+import {NavLink, Redirect} from 'react-router-dom';
+import SuperButton from "../common/SuperButton/SuperButton";
+import {logoutTC} from "../../m2-bll/authReducer";
 
 
 export const Profile = () => {
+
+    const dispatch = useDispatch()
+
     const info = useSelector<AppRootStateType, LoginResponseType>(state => state.profile.informationAboutUser)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    const onClickHandler = () => {
+        dispatch(logoutTC())
+    }
 
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>
@@ -22,6 +31,12 @@ export const Profile = () => {
                     <div className={cls.infoUser}>
                         <img className={cls.userPhoto} src={info.avatar ? info.avatar : ""}/>
                         <span className={cls.userName}>{info.name}</span>
+                        <div>
+                            <SuperButton onClick={onClickHandler} className={cls.logoutBtn}>Logout</SuperButton>
+                        </div>
+                        <div>
+                            <NavLink to={'/information_about_user'} className={cls.editProfile}>Edit Profile</NavLink>
+                        </div>
                     </div>
                     <span className={cls.userCards}>Number of cards: {info.publicCardPacksCount}</span>
                 </div>

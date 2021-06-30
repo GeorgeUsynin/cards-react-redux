@@ -41,9 +41,8 @@
 }
 .userName {
     position: absolute;
-    width: 103px;
+    width: 100%;
     height: 27px;
-    left: 70px;
     top: 124px;
     font-family: 'Poppins', sans-serif;
     font-style: normal;
@@ -63,4 +62,17 @@
     font-size: 16px;
     line-height: 19px;
     color: #2D2E46;
+}
+
+.logoutBtn {
+    position: absolute;
+    top: 170px;
+    left: 93px;
+}
+.editProfile {
+    position: absolute;
+    top: 190px;
+    width: 100%;
+    text-decoration: none;
+    text-align: center;
 }

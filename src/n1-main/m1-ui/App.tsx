@@ -9,6 +9,7 @@ import {RestorePassword} from "./RestorePassword/RestorePassword";
 import {NewPassword} from "./NewPassword/NewPassword";
 import {TestComponents} from "./TestComponents/TestComponents";
 import RegisterPage from './Registration/RegisterPage'
+import {PersonalInfo} from "./Profile/PersonalInfo/PersonalInfo";
 
 const App = () => {
     return (
