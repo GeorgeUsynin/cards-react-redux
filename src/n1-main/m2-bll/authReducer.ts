@@ -21,6 +21,9 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
+export const setIsLoggedOutAC = (value: boolean) =>
+    ({type: 'logout/SET-IS-LOGGED-OUT', value} as const)
+
 // thunks
 export const loginTC = (data: LoginParamsType): AppThunkType => (dispatch) => {
     authAPI.login(data)
@@ -39,7 +42,7 @@ export const loginTC = (data: LoginParamsType): AppThunkType => (dispatch) => {
 export const logoutTC = (): AppThunkType => (dispatch) => {
     authAPI.logout()
         .then(res => {
-            dispatch(setIsLoggedInAC(false))
+            dispatch(setIsLoggedOutAC(false))
         })
         .catch((e) => {
             const error = e.response

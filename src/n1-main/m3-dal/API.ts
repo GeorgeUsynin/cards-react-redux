@@ -9,7 +9,11 @@ const instance = axios.create({
 export const authAPI = {
     login(data: LoginParamsType) {
         return instance.post<LoginResponseType>("auth/login", data)
-    }
+    },
+    logout() {
+        return instance.delete<DefaultResponseType>("auth/me")
+    },
+
 }
 
 
