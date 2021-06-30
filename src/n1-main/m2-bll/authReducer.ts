@@ -11,6 +11,8 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
             return {...state, isLoggedIn: action.value}
+        case 'logout/SET-IS-LOGGED-OUT':
+            return {...state, isLoggedIn: action.value}
         default:
             return state
     }
@@ -33,4 +35,19 @@ export const loginTC = (data: LoginParamsType): AppThunkType => (dispatch) => {
             console.log('Error: ', {...e})
         })
 }
-export type AuthActionsType = ReturnType<typeof setIsLoggedInAC | typeof setInformationAboutUserAC> // изменили запись в одну строчку !!
+
+export const logoutTC = (): AppThunkType => (dispatch) => {
+    authAPI.logout()
+        .then(res => {
+            dispatch(setIsLoggedInAC(false))
+        })
+        .catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.messages + ', more details in the console')
+            console.log('Error: ', {...e})
+        })
+}
+
+
+export type AuthActionsType = ReturnType<typeof setIsLoggedInAC | typeof setInformationAboutUserAC | typeof setIsLoggedOutAC> // изменили запись в одну строчку !!

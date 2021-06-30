@@ -1,8 +1,9 @@
 import axios from 'axios'
+import {DefaultResponseType} from "./apiRestore";
 
 const instance = axios.create({
     // baseURL: "http://localhost:7542/2.0/",
-    baseURL: "https://cards-react-redux.herokuapp.com/2.0",
+    baseURL: "https://neko-back.herokuapp.com/2.0",
     withCredentials: true,
 });
 
