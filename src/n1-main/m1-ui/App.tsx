@@ -22,8 +22,10 @@ const App = () => {
                 <Route path={'/profile'} render={() => <Profile/>}/>
                 <Route path={'/404'} render={() => <PageNotFound/>}/>
                 <Route path={'/restore_password'} render={() => <RestorePassword/>}/>
-                <Route path={'/new_password/:token?'} render={() => <NewPassword/>}/> {/* дял отображения <NewPassword/> после token стоит "?" */}
+                <Route path={'/new_password/:token?'}
+                       render={() => <NewPassword/>}/> {/* для отображения <NewPassword/> после token стоит "?" */}
                 <Route path={'/test_components'} render={() => <TestComponents/>}/>
+                <Route path={'/information_about_user'} render={() => <PersonalInfo/>}/>
             </div>
         </div>
     );
