@@ -36,7 +36,7 @@ export const Profile = () => {
                             <SuperButton onClick={onClickHandler} className={cls.logoutBtn}>Logout</SuperButton>
                         </div>
                         <div>
-                            <NavLink to={'/information_about_user'} className={cls.editProfile}>Edit Profile</NavLink>
+                            <NavLink to={'/profile/information_about_user'} className={cls.editProfile}>Edit Profile</NavLink>
                         </div>
                     </div>
                     <span className={cls.userCards}>Number of cards: {info.publicCardPacksCount}</span>

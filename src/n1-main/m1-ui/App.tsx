@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import './App.css';
 import {Header} from './Header/Header';
 import {Login} from "./Login/Login";
@@ -19,13 +19,13 @@ const App = () => {
             <div className='app-wrapper-content'>
                 <Route path={'/login'} render={() => <Login/>}/>
                 <Route path={'/registration'} render={() => <RegisterPage/>}/>
-                <Route path={'/profile'} render={() => <Profile/>}/>
+                <Route exact path={'/profile'} render={() => <Profile/>}/>
                 <Route path={'/404'} render={() => <PageNotFound/>}/>
                 <Route path={'/restore_password'} render={() => <RestorePassword/>}/>
                 <Route path={'/new_password/:token?'}
                        render={() => <NewPassword/>}/> {/* для отображения <NewPassword/> после token стоит "?" */}
                 <Route path={'/test_components'} render={() => <TestComponents/>}/>
-                <Route path={'/information_about_user'} render={() => <PersonalInfo/>}/>
+                <Route path={'/profile/information_about_user'} render={() => <PersonalInfo/>}/>
             </div>
         </div>
     );
