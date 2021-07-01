@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import cls from './RestorePassword.module.css'
+import cls from './RestorePassword.module.scss'
 import SuperInputText from "../common/SuperInput/SuperInputText";
 import SuperButton from "../common/SuperButton/SuperButton";
 import {NavLink} from "react-router-dom";
@@ -35,32 +35,27 @@ export const RestorePassword = () => {
                     <CheckPassword email={email}/>
                     :
                     <div className={cls.card}>
-
                         <h2 className={cls.title}>It-incubator</h2>
-
-                        <h3>Forgot your password?</h3>
-
-                        <SuperInputText
-                            value={email}
-                            onChangeText={onChangeEmail}
-                            className={cls.inputEmail}
-                            placeholder={'Email'}
-                        />
-
+                        <h3 className={cls.subtitle}>Forgot your password?</h3>
+                        <div className={cls.inputContainer}>
+                            <SuperInputText
+                                value={email}
+                                onChangeText={onChangeEmail}
+                                className={cls.inputEmail}
+                                placeholder={'Email'}
+                            />
+                        </div>
                         <p>{error}</p>
-
-                        <p className={`${cls.text} ${cls.firstAdvice}`}>Enter your email address and we will send
+                        <p className={cls.firstNote}>Enter your email address and we will send
                             you further
                             instructions</p>
-
-                        <SuperButton onClick={onClickSend} className={cls.button}>Send Instructions</SuperButton>
-
-                        <p className={`${cls.text} ${cls.secondAdvice}`}>Did you remember your password?</p>
-
+                        <div className={cls.buttonContainer}>
+                            <SuperButton onClick={onClickSend} className={cls.button}><span>Send Instructions</span></SuperButton>
+                        </div>
+                        <p className={cls.secondNote}>Did you remember your password?</p>
                         <div className={cls.reLogin}>
                             <NavLink to={'/login'}>Try logging in</NavLink>
                         </div>
-
                     </div>
             }
         </div>

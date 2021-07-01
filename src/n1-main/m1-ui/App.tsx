@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import './App.css';
+import './App.scss';
 import {Header} from './Header/Header';
 import {Login} from "./Login/Login";
 import {Profile} from "./Profile/Profile";
@@ -14,8 +14,7 @@ import {PersonalInfo} from "./Profile/PersonalInfo/PersonalInfo";
 const App = () => {
     return (
         <div className='app-wrapper'>
-
-            <Header/>
+            {/*<Header/>*/}
             <div className='app-wrapper-content'>
                 <Route path={'/login'} render={() => <Login/>}/>
                 <Route path={'/registration'} render={() => <RegisterPage/>}/>

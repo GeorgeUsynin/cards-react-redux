@@ -36,7 +36,7 @@ export const Login = () => {
 
     return (
         <div className={cls.loginContainer}>
-            <h1>Login</h1>
+            <h1 className={cls.titleLogin}>Login</h1>
             <div className={cls.card}>
                 <span className={cls.title}>It-incubator</span>
                 <span className={cls.subtitle}>Sign In</span>
