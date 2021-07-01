@@ -1,14 +1,17 @@
 import React, {ChangeEvent, useState} from 'react'
-import cls from './Login.module.css'
+import cls from './Login.module.scss'
 import {loginTC} from "../../m2-bll/authReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {NavLink, Redirect} from 'react-router-dom';
 import SuperInputText from "../common/SuperInput/SuperInputText";
 import SuperButton from "../common/SuperButton/SuperButton";
+import eye from '../../../assets/images/eye.svg'
 
 
 export const Login = () => {
+
+    const [type, setType] = useState("password")
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const errorEmail = email ? '' : 'write your email';
@@ -17,6 +20,9 @@ export const Login = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
+    const changeTypeHandler = () => {
+        type === 'text' ? setType('password') : setType('text')
+    }
 
 
     const onChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,40 +42,44 @@ export const Login = () => {
 
     return (
         <div className={cls.loginContainer}>
-            <h1 className={cls.titleLogin}>Login</h1>
             <div className={cls.card}>
-                <span className={cls.title}>It-incubator</span>
-                <span className={cls.subtitle}>Sign In</span>
-                <div>
-                    <span className={cls.titleEmail}>Email</span>
+                <p className={cls.title}>It-incubator</p>
+                <p className={cls.subtitle}>Sign In</p>
+                <p className={cls.titleEmail}>Email</p>
+                <div className={cls.inputContainer}>
                     <SuperInputText
-                        className={cls.inputEmail}
+                        className={cls.inputEmailPassword}
                         value={email}
                         type={"text"}
                         onChangeText={setEmail}
-                        error={errorEmail}
+                        // error={errorEmail}
                         spanClassName={cls.spanErrorEmail}
                     />
                 </div>
-                <div>
-                    <span className={cls.titlePassword}>Password</span>
+                <p className={cls.titlePassword}>Password</p>
+                <div className={cls.inputContainer}>
+                    <div className={cls.eye} onClick={changeTypeHandler}><img src={eye} alt="eye"/></div>
                     <SuperInputText
-                        className={cls.inputPassword}
+                        className={cls.inputEmailPassword}
                         value={password}
-                        type={"password"}
+                        type={type}
                         onChangeText={setPassword}
-                        error={errorPassword}
+                        // error={errorPassword}
                         spanClassName={cls.spanErrorPassword}
                     />
                 </div>
                 <div className={cls.checkbox}>
                     <input type={"checkbox"} checked={check} name={"RememberMe"} onChange={onChangeCheck}/>
-                    <span>Remember me</span>
+                    <span className={cls.rememberMe}>Remember me</span>
                 </div>
                 <NavLink to={'/restore_password'} className={cls.restorePassword}>Forgot Password</NavLink>
-                <SuperButton className={cls.button} onClick={sentData}>Login</SuperButton>
-                <span className={cls.newAccount}>Don't have an account</span>
-                <NavLink to={'/registration'} className={cls.signUp}>Sign Up</NavLink>
+                <div className={cls.buttonContainer}>
+                    <SuperButton className={cls.button} onClick={sentData}><span>Login</span></SuperButton>
+                </div>
+                <p className={cls.newAccount}>Don't have an account</p>
+                <div className={cls.signUp}>
+                    <NavLink to={'/registration'}>Sign Up</NavLink>
+                </div>
             </div>
         </div>
     )
