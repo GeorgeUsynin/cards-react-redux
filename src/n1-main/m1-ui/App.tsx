@@ -14,7 +14,7 @@ import {PersonalInfo} from "./Profile/PersonalInfo/PersonalInfo";
 const App = () => {
     return (
         <div className='app-wrapper'>
-            {/*<Header/>*/}
+            <Header/>
             <div className='app-wrapper-content'>
                 <Route path={'/login'} render={() => <Login/>}/>
                 <Route path={'/registration'} render={() => <RegisterPage/>}/>
