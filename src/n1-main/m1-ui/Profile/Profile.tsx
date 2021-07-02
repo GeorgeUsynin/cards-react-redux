@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import cls from './Profile.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {LoginResponseType} from "../../m3-dal/API";
 import {NavLink, Redirect} from 'react-router-dom';
 import SuperButton from "../common/SuperButton/SuperButton";
-import {logoutTC} from "../../m2-bll/authReducer";
+import {isLoggedInApp, logoutTC} from "../../m2-bll/authReducer";
 
 
 
@@ -15,6 +15,12 @@ export const Profile = () => {
 
     const info = useSelector<AppRootStateType, LoginResponseType>(state => state.profile.informationAboutUser)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    useEffect(() => {
+        if (!info._id) {
+            dispatch(isLoggedInApp())
+        }
+    })
 
     const onClickHandler = () => {
         dispatch(logoutTC())
