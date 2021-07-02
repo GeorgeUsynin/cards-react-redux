@@ -1,0 +1,28 @@
+@import "variables";
+
+@mixin text($fontFamily,$fontSize,$font-weight,$line-height,$color, $text-align) {
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  color: $color;
+  text-align: $text-align;
+}
+
+@mixin primaryButton() {
+  background: #21268F;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+@mixin primaryButtonText($padding) {
+  font-family: $fontFamilyText;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.01em;
+  color: #ECECF9;
+  padding: $padding;
+  display: inline-block;
+}
