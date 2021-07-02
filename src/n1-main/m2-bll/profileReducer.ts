@@ -1,6 +1,5 @@
 import {LoginResponseType} from "../m3-dal/API";
 import {AppThunkType} from "./store";
-import {authApi} from "../m3-dal/apiRestore";
 import {profileApi} from "../m3-dal/apiProfile";
 
 const initialState = {

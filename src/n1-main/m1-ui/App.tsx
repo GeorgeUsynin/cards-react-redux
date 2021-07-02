@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import './App.scss';
 import {Header} from './Header/Header';
 import {Login} from "./Login/Login";
@@ -8,8 +8,8 @@ import {PageNotFound} from "./PageNotFound/PageNotFound";
 import {RestorePassword} from "./RestorePassword/RestorePassword";
 import {NewPassword} from "./NewPassword/NewPassword";
 import {TestComponents} from "./TestComponents/TestComponents";
-import RegisterPage from './Registration/RegisterPage'
 import {PersonalInfo} from "./Profile/PersonalInfo/PersonalInfo";
+import {Register} from "./Registration/Register";
 
 const App = () => {
     return (
@@ -17,7 +17,7 @@ const App = () => {
             <Header/>
             <div className='app-wrapper-content'>
                 <Route path={'/login'} render={() => <Login/>}/>
-                <Route path={'/registration'} render={() => <RegisterPage/>}/>
+                <Route path={'/registration'} render={() => <Register/>}/>
                 <Route exact path={'/profile'} render={() => <Profile/>}/>
                 <Route path={'/404'} render={() => <PageNotFound/>}/>
                 <Route path={'/restore_password'} render={() => <RestorePassword/>}/>
