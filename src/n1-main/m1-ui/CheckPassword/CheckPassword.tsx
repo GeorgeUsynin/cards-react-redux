@@ -7,7 +7,6 @@ type CheckPasswordType = {
 }
 
 export const CheckPassword: React.FC<CheckPasswordType> = ({email}) => {
-    email = 'sadjakfjksdajfksdlkf'
     return (
         <div className={cls.checkPasswordContainer}>
             <div className={cls.card}>
@@ -19,7 +18,7 @@ export const CheckPassword: React.FC<CheckPasswordType> = ({email}) => {
 
                 <h3 className={cls.subtitle}>Check email</h3>
 
-                <p className={cls.note}>{`We've sent an Email with instructions to ${email}`}</p>
+                <p className={cls.note}>{`We've sent an Email with instructions to `}<span>{email}</span></p>
             </div>
         </div>
     )

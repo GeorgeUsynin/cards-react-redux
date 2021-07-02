@@ -73,8 +73,8 @@ export const Register: React.FC = () => {
     return (
         <div className={cls.registrationContainer}>
             <div className={cls.card}>
-                <p className={cls.title}>IT-Incubator</p>
-                <p className={cls.subtitle}>Sign Up</p>
+                <h2 className={cls.title}>IT-Incubator</h2>
+                <h3 className={cls.subtitle}>Sign Up</h3>
                 <p className={cls.titleEmail}>Email</p>
                 <div className={cls.inputContainer}>
                     <SuperInputText

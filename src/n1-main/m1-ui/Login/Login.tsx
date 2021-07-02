@@ -45,8 +45,8 @@ export const Login = () => {
     return (
         <div className={cls.loginContainer}>
             <div className={cls.card}>
-                <p className={cls.title}>It-incubator</p>
-                <p className={cls.subtitle}>Sign In</p>
+                <h2 className={cls.title}>It-incubator</h2>
+                <h3 className={cls.subtitle}>Sign In</h3>
                 <p className={cls.titleEmail}>Email</p>
                 <div className={cls.inputContainer}>
                     <SuperInputText
