@@ -7,13 +7,15 @@ import preloader from '../common/preloader/Spinner-2.gif'
 import SuperInputText from '../common/SuperInput/SuperInputText'
 import {Redirect} from "react-router";
 import eye from "../../../assets/images/eye.svg";
+import {InputTypeType} from "../NewPassword/NewPassword";
+import closedEye from "../../../assets/images/closedEye.svg";
 
 export const Register: React.FC = () => {
     const dispatch = useDispatch()
     const error = useSelector<AppRootStateType, string | null>(state => state.register.error)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.register.isFetching)
 
-    const [type, setType] = useState("password")
+    const [type, setType] = useState<InputTypeType>("password")
     let [email, setEmail] = useState<string>('')
     let [password, setPassword] = useState<string>('')
     let [confirmPass, setConfirmPass] = useState<string>('')
@@ -86,7 +88,7 @@ export const Register: React.FC = () => {
                 </div>
                 <p className={cls.titlePassword}>Password</p>
                 <div className={cls.inputContainer}>
-                    <div className={cls.eye} onClick={changeTypeHandler}><img src={eye} alt="eye"/></div>
+                    <div className={cls.eye} onClick={changeTypeHandler}><img src={type === 'password' ? closedEye : eye} alt="eye"/></div>
                     <SuperInputText
                         className={cls.inputEmailPassword}
                         value={password}
@@ -98,7 +100,7 @@ export const Register: React.FC = () => {
                 </div>
                 <p className={cls.titlePassword}>Confirm Password</p>
                 <div className={cls.inputContainer}>
-                    <div className={cls.eye} onClick={changeTypeHandler}><img src={eye} alt="eye"/></div>
+                    <div className={cls.eye} onClick={changeTypeHandler}><img src={type === 'password' ? closedEye : eye} alt="eye"/></div>
                     <SuperInputText
                         className={cls.inputEmailPassword}
                         value={confirmPass}

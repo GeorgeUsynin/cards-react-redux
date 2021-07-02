@@ -7,11 +7,13 @@ import {NavLink, Redirect} from 'react-router-dom';
 import SuperInputText from "../common/SuperInput/SuperInputText";
 import SuperButton from "../common/SuperButton/SuperButton";
 import eye from '../../../assets/images/eye.svg'
+import {InputTypeType} from "../NewPassword/NewPassword";
+import closedEye from "../../../assets/images/closedEye.svg";
 
 
 export const Login = () => {
 
-    const [type, setType] = useState("password")
+    const [type, setType] = useState<InputTypeType>("password")
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const errorEmail = email ? '' : 'write your email';
@@ -58,7 +60,7 @@ export const Login = () => {
                 </div>
                 <p className={cls.titlePassword}>Password</p>
                 <div className={cls.inputContainer}>
-                    <div className={cls.eye} onClick={changeTypeHandler}><img src={eye} alt="eye"/></div>
+                    <div className={cls.eye} onClick={changeTypeHandler}><img src={type === 'password' ? closedEye : eye} alt="eye"/></div>
                     <SuperInputText
                         className={cls.inputEmailPassword}
                         value={password}

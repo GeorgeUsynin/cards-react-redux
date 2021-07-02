@@ -11,7 +11,9 @@ import {restorePassword} from "../../m2-bll/restorePasswordReducer";
 
 export const RestorePassword = () => {
 
-    const showEmailCheck = useSelector<AppRootStateType, boolean>(state => state.restorePassword.showEmailCheck)
+    // const showEmailCheck = useSelector<AppRootStateType, boolean>(state => state.restorePassword.showEmailCheck)
+
+    let showEmailCheck = true   
 
     const error = useSelector<AppRootStateType, null | string>(state => state.restorePassword.error)
 
