@@ -20,7 +20,7 @@ export const Profile = () => {
         if (!info._id) {
             dispatch(isLoggedInApp())
         }
-    })
+    },[])
 
     const onClickHandler = () => {
         dispatch(logoutTC())
