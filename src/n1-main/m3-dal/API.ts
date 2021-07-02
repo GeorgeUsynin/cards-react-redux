@@ -14,7 +14,9 @@ export const authAPI = {
     logout() {
         return instance.delete<DefaultResponseType>("auth/me")
     },
-
+    isAuthorized () {
+        return instance.post<LoginResponseType>("auth/me",{})
+    }
 }
 
 
