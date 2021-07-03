@@ -1,56 +1,84 @@
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import styles from './PersonalInfo.module.css'
-import {editUserNameTC} from "../../../m2-bll/profileReducer";
+import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import cls from './PersonalInfo.module.scss'
+import {editUserProfileTC} from "../../../m2-bll/profileReducer";
+import {Redirect} from "react-router";
+import {PATH} from "../../App";
+import {AppRootStateType} from "../../../m2-bll/store";
+import defaultAvatar from '../../../../assets/images/avatar.png'
+import SuperInputText from "../../common/SuperInput/SuperInputText";
+import {isLoggedInApp} from "../../../m2-bll/authReducer";
+import { useHistory } from 'react-router-dom';
 
 export const PersonalInfo: React.FC = () => {
     const dispatch = useDispatch()
 
-    let [email, setEmail] = useState<string>('')
-    let [nickname, setNickname] = useState<string>('')
-    // let [error, setError] = useState<string | null>(null)
+    let history = useHistory()
+
+    const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
+    const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
+    const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
+
+    useEffect(() => {
+        if (!id) {
+            dispatch(isLoggedInApp())
+        }
+    }, [])
+
+    let [ava, setAva] = useState<string>('')
+    let [nickname, setNickname] = useState<string>(name)
 
     const cancelHandler = () => {
-        console.log('cancel')
+        history.push(PATH.PROFILE)
     }
     const saveHandler = () => {
-        dispatch(editUserNameTC(nickname))
-        //     debugger
-        console.log('save')
-        //     if (pass === confirmPass) {
-        //         dispatch(register(email, pass))
-        //         setError(null)
-        //     } else {
-        //         setError('password don\'t match')
-        //     }
+        dispatch(editUserProfileTC(nickname, ava))
+        history.push(PATH.PROFILE)
     }
 
     return (
-        <div className={styles.infoContainer}>
-            <div>
-                <h2>Personal Inforamtion</h2>
-                <div>
-                    <img src={''} alt='profile_photo'/>
+        <div className={cls.infoContainer}>
+            <div className={cls.card}>
+                <h2 className={cls.title}>Personal Inforamtion</h2>
+                <div className={cls.imgWrapper}>
+                    <img src={avatar ? avatar : defaultAvatar} alt='profile_photo'/>
                 </div>
-                <div className={styles.form}>
-                    <label>
-                        <div className={styles.inputTitle}>Nickname</div>
-                        <input className={styles.input} type="text" value={nickname}
-                               onChange={(e) => setNickname(e.currentTarget.value)}/>
-                    </label>
-                    <label>
-                        <div className={styles.inputTitle}>Email</div>
-                        <input className={styles.input} type="password" value={email}
-                               onChange={(e) => setEmail(e.currentTarget.value)}/>
-                    </label>
-                </div>
-                {/*<div className={cls.info}>*/}
-                {/*    {error && <div className={cls.error}>{error}</div>}*/}
-                {/*</div>*/}
-                <div className={styles.buttonsContainer}>
-                    <button className={styles.cancelBtn} onClick={cancelHandler}>Cancel
+                <label>
+                    <p className={cls.titleEmail}>Nickname</p>
+                    <div className={cls.inputContainer}>
+                        <SuperInputText
+                            className={cls.inputNicknameAvatar}
+                            value={nickname}
+                            type={"text"}
+                            onChangeText={setNickname}
+                            // error={errorEmail}
+                        />
+                    </div>
+                </label>
+                <label>
+                    <p className={cls.titleEmail}>Avatar</p>
+                    <div className={cls.inputContainer}>
+                        <SuperInputText
+                            className={cls.inputNicknameAvatar}
+                            value={ava}
+                            type={"text"}
+                            onChangeText={setAva}
+                            // error={errorEmail}
+                        />
+                    </div>
+                </label>
+                <div className={cls.buttonContainer}>
+                    <button
+                        className={cls.cancelButton}
+                        onClick={cancelHandler}>
+                        <span>Cancel</span>
                     </button>
-                    <button className={styles.saveBtn} onClick={saveHandler}>Save</button>
+                    <button
+                        className={cls.registerButton}
+                        onClick={saveHandler}
+                    >
+                        <span>Save</span>
+                    </button>
                 </div>
             </div>
         </div>

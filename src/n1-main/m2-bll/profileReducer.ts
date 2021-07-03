@@ -2,7 +2,11 @@ import {LoginResponseType} from "../m3-dal/API";
 import {AppThunkType} from "./store";
 import {profileApi} from "../m3-dal/apiProfile";
 
-const initialState = {
+type InitialStateType = {
+    informationAboutUser: LoginResponseType
+}
+
+const initialState: InitialStateType = {
     informationAboutUser: {
         _id: "",
         email: "",
@@ -13,9 +17,10 @@ const initialState = {
         isAdmin: false,
         verified: false,
         rememberMe: false,
+        avatar: "",
+        error: ""
     }
 }
-type InitialStateType = typeof initialState
 
 /*export type LoginResponseType = {
     _id: string
@@ -35,8 +40,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
     switch (action.type) {
         case 'profile/SET-INFORMATION-ABOUT-USER':
             return {...state, informationAboutUser: action.data}
-        case "profile/SET-USER-NAME":
-            return {...state, informationAboutUser: {...state.informationAboutUser, name: action.name}}
+        case "profile/SET-UPDATED-USER":
+            return {...state, informationAboutUser: action.updatedUser}
         default:
             return state
     }
@@ -45,14 +50,14 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
 export const setInformationAboutUserAC = (data: LoginResponseType) =>
     ({type: 'profile/SET-INFORMATION-ABOUT-USER', data} as const)
 
-export const setUserNameAC = (name: string) =>
-    ({type: 'profile/SET-USER-NAME', name} as const)
+export const setUpdatedUserAC = (updatedUser: LoginResponseType) =>
+    ({type: 'profile/SET-UPDATED-USER', updatedUser} as const)
 
-export const editUserNameTC = (name: string): AppThunkType => (dispatch) => {
-    profileApi.editUserName(name)
+
+export const editUserProfileTC = (name: string, avatar: string): AppThunkType => (dispatch) => {
+    profileApi.editUserNameAvatar(name, avatar)
         .then(res => {
-            debugger
-            dispatch(setUserNameAC(res.data.updatedUser.name))
+            dispatch(setUpdatedUserAC(res.data.updatedUser))
         })
         .catch(err => {
             const error = err.response
@@ -64,4 +69,4 @@ export const editUserNameTC = (name: string): AppThunkType => (dispatch) => {
         })
 }
 
-export type ProfileActionsType = ReturnType<typeof setInformationAboutUserAC | typeof setUserNameAC>
+export type ProfileActionsType = ReturnType<typeof setInformationAboutUserAC | typeof setUpdatedUserAC>

@@ -26,3 +26,9 @@
   padding: $padding;
   display: inline-block;
 }
+
+@mixin flexSuperCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

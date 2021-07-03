@@ -30,7 +30,7 @@ export type LoginResponseType = {
     _id: string
     email: string
     name: string
-    avatar?: string
+    avatar: string
     publicCardPacksCount: number
     created: DateConstructor
     updated: DateConstructor

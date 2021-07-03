@@ -10,11 +10,14 @@ import eye from "../../../assets/images/eye.svg";
 import {InputTypeType} from "../NewPassword/NewPassword";
 import closedEye from "../../../assets/images/closedEye.svg";
 import {PATH} from "../App";
+import {useHistory} from "react-router-dom";
 
 export const Register: React.FC = () => {
     const dispatch = useDispatch()
     const error = useSelector<AppRootStateType, string | null>(state => state.register.error)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.register.isFetching)
+
+    let history = useHistory()
 
     const [type, setType] = useState<InputTypeType>("password")
     let [email, setEmail] = useState<string>('')
@@ -48,9 +51,7 @@ export const Register: React.FC = () => {
     }
 
     const cancelHandler = () => {
-        setEmail('')
-        setPassword('')
-        setConfirmPass('')
+        history.push(PATH.LOGIN)
     }
 
     const changeTypeHandler = () => {
@@ -76,41 +77,49 @@ export const Register: React.FC = () => {
             <div className={cls.card}>
                 <h2 className={cls.title}>IT-Incubator</h2>
                 <h3 className={cls.subtitle}>Sign Up</h3>
-                <p className={cls.titleEmail}>Email</p>
-                <div className={cls.inputContainer}>
-                    <SuperInputText
-                        className={cls.inputEmailPassword}
-                        value={email}
-                        type={"text"}
-                        onChange={changeEmailHandler}
-                        // error={errorEmail}
-                        spanClassName={cls.spanErrorEmail}
-                    />
-                </div>
-                <p className={cls.titlePassword}>Password</p>
-                <div className={cls.inputContainer}>
-                    <div className={cls.eye} onClick={changeTypeHandler}><img src={type === 'password' ? closedEye : eye} alt="eye"/></div>
-                    <SuperInputText
-                        className={cls.inputEmailPassword}
-                        value={password}
-                        type={type}
-                        onChange={changePasswordHandler}
-                        // error={errorPassword}
-                        spanClassName={cls.spanErrorPassword}
-                    />
-                </div>
-                <p className={cls.titlePassword}>Confirm Password</p>
-                <div className={cls.inputContainer}>
-                    <div className={cls.eye} onClick={changeTypeHandler}><img src={type === 'password' ? closedEye : eye} alt="eye"/></div>
-                    <SuperInputText
-                        className={cls.inputEmailPassword}
-                        value={confirmPass}
-                        type={type}
-                        onChange={(e) => setConfirmPass(e.currentTarget.value)}
-                        // error={errorPassword}
-                        spanClassName={cls.spanErrorPassword}
-                    />
-                </div>
+                <label>
+                    <p className={cls.titleEmail}>Email</p>
+                    <div className={cls.inputContainer}>
+                        <SuperInputText
+                            className={cls.inputEmailPassword}
+                            value={email}
+                            type={"text"}
+                            onChange={changeEmailHandler}
+                            // error={errorEmail}
+                            spanClassName={cls.spanErrorEmail}
+                        />
+                    </div>
+                </label>
+                <label>
+                    <p className={cls.titlePassword}>Password</p>
+                    <div className={cls.inputContainer}>
+                        <div className={cls.eye} onClick={changeTypeHandler}><img
+                            src={type === 'password' ? closedEye : eye} alt="eye"/></div>
+                        <SuperInputText
+                            className={cls.inputEmailPassword}
+                            value={password}
+                            type={type}
+                            onChange={changePasswordHandler}
+                            // error={errorPassword}
+                            spanClassName={cls.spanErrorPassword}
+                        />
+                    </div>
+                </label>
+                <label>
+                    <p className={cls.titlePassword}>Confirm Password</p>
+                    <div className={cls.inputContainer}>
+                        <div className={cls.eye} onClick={changeTypeHandler}><img
+                            src={type === 'password' ? closedEye : eye} alt="eye"/></div>
+                        <SuperInputText
+                            className={cls.inputEmailPassword}
+                            value={confirmPass}
+                            type={type}
+                            onChange={(e) => setConfirmPass(e.currentTarget.value)}
+                            // error={errorPassword}
+                            spanClassName={cls.spanErrorPassword}
+                        />
+                    </div>
+                </label>
                 {/*<div className={cls.info}>*/}
                 {/*  {*/}
                 {/*    isFetching ?*/}
@@ -120,7 +129,7 @@ export const Register: React.FC = () => {
                 {/*      : error && <div className={cls.error}>{error}</div>}*/}
                 {/*</div>*/}
                 <div className={cls.buttonContainer}>
-                    <button 
+                    <button
                         className={cls.cancelButton}
                         onClick={cancelHandler}>
                         <span>Cancel</span>

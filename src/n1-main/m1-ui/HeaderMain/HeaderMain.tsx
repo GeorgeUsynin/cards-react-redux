@@ -13,8 +13,7 @@ export const HeaderMain = () => {
 
     let location = useLocation()
 
-
-    const activeNavLinkClass = location.pathname === PATH.PROFILE ? cls.active : ""
+    const activeNavLinkClass = location.pathname !== PATH.PACKS_LIST ? cls.active : ""
 
     const onClickHandler = () => {
         dispatch(logoutTC())
