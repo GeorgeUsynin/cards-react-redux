@@ -12,7 +12,7 @@ type UserInfoType = {
 export const UserInfo: React.FC<UserInfoType> = ({avatar, name}) => {
     return (
         <div className={cls.infoUser}>
-            <img className={cls.userPhoto} src={avatar ? avatar : defaultAvatar}/>
+            <img className={cls.userPhoto} src={avatar ? avatar : defaultAvatar} alt={""}/>
             <p className={cls.userName}>{name}</p>
             <div className={cls.editProfileWrapper}>
                 <NavLink to={'/information_about_user'}>Edit

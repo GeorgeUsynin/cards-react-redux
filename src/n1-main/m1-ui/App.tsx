@@ -27,7 +27,6 @@ export const PATH = {
     NEW_PASSWORD: "/new_password/:token?"
 }
 
-
 const App = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)

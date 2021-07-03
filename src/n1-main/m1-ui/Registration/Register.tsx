@@ -33,21 +33,21 @@ export const Register: React.FC = () => {
 
     const changeEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
-        setEmail(value)
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-            setValidateError('invalid email')
+            setValidateError('Invalid email')
         } else {
             setValidateError('')
         }
+        setEmail(value)
     }
     const changePasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
-        setPassword(value)
         if (value.length < 8 || value.length > 15) {
-            setValidatePasswordError('invalid password length')
+            setValidatePasswordError('Invalid password length, the password must contain from 8 to 15 characters')
         } else {
             setValidatePasswordError('')
         }
+        setPassword(value)
     }
 
     const cancelHandler = () => {

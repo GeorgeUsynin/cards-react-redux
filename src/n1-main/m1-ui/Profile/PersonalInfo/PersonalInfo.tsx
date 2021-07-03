@@ -2,13 +2,12 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import cls from './PersonalInfo.module.scss'
 import {editUserProfileTC} from "../../../m2-bll/profileReducer";
-import {Redirect} from "react-router";
 import {PATH} from "../../App";
 import {AppRootStateType} from "../../../m2-bll/store";
 import defaultAvatar from '../../../../assets/images/avatar.png'
 import SuperInputText from "../../common/SuperInput/SuperInputText";
 import {isLoggedInApp} from "../../../m2-bll/authReducer";
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 export const PersonalInfo: React.FC = () => {
     const dispatch = useDispatch()

@@ -13,7 +13,7 @@ export const CheckPassword: React.FC<CheckPasswordType> = ({email}) => {
                 <h2 className={cls.title}>It-incubator</h2>
 
                 <div className={cls.imgContainer}>
-                    <img src={letter} alt="picture"/>
+                    <img src={letter} alt=""/>
                 </div>
 
                 <h3 className={cls.subtitle}>Check email</h3>
