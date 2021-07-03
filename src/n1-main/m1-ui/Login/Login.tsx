@@ -9,6 +9,7 @@ import SuperButton from "../common/SuperButton/SuperButton";
 import eye from '../../../assets/images/eye.svg'
 import {InputTypeType} from "../NewPassword/NewPassword";
 import closedEye from "../../../assets/images/closedEye.svg";
+import {PATH} from "../App";
 
 
 export const Login = () => {
@@ -39,7 +40,7 @@ export const Login = () => {
     }
 
     if (isLoggedIn) {
-        return <Redirect to={'/profile'}/>
+        return <Redirect to={PATH.PROFILE}/>
     }
 
     return (

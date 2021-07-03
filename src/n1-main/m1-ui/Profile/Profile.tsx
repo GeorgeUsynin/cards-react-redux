@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import cls from './Profile.module.css'
+import cls from './Profile.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {LoginResponseType} from "../../m3-dal/API";
@@ -31,7 +31,6 @@ export const Profile = () => {
 
     return (
         <div className={cls.profileContainer}>
-            <h1>Profile</h1>
             <div className={cls.card}>
                 <div className={cls.infoCards}>
                     <div className={cls.infoUser}>
@@ -41,7 +40,7 @@ export const Profile = () => {
                             <SuperButton onClick={onClickHandler} className={cls.logoutBtn}>Logout</SuperButton>
                         </div>
                         <div>
-                            <NavLink to={'/profile/information_about_user'} className={cls.editProfile}>Edit
+                            <NavLink to={'/information_about_user'} className={cls.editProfile}>Edit
                                 Profile</NavLink>
                         </div>
                     </div>

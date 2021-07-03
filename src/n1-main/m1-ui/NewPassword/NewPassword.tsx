@@ -8,6 +8,7 @@ import {AppRootStateType} from "../../m2-bll/store";
 import {setNewPassword} from "../../m2-bll/restorePasswordReducer";
 import eye from "../../../assets/images/eye.svg";
 import closedEye from "../../../assets/images/closedEye.svg";
+import {PATH} from "../App";
 
 export type InputTypeType = "password" | "text" | "checkbox"
 
@@ -39,7 +40,7 @@ export const NewPassword = () => {
     }
 
     if (isNewPasswordCreated) {
-        return <Redirect to={'/login'}/>
+        return <Redirect to={PATH.LOGIN}/>
     }
 
     return (

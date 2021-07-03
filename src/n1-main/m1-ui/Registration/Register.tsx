@@ -9,6 +9,7 @@ import {Redirect} from "react-router";
 import eye from "../../../assets/images/eye.svg";
 import {InputTypeType} from "../NewPassword/NewPassword";
 import closedEye from "../../../assets/images/closedEye.svg";
+import {PATH} from "../App";
 
 export const Register: React.FC = () => {
     const dispatch = useDispatch()
@@ -67,7 +68,7 @@ export const Register: React.FC = () => {
     }
     const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
     // redirect logic
-    if (isRegistered) return <Redirect to={'/login'}/>
+    if (isRegistered) return <Redirect to={PATH.LOGIN}/>
 
 
     return (
