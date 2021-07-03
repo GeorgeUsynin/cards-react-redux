@@ -42,7 +42,7 @@
           box-sizing: border-box;
         }
 
-        a:hover, .active{
+        a:hover, .active {
           background: #DCCCDB;
           border-bottom: solid 5px $elementsColor;
           outline: none;
@@ -51,6 +51,23 @@
       }
     }
 
+    .buttonContainer {
+      text-align: center;
+      display: flex;
+      align-items: center;
 
+      .logoutBtn {
+        @include primaryButton();
+        background: #D7D8EF;
+
+        span {
+          @include primaryButtonText(9px 30px);
+          color: $elementsColor;
+        }
+      }
+
+
+
+    }
   }
 }

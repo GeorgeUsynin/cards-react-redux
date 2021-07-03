@@ -19,7 +19,7 @@ export const PATH = {
     PROFILE: '/profile',
     PACKS_LIST: '/packsList',
     USER_INFO: '/information_about_user',
-    LOGIN: '.login',
+    LOGIN: '/login',
     REGISTRATION: '/registration',
     TEST_COMPONENTS: '/test_components',
     PAGE_NOT_FOUND: '/404',
@@ -35,12 +35,12 @@ const App = () => {
     return (
         <div className='app-wrapper'>
             <Header/>
-            <HeaderMain/>
+            {isLoggedIn && <HeaderMain/>}
             <div className='app-wrapper-content'>
+                <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.PACKS_LIST} render={() => <Profile/>}/>
                 <Route path={PATH.USER_INFO} render={() => <PersonalInfo/>}/>
-                <Route path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.REGISTRATION} render={() => <Register/>}/>
                 <Route path={PATH.TEST_COMPONENTS} render={() => <TestComponents/>}/>
                 <Route path={PATH.PAGE_NOT_FOUND} render={() => <PageNotFound/>}/>

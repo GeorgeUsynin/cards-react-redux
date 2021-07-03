@@ -3,9 +3,10 @@ import cls from './Profile.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {LoginResponseType} from "../../m3-dal/API";
-import {NavLink, Redirect} from 'react-router-dom';
-import SuperButton from "../common/SuperButton/SuperButton";
-import {isLoggedInApp, logoutTC} from "../../m2-bll/authReducer";
+import {Redirect} from 'react-router-dom';
+import {isLoggedInApp} from "../../m2-bll/authReducer";
+import {UserInfo} from "./UserInfo/UserInfo";
+import {UserInfoCards} from "./UserInfoCards/UserInfoCards";
 
 
 export const Profile = () => {
@@ -19,11 +20,8 @@ export const Profile = () => {
         if (!info._id) {
             dispatch(isLoggedInApp())
         }
-    },[])
+    }, [])
 
-    const onClickHandler = () => {
-        dispatch(logoutTC())
-    }
 
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>
@@ -32,19 +30,9 @@ export const Profile = () => {
     return (
         <div className={cls.profileContainer}>
             <div className={cls.card}>
-                <div className={cls.infoCards}>
-                    <div className={cls.infoUser}>
-                        <img className={cls.userPhoto} src={info.avatar ? info.avatar : ""}/>
-                        <span className={cls.userName}>{info.name}</span>
-                        <div>
-                            <SuperButton onClick={onClickHandler} className={cls.logoutBtn}>Logout</SuperButton>
-                        </div>
-                        <div>
-                            <NavLink to={'/information_about_user'} className={cls.editProfile}>Edit
-                                Profile</NavLink>
-                        </div>
-                    </div>
-                    <span className={cls.userCards}>Number of cards: {info.publicCardPacksCount}</span>
+                <div className={cls.info}>
+                    <UserInfo avatar={info.avatar} name={info.name}/>
+                    <UserInfoCards publicCardPacksCount={info.publicCardPacksCount}/>
                 </div>
             </div>
         </div>
