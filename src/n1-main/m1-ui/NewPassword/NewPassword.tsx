@@ -61,17 +61,14 @@ export const NewPassword = () => {
                         onChangeText={onChangePassword}/>
                 </div>
 
-
-                <p>{error}</p>
-
-                <p className={cls.note}>Create new password and we will send you further instructions to email</p>
+                <p className={cls.note}>Create new password and press the button below</p>
 
                 <div className={cls.buttonContainer}>
                     <SuperButton
                         onClick={onClickSend}
                         className={cls.button}
                     >
-                        <span>Send instructions</span>
+                        <span>Create</span>
                     </SuperButton>
                 </div>
 

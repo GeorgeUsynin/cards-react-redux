@@ -1,7 +1,7 @@
 import {authAPI, LoginParamsType} from "../m3-dal/API";
 import {setInformationAboutUserAC} from "./profileReducer";
 import {AppThunkType} from "./store";
-import {REGISTER_ERROR, REGISTER_LOADING, REGISTER_SUCCESS} from "./registerReducer";
+import {REGISTER_ERROR, REGISTER_LOADING} from "./registerReducer";
 
 type InitialStateType = {
     isFetching: boolean
@@ -29,6 +29,13 @@ export const setLoginError = (error: string | null) => {
     } as const
 }
 
+export const setLoginLoading = (isFetching: boolean) => {
+    return {
+        type: REGISTER_LOADING,
+        isFetching,
+    } as const
+}
+
 //reducer
 
 export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
@@ -43,14 +50,6 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
         default:
             return state
     }
-}
-
-
-export const setLoginLoading = (isFetching: boolean) => {
-    return {
-        type: REGISTER_LOADING,
-        isFetching,
-    } as const
 }
 
 // thunks
