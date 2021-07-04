@@ -62,6 +62,7 @@ export const RestorePassword = () => {
                                         {...formik.getFieldProps('email')}
                                         className={cls.inputEmail}
                                         type={"text"}
+                                        placeholder={'Email'}
                                         onClick={() => dispatch(setRestorePasswordError(null))}
                                         // name={'email'}
                                         // onChange={formik.handleChange}

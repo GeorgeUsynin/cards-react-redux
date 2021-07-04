@@ -98,6 +98,7 @@ export const restorePassword = (email: string): AppThunkType => (dispatch) => {
 }
 
 export const setNewPassword = (password: string, resetPasswordToken: string): AppThunkType => (dispatch) => {
+    dispatch(setRestorePasswordLoading(true))
     authApi.setNewPassword(password, resetPasswordToken)
         .then(res => {
             debugger
@@ -110,5 +111,8 @@ export const setNewPassword = (password: string, resetPasswordToken: string): Ap
                 :
                 (err.message + ', more details in the console')
             dispatch(setRestorePasswordError(error))
+        })
+        .finally(()=>{
+            dispatch(setRestorePasswordLoading(false))
         })
 }
