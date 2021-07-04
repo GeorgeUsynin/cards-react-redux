@@ -73,7 +73,6 @@ export const loginTC = (data: LoginParamsType): AppThunkType => (dispatch) => {
 
 export const logoutTC = (): AppThunkType => (dispatch) => {
     dispatch(setLoginLoading(true))
-    debugger
     authAPI.logout()
         .then(res => {
             dispatch(setIsLoggedOutAC(false))

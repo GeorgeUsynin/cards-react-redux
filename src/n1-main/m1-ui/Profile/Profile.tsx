@@ -14,7 +14,8 @@ export const Profile = () => {
 
     const dispatch = useDispatch()
 
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
+    const isFetchingAUTH = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
+    const isFetchingPROFILE = useSelector<AppRootStateType, boolean>(state => state.profile.isFetching)
     const info = useSelector<AppRootStateType, LoginResponseType>(state => state.profile.informationAboutUser)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
@@ -32,7 +33,7 @@ export const Profile = () => {
     return (
         <div className={cls.profileContainer}>
             {
-                isFetching
+                isFetchingAUTH || isFetchingPROFILE
                     ?
                     <Preloader/>
                     :
