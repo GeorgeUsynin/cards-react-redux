@@ -24,6 +24,10 @@
     margin: 32px 0 54px;
   }
 
+  label{
+   cursor: pointer;
+  }
+
   .titleEmail, .titlePassword {
     @include text($fontFamilyText, 13px, 400, 20px, #24254A, left);
     width: 80%;
@@ -32,8 +36,8 @@
   }
 
   .inputContainer {
-    display: flex;
-    justify-content: center;
+    @include flexSuperCenter();
+    flex-direction: column;
     position: relative;
 
     .eye {
@@ -41,7 +45,7 @@
       height: 15px;
       position: absolute;
       right: 50px;
-      bottom: 14px;
+      bottom: 27px;
       cursor: pointer;
     }
 

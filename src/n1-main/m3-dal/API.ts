@@ -23,7 +23,7 @@ export const authAPI = {
 export type LoginParamsType = {
     email: string
     password: string
-    check: boolean
+    rememberMe: boolean
 }
 
 export type LoginResponseType = {

@@ -7,12 +7,14 @@ import {Redirect} from 'react-router-dom';
 import {isLoggedInApp} from "../../m2-bll/authReducer";
 import {UserInfo} from "./UserInfo/UserInfo";
 import {UserInfoCards} from "./UserInfoCards/UserInfoCards";
+import {Preloader} from "../common/preloader/Preloader";
 
 
 export const Profile = () => {
 
     const dispatch = useDispatch()
 
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
     const info = useSelector<AppRootStateType, LoginResponseType>(state => state.profile.informationAboutUser)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
@@ -29,12 +31,18 @@ export const Profile = () => {
 
     return (
         <div className={cls.profileContainer}>
-            <div className={cls.card}>
-                <div className={cls.info}>
-                    <UserInfo avatar={info.avatar} name={info.name}/>
-                    <UserInfoCards publicCardPacksCount={info.publicCardPacksCount}/>
-                </div>
-            </div>
+            {
+                isFetching
+                    ?
+                    <Preloader/>
+                    :
+                    <div className={cls.card}>
+                        <div className={cls.info}>
+                            <UserInfo avatar={info.avatar} name={info.name}/>
+                            <UserInfoCards publicCardPacksCount={info.publicCardPacksCount}/>
+                        </div>
+                    </div>
+            }
         </div>
     )
 }
