@@ -1,76 +1,146 @@
-import React, {ChangeEvent, useState} from 'react'
-import cls from './Login.module.css'
-import {loginTC} from "../../m2-bll/authReducer";
+import React, {useState} from 'react'
+import cls from './Login.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {NavLink, Redirect} from 'react-router-dom';
 import SuperInputText from "../common/SuperInput/SuperInputText";
 import SuperButton from "../common/SuperButton/SuperButton";
+import eye from '../../../assets/images/eye.svg'
+import {InputTypeType} from "../NewPassword/NewPassword";
+import closedEye from "../../../assets/images/closedEye.svg";
+import {PATH} from "../../App";
+import {useFormik} from "formik";
+import {loginTC, setLoginError} from "../../m2-bll/authReducer";
+import {Preloader} from "../common/preloader/Preloader";
 
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
 
 export const Login = () => {
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const errorEmail = email ? '' : 'write your email';
-    const errorPassword = password ? '' : 'write your password';
-    const [check, setCheck] = useState<boolean>(false)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
     const dispatch = useDispatch()
 
+    const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
-    const onChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
-        setCheck(e.currentTarget.checked)
-    }
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
 
-    const sentData = () => {
-        dispatch(loginTC({email, password, check}))
-        setEmail("")
-        setPassword("")
-        setCheck(false)
+    const [type, setType] = useState<InputTypeType>("password")
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            rememberMe: false
+        },
+        validate: (values) => {
+            const errors: FormikErrorType = {}
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            if (!values.password) {
+                errors.password = 'Required';
+            } else if (values.password.length < 8) {
+                errors.password = 'Password must contain from 8 to 15 characters';
+            } else if (values.password.length > 15) {
+                errors.password = 'Password must contain from 8 to 15 characters';
+            }
+            return errors
+        },
+        onSubmit: values => {
+            dispatch(loginTC(values))
+        }
+    })
+
+    const changeTypeHandler = () => {
+        type === 'text' ? setType('password') : setType('text')
     }
 
     if (isLoggedIn) {
-        return <Redirect to={'/profile'}/>
+        return <Redirect to={PATH.PROFILE}/>
     }
 
     return (
         <div className={cls.loginContainer}>
-            <h1>Login</h1>
-            <div className={cls.card}>
-                <span className={cls.title}>It-incubator</span>
-                <span className={cls.subtitle}>Sign In</span>
-                <div>
-                    <span className={cls.titleEmail}>Email</span>
-                    <SuperInputText
-                        className={cls.inputEmail}
-                        value={email}
-                        type={"text"}
-                        onChangeText={setEmail}
-                        error={errorEmail}
-                        spanClassName={cls.spanErrorEmail}
-                    />
-                </div>
-                <div>
-                    <span className={cls.titlePassword}>Password</span>
-                    <SuperInputText
-                        className={cls.inputPassword}
-                        value={password}
-                        type={"password"}
-                        onChangeText={setPassword}
-                        error={errorPassword}
-                        spanClassName={cls.spanErrorPassword}
-                    />
-                </div>
-                <div className={cls.checkbox}>
-                    <input type={"checkbox"} checked={check} name={"RememberMe"} onChange={onChangeCheck}/>
-                    <span>Remember me</span>
-                </div>
-                <NavLink to={'/restore_password'} className={cls.restorePassword}>Forgot Password</NavLink>
-                <SuperButton className={cls.button} onClick={sentData}>Login</SuperButton>
-                <span className={cls.newAccount}>Don't have an account</span>
-                <NavLink to={'/registration'} className={cls.signUp}>Sign Up</NavLink>
-            </div>
+            {
+                isFetching
+                    ?
+                    <Preloader/>
+                    :
+                    <div className={cls.card}>
+                        <h2 className={cls.title}>It-incubator</h2>
+                        <h3 className={cls.subtitle}>Sign In</h3>
+                        <form onSubmit={formik.handleSubmit}>
+                            <label>
+                                <p className={cls.titleEmail}>Email</p>
+                                <div className={cls.inputContainer}>
+                                    <SuperInputText
+                                        {...formik.getFieldProps('email')}
+                                        className={cls.inputEmailPassword}
+                                        type={"text"}
+                                        onClick={() => dispatch(setLoginError(null))}
+                                        // name={'email'}
+                                        // onChange={formik.handleChange}
+                                        // onBlur={formik.handleBlur}
+                                        // value={formik.values.email}
+                                    />
+                                    {
+                                        formik.touched.email &&
+                                        formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> :
+                                            <div style={{color: 'red'}}>{error?.match(/user/) ? error : ''}</div>
+                                    }
+                                </div>
+                            </label>
+                            <label>
+                                <p className={cls.titlePassword}>Password</p>
+                                <div className={cls.inputContainer}>
+                                    <div className={cls.eye} onClick={changeTypeHandler}><img
+                                        src={type === 'password' ? closedEye : eye} alt="eye"/></div>
+                                    <SuperInputText
+                                        {...formik.getFieldProps('password')}
+                                        className={cls.inputEmailPassword}
+                                        onClick={() => dispatch(setLoginError(null))}
+                                        type={type}
+                                        // name={'password'}
+                                        // onBlur={formik.handleBlur}
+                                        // onChange={formik.handleChange}
+                                        // value={formik.values.password}
+                                    />
+                                    {formik.touched.password && formik.errors.password ?
+                                        <div style={{color: 'red'}}>{formik.errors.password}</div> :
+                                        <div style={{color: 'red'}}>{error?.match(/password/) ? error : ''}</div>
+                                    }
+                                </div>
+                            </label>
+                            <div className={cls.checkbox}>
+                                <label>
+                                    <SuperInputText
+                                        {...formik.getFieldProps('rememberMe')}
+                                        type={'checkbox'}
+                                        // name={'rememberMe'}
+                                        // onChange={formik.handleChange}
+                                        // checked={formik.values.rememberMe}
+                                    />
+                                    <span className={cls.rememberMe}>Remember me</span>
+                                </label>
+                            </div>
+                            <NavLink to={'/restore_password'} className={cls.restorePassword}>Forgot Password</NavLink>
+                            <div className={cls.buttonContainer}>
+                                <SuperButton className={cls.button} type={'submit'}><span>Login</span></SuperButton>
+                            </div>
+                        </form>
+                        <p className={cls.newAccount}>Don't have an account</p>
+                        <div className={cls.signUp}>
+                            <NavLink to={'/registration'}>Sign Up</NavLink>
+                        </div>
+                    </div>
+            }
         </div>
     )
 }

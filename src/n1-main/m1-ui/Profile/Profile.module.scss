@@ -1,0 +1,22 @@
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+
+.profileContainer {
+  height: 100vh;
+  background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
+  border-top: solid 1px #E6D4DE;
+
+  .card {
+    width: 80%;
+    margin: 24px auto 0;
+    background: #FEFEFF;
+    border-radius: 8px;
+
+    .info {
+      width: 25%;
+      background: #ECECF9;
+      border-radius: 8px 0 0 8px;
+      border-bottom: solid 1px transparent;
+    }
+  }
+}

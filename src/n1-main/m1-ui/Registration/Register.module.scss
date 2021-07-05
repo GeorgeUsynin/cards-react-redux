@@ -1,0 +1,88 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.registrationContainer {
+  height: 100vh;
+  background: $bgColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    flex-basis: 540px;
+    background: $bgCard;
+    border-radius: 8px;
+
+    label{
+      cursor: pointer;
+    }
+
+    .title {
+      @include text($fontFamilyTitle, 26px, 600, 39px, $textColor, center);
+      margin: 25px 0 32px;
+    }
+
+    .subtitle {
+      @include text($fontFamilyTitle, 22px, 600, 33px, $textColor, center);
+      margin: 32px 0 54px;
+    }
+
+    .titleEmail, .titlePassword {
+      @include text($fontFamilyText, 13px, 400, 20px, #24254A, left);
+      width: 80%;
+      opacity: .7;
+      margin: 38px auto 5px;
+    }
+
+    .inputContainer {
+      @include flexSuperCenter();
+      flex-direction: column;
+      position: relative;
+
+      .eye {
+        width: 22px;
+        height: 15px;
+        position: absolute;
+        right: 62px;
+        bottom: 27px;
+        cursor: pointer;
+      }
+
+      .inputEmailPassword {
+        @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
+        width: 80%;
+        background: $bgCard;
+        border: none;
+        border-bottom: solid #c8d2e3 2px;
+        outline: none;
+        padding: 0;
+      }
+    }
+
+    .buttonContainer {
+      text-align: center;
+
+      .cancelButton {
+        @include primaryButton();
+        margin-top: 84px;
+        margin-bottom: 60px;
+        margin-right: 36px;
+        background: #D7D8EF;
+
+        span {
+          @include primaryButtonText(9px 36px);
+          color: $elementsColor;
+        }
+      }
+
+      .registerButton {
+        @include primaryButton();
+
+        span {
+          @include primaryButtonText(9px 64px);
+        }
+      }
+    }
+  }
+
+}

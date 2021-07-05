@@ -1,24 +1,31 @@
-import React from 'react'
-import cls from './Profile.module.css'
+import React, {useEffect} from 'react'
+import cls from './Profile.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {LoginResponseType} from "../../m3-dal/API";
 import {NavLink, Redirect} from 'react-router-dom';
-import SuperButton from "../common/SuperButton/SuperButton";
-import {logoutTC} from "../../m2-bll/authReducer";
-
+import {isLoggedInApp} from "../../m2-bll/authReducer";
+import {UserInfo} from "./UserInfo/UserInfo";
+import {UserInfoCards} from "./UserInfoCards/UserInfoCards";
+import {Preloader} from "../common/preloader/Preloader";
 
 
 export const Profile = () => {
 
     const dispatch = useDispatch()
 
+    const isFetchingAUTH = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
+    const isFetchingPROFILE = useSelector<AppRootStateType, boolean>(state => state.profile.isFetching)
     const info = useSelector<AppRootStateType, LoginResponseType>(state => state.profile.informationAboutUser)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
-    const onClickHandler = () => {
-        dispatch(logoutTC())
-    }
+    useEffect(() => {
+        if (!info._id) {
+            debugger
+            dispatch(isLoggedInApp())
+        }
+    }, [info._id])
+
 
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>
@@ -26,22 +33,21 @@ export const Profile = () => {
 
     return (
         <div className={cls.profileContainer}>
-            <h1>Profile</h1>
-            <div className={cls.card}>
-                <div className={cls.infoCards}>
-                    <div className={cls.infoUser}>
-                        <img className={cls.userPhoto} src={info.avatar ? info.avatar : ""}/>
-                        <span className={cls.userName}>{info.name}</span>
-                        <div>
-                            <SuperButton onClick={onClickHandler} className={cls.logoutBtn}>Logout</SuperButton>
+            {
+                isFetchingAUTH || isFetchingPROFILE
+                    ?
+                    <Preloader/>
+                    :
+                    <div className={cls.card}>
+                        <div className={cls.info}>
+                            <UserInfo avatar={info.avatar} name={info.name}/>
+                            <UserInfoCards publicCardPacksCount={info.publicCardPacksCount}/>
                         </div>
                         <div>
-                            <NavLink to={'/information_about_user'} className={cls.editProfile}>Edit Profile</NavLink>
+                            <NavLink to={'/profile/information_about_user'} className={cls.editProfile}>Edit Profile</NavLink>
                         </div>
                     </div>
-                    <span className={cls.userCards}>Number of cards: {info.publicCardPacksCount}</span>
-                </div>
-            </div>
+            }
         </div>
     )
 }

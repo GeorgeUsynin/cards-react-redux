@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {DefaultResponseType} from "./apiRestore";
 
 const instance = axios.create({
     // baseURL: "http://localhost:7542/2.0/",
@@ -13,21 +14,23 @@ export const authAPI = {
     logout() {
         return instance.delete<DefaultResponseType>("auth/me")
     },
-
+    isAuthorized () {
+        return instance.post<LoginResponseType>("auth/me",{})
+    }
 }
 
 
 export type LoginParamsType = {
     email: string
     password: string
-    check: boolean
+    rememberMe: boolean
 }
 
 export type LoginResponseType = {
     _id: string
     email: string
     name: string
-    avatar?: string
+    avatar: string
     publicCardPacksCount: number
     created: DateConstructor
     updated: DateConstructor

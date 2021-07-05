@@ -1,0 +1,38 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.infoUser {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #D9D9F1;
+  border-radius: 8px 0 8px 8px;
+
+  img {
+    margin-top: 24px;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+  }
+
+  .userName {
+    @include text($fontFamilyTitle, 18px, 600, 27px, $textColor, center);
+  }
+
+  .editProfileWrapper {
+    border: 1px solid #635D80;
+    box-sizing: border-box;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 24px;
+
+    a {
+      @include text($fontFamilyText, 12px, 600, 14px, $elementsColor, center);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      padding: 6px 10px;
+    }
+  }
+}

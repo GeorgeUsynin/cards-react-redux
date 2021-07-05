@@ -1,0 +1,83 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.infoContainer {
+  height: 100vh;
+  background: $bgColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    flex-basis: 450px;
+    background: $bgCard;
+    border-radius: 8px;
+  }
+
+  .title {
+    @include text($fontFamilyTitle, 26px, 600, 39px, $textColor, center);
+    margin: 25px 0 32px;
+  }
+
+  .imgWrapper {
+    @include flexSuperCenter();
+
+    img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+    }
+  }
+
+  label {
+    cursor: pointer;
+
+    .inputContainer {
+      display: flex;
+      justify-content: center;
+      position: relative;
+
+      .inputNicknameAvatar {
+        @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
+        width: 80%;
+        background: $bgCard;
+        border: none;
+        border-bottom: solid #c8d2e3 2px;
+        outline: none;
+        padding: 0;
+      }
+    }
+
+    p {
+      @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
+      width: 80%;
+      margin: 16px auto 10px;
+    }
+  }
+
+  .buttonContainer {
+    text-align: center;
+
+
+    .cancelButton {
+      @include primaryButton();
+      background: #D7D8EF;
+      margin-top: 90px;
+      margin-bottom: 60px;
+      margin-right: 50px;
+
+      span {
+        @include primaryButtonText(9px 36px);
+        color: $elementsColor;
+      }
+    }
+
+    .registerButton {
+      @include primaryButton();
+
+      span {
+        @include primaryButtonText(9px 64px);
+      }
+    }
+  }
+}

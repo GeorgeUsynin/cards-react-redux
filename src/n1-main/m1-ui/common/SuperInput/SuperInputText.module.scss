@@ -1,0 +1,15 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.superInput {
+}
+
+.errorInput {
+	background: rgba(243, 6, 6, 0.2);
+}
+
+.error {
+	text-align: center;
+	color: rgba(243, 6, 6, 0.7);
+	padding: 10px 0 0 0;
+}
