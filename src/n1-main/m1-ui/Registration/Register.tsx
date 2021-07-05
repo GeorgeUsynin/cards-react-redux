@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import cls from './Register.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { register, setRegisterError, setRegisterLoading } from '../../m2-bll/registerReducer'
