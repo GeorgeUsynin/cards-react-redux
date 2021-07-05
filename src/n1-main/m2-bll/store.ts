@@ -6,6 +6,7 @@ import {ProfileActionsType, profileReducer} from "./profileReducer";
 import {RegisterActions, registerReducer} from './registerReducer'
 import {RestorePasswordActionsType, restorePasswordReducer} from "./restorePasswordReducer";
 import {SearchingActionsType, searchReducer} from "./searchReducer";
+import {PaginatorActionsType, paginatorReducer} from "./paginatorReducer";
 
 
 const rootReducer = combineReducers({
@@ -13,10 +14,17 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     restorePassword: restorePasswordReducer,
     register: registerReducer,
-    search: searchReducer
+    search: searchReducer,
+    paginator: paginatorReducer
 })
 
-export type AppActionsType = RestorePasswordActionsType | RegisterActions | AuthActionsType | ProfileActionsType | SearchingActionsType
+export type AppActionsType =
+    RestorePasswordActionsType
+    | RegisterActions
+    | AuthActionsType
+    | ProfileActionsType
+    | SearchingActionsType
+    | PaginatorActionsType
 
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
