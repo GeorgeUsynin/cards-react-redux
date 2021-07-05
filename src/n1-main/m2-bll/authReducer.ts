@@ -88,6 +88,7 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
 }
 
 export const isLoggedInApp = (): AppThunkType => (dispatch) => {
+    dispatch(setLoginLoading(true))
     authAPI.isAuthorized()
         .then(res => {
             dispatch(setInformationAboutUserAC(res.data))
@@ -98,6 +99,9 @@ export const isLoggedInApp = (): AppThunkType => (dispatch) => {
                 ? e.response.data.error
                 : (e.messages + ', more details in the console')
             console.log('Error: ', {...e})
+        })
+        .finally(() => {
+            dispatch(setLoginLoading(false))
         })
 }
 
