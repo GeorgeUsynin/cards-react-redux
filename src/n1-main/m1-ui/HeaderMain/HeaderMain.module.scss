@@ -1,0 +1,73 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.headerContainer {
+  background: #EBE0E9;
+
+  .wrapper {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    height: 60px;
+
+    .logo {
+      flex-basis: 30%;
+      @include text($fontFamilyTitle, 26px, 600, 39px, $textColor, center);
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .linksContainer {
+      flex-basis: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .linkContainer {
+        //border-bottom: solid 2px $elementsColor;
+        a {
+          @include text($fontFamilyText, 16px, 500, 16px, $textColor, center);
+          height: 60px;
+          width: 173px;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          background: #EBE0E9;
+          text-decoration: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-sizing: border-box;
+        }
+
+        a:hover, .active {
+          background: #DCCCDB;
+          border-bottom: solid 5px $elementsColor;
+          outline: none;
+        }
+
+      }
+    }
+
+    .buttonContainer {
+      text-align: center;
+      display: flex;
+      align-items: center;
+
+      .logoutBtn {
+        @include primaryButton();
+        background: #D7D8EF;
+
+        span {
+          @include primaryButtonText(9px 30px);
+          color: $elementsColor;
+        }
+      }
+
+
+
+    }
+  }
+}

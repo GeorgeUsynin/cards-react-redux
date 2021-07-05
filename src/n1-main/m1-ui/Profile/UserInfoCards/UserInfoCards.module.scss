@@ -1,0 +1,9 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.infoUserCards {
+  p {
+    @include text($fontFamilyTitle, 16px, 600, 19px, $textColor, left);
+    padding: 0 24px;
+  }
+}

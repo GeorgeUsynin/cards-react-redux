@@ -7,17 +7,19 @@ type InitialStateType = {
     showEmailCheck: boolean
     error: string | null
     isNewPasswordCreated: boolean
+    isFetching: boolean
 }
 
 export type RestorePasswordActionsType =
 
     | ReturnType<typeof setShowEmailCheck>
-    | ReturnType<typeof setError>
+    | ReturnType<typeof setRestorePasswordError>
     | ReturnType<typeof setIsNewPasswordCreated>
+    | ReturnType<typeof setRestorePasswordLoading>
 
 //actions
 
-const setShowEmailCheck = (showEmailCheck: boolean) => {
+export const setShowEmailCheck = (showEmailCheck: boolean) => {
     return {
         type: 'cards/restorePassword/setShowEmailCheck',
         payload: {
@@ -26,7 +28,7 @@ const setShowEmailCheck = (showEmailCheck: boolean) => {
     } as const
 }
 
-const setError = (error: string | null) => {
+export const setRestorePasswordError = (error: string | null) => {
     return {
         type: 'cards/restorePassword/setError',
         payload: {
@@ -43,10 +45,20 @@ const setIsNewPasswordCreated = (isNewPasswordCreated: boolean) => {
     } as const
 }
 
+export const setRestorePasswordLoading = (isFetching: boolean) => {
+    return {
+        type: 'cards/restorePassword/setRestorePasswordLoading',
+        payload: {
+            isFetching
+        }
+    } as const
+}
+
 const initialState: InitialStateType = {
     showEmailCheck: false,
     error: null,
-    isNewPasswordCreated: false
+    isNewPasswordCreated: false,
+    isFetching: false
 }
 
 export const restorePasswordReducer = (state: InitialStateType = initialState, action: RestorePasswordActionsType): InitialStateType => {
@@ -54,6 +66,7 @@ export const restorePasswordReducer = (state: InitialStateType = initialState, a
         case "cards/restorePassword/setShowEmailCheck":
         case "cards/restorePassword/setError":
         case "cards/restorePassword/setIsNewPasswordCreated":
+        case 'cards/restorePassword/setRestorePasswordLoading':
             return {
                 ...state,
                 ...action.payload
@@ -66,6 +79,7 @@ export const restorePasswordReducer = (state: InitialStateType = initialState, a
 //thunk
 
 export const restorePassword = (email: string): AppThunkType => (dispatch) => {
+    dispatch(setRestorePasswordLoading(true))
     authApi.restorePassword(email)
         .then(res => {
             dispatch(setShowEmailCheck(true))
@@ -76,12 +90,15 @@ export const restorePassword = (email: string): AppThunkType => (dispatch) => {
                 err.response.data.error
                 :
                 (err.message + ', more details in the console')
-            debugger
-            dispatch(setError(error))
+            dispatch(setRestorePasswordError(error))
+        })
+        .finally(()=>{
+            dispatch(setRestorePasswordLoading(false))
         })
 }
 
 export const setNewPassword = (password: string, resetPasswordToken: string): AppThunkType => (dispatch) => {
+    dispatch(setRestorePasswordLoading(true))
     authApi.setNewPassword(password, resetPasswordToken)
         .then(res => {
             debugger
@@ -93,6 +110,9 @@ export const setNewPassword = (password: string, resetPasswordToken: string): Ap
                 err.response.data.error
                 :
                 (err.message + ', more details in the console')
-            dispatch(setError(error))
+            dispatch(setRestorePasswordError(error))
+        })
+        .finally(()=>{
+            dispatch(setRestorePasswordLoading(false))
         })
 }

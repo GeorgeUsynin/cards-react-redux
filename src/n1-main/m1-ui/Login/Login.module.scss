@@ -1,0 +1,116 @@
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+
+.loginContainer {
+  height: 100vh;
+  background: $bgColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    flex-basis: 420px;
+    background: $bgCard;
+    border-radius: 8px;
+  }
+
+  .title {
+    @include text($fontFamilyTitle, 26px, 600, 39px, $textColor, center);
+    margin: 25px 0 32px;
+  }
+
+  .subtitle {
+    @include text($fontFamilyTitle, 22px, 600, 33px, $textColor, center);
+    margin: 32px 0 54px;
+  }
+
+  label{
+   cursor: pointer;
+  }
+
+  .titleEmail, .titlePassword {
+    @include text($fontFamilyText, 13px, 400, 20px, #24254A, left);
+    width: 80%;
+    opacity: .7;
+    margin: 38px auto 5px;
+  }
+
+  .inputContainer {
+    @include flexSuperCenter();
+    flex-direction: column;
+    position: relative;
+
+    .eye {
+      width: 22px;
+      height: 15px;
+      position: absolute;
+      right: 50px;
+      bottom: 27px;
+      cursor: pointer;
+    }
+
+    .inputEmailPassword {
+      @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
+      width: 80%;
+      background: $bgCard;
+      border: none;
+      border-bottom: solid #c8d2e3 2px;
+      outline: none;
+      padding: 0;
+    }
+  }
+
+  .checkbox {
+    width: 80%;
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+
+    input {
+      margin: 0 5px 0 0;
+      display: inline-block;
+    }
+
+    .rememberMe {
+      @include text($fontFamilyText, 14px, 400, 0px, $textColor, left);
+      display: inline-block;
+    }
+  }
+
+  .restorePassword {
+    @include text($fontFamilyText, 14px, 500, 17px, $textColor, right);
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+    margin: 0 auto 50px;
+    text-decoration: none;
+  }
+
+  .buttonContainer {
+    text-align: center;
+
+    .button {
+      @include primaryButton();
+
+      span {
+        @include primaryButtonText(9px 113px);
+      }
+    }
+  }
+
+  .newAccount {
+    @include text($fontFamilyText, 14px, 600, 24px, #2D2E46, center);
+    opacity: 0.5;
+    margin: 30px 0 11px;
+  }
+
+  .signUp {
+    text-align: center;
+    margin-bottom: 30px;
+    a {
+      @include text($fontFamilyText, 16px, 600, 24px, $elementsColor, center);
+      text-decoration: none;
+    }
+
+  }
+}
