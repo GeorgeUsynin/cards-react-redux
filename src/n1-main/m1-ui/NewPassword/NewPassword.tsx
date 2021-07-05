@@ -8,7 +8,7 @@ import {AppRootStateType} from "../../m2-bll/store";
 import {restorePassword, setNewPassword, setRestorePasswordError} from "../../m2-bll/restorePasswordReducer";
 import eye from "../../../assets/images/eye.svg";
 import closedEye from "../../../assets/images/closedEye.svg";
-import {PATH} from "../App";
+import {PATH} from "../../App";
 import {useFormik} from "formik";
 import {setLoginError} from "../../m2-bll/authReducer";
 import {Preloader} from "../common/preloader/Preloader";

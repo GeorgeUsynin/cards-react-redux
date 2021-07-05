@@ -1,24 +1,24 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import './App.scss';
-import {Header} from './Header/Header';
-import {Login} from "./Login/Login";
-import {Profile} from "./Profile/Profile";
-import {PageNotFound} from "./PageNotFound/PageNotFound";
-import {RestorePassword} from "./RestorePassword/RestorePassword";
-import {NewPassword} from "./NewPassword/NewPassword";
-import {TestComponents} from "./TestComponents/TestComponents";
-import {PersonalInfo} from "./Profile/PersonalInfo/PersonalInfo";
-import {Register} from "./Registration/Register";
-import {HeaderMain} from "./HeaderMain/HeaderMain";
+import {Header} from './m1-ui/Header/Header';
+import {Login} from "./m1-ui/Login/Login";
+import {Profile} from "./m1-ui/Profile/Profile";
+import {PageNotFound} from "./m1-ui/PageNotFound/PageNotFound";
+import {RestorePassword} from "./m1-ui/RestorePassword/RestorePassword";
+import {NewPassword} from "./m1-ui/NewPassword/NewPassword";
+import {TestComponents} from "./m1-ui/TestComponents/TestComponents";
+import {PersonalInfo} from "./m1-ui/Profile/PersonalInfo/PersonalInfo";
+import {Register} from "./m1-ui/Registration/Register";
+import {HeaderMain} from "./m1-ui/HeaderMain/HeaderMain";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../m2-bll/store";
-import {PacksList} from "./PacksList/PacksList";
+import {AppRootStateType} from "./m2-bll/store";
+import {PacksList} from "./m1-ui/PacksList/PacksList";
 
 
 export const PATH = {
     PROFILE: '/profile',
-    PACKS_LIST: '/packsList',
+    PACKS_LIST: '/packslist',
     USER_INFO: '/information_about_user',
     LOGIN: '/login',
     REGISTRATION: '/registration',

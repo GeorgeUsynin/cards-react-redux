@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import cls from './PersonalInfo.module.scss'
 import {editUserProfileTC} from "../../../m2-bll/profileReducer";
-import {PATH} from "../../App";
+import {PATH} from "../../../App";
 import {AppRootStateType} from "../../../m2-bll/store";
 import defaultAvatar from '../../../../assets/images/avatar.png'
 import SuperInputText from "../../common/SuperInput/SuperInputText";

@@ -2,7 +2,7 @@ import React from 'react'
 import cls from './CheckPassword.module.scss'
 import letter from '../../../assets/images/letter.svg'
 import { NavLink } from 'react-router-dom'
-import {PATH} from "../App";
+import {PATH} from "../../App";
 import {useDispatch} from "react-redux";
 import {setShowEmailCheck} from "../../m2-bll/restorePasswordReducer";
 

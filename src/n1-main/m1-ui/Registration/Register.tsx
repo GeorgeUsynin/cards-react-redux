@@ -8,7 +8,7 @@ import {Redirect} from "react-router";
 import eye from "../../../assets/images/eye.svg";
 import {InputTypeType} from "../NewPassword/NewPassword";
 import closedEye from "../../../assets/images/closedEye.svg";
-import {PATH} from "../App";
+import {PATH} from "../../App";
 import {useHistory} from "react-router-dom";
 import {useFormik} from "formik";
 import {Preloader} from "../common/preloader/Preloader";

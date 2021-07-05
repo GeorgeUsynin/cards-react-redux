@@ -8,7 +8,7 @@ import SuperButton from "../common/SuperButton/SuperButton";
 import eye from '../../../assets/images/eye.svg'
 import {InputTypeType} from "../NewPassword/NewPassword";
 import closedEye from "../../../assets/images/closedEye.svg";
-import {PATH} from "../App";
+import {PATH} from "../../App";
 import {useFormik} from "formik";
 import {loginTC, setLoginError} from "../../m2-bll/authReducer";
 import {Preloader} from "../common/preloader/Preloader";
