@@ -105,20 +105,6 @@ export const isLoggedInApp = (): AppThunkType => (dispatch) => {
         })
 }
 
-export const isLoggedInApp = (): AppThunkType => (dispatch) => {
-    authAPI.isAuthorized()
-        .then(res => {
-            dispatch(setInformationAboutUserAC(res.data))
-            dispatch(setIsLoggedInAC(true))
-        })
-        .catch((e) => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.messages + ', more details in the console')
-            console.log('Error: ', {...e})
-        })
-}
-
 export type AuthActionsType = ReturnType<typeof setIsLoggedInAC
     | typeof setInformationAboutUserAC
     | typeof setIsLoggedOutAC
