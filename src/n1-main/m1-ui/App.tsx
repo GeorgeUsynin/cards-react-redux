@@ -13,6 +13,7 @@ import {Register} from "./Registration/Register";
 import {HeaderMain} from "./HeaderMain/HeaderMain";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../m2-bll/store";
+import {PacksList} from "./PacksList/PacksList";
 
 
 export const PATH = {
@@ -38,7 +39,7 @@ const App = () => {
             <div className='app-wrapper-content'>
                 <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
-                <Route path={PATH.PACKS_LIST} render={() => <Profile/>}/>
+                <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
                 <Route path={PATH.USER_INFO} render={() => <PersonalInfo/>}/>
                 <Route path={PATH.REGISTRATION} render={() => <Register/>}/>
                 <Route path={PATH.TEST_COMPONENTS} render={() => <TestComponents/>}/>

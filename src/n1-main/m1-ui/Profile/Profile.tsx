@@ -21,6 +21,7 @@ export const Profile = () => {
 
     useEffect(() => {
         if (!info._id) {
+            debugger
             dispatch(isLoggedInApp())
         }
     }, [info._id])
