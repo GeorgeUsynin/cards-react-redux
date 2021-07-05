@@ -72,15 +72,15 @@ export const registerReducer = (state = registerInitialState, action: RegisterAc
 
 export const register =
   (email: string, password: string): AppThunkType => async (dispatch) => {
-
-    // dispatch(setRegisterLoading(true))
+    dispatch(setRegisterLoading(true))
     try {
       await RegisterAPI.register(email, password)
-      dispatch(setRegisterLoading(false))
       dispatch(setRegisterSuccess(true))
     } catch (e) {
       const error = e.response.data.error
-      dispatch(setRegisterLoading(false))
       dispatch(setRegisterError(error))
+    }
+    finally {
+      dispatch(setRegisterLoading(false))
     }
   }

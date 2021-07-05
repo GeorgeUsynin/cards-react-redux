@@ -1,0 +1,16 @@
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+
+
+.tableHeader {
+  @include text($fontFamilyText, 16px, 600, 19px, $textColor, left);
+  display: grid;
+  grid-template-columns: 15% 15% 20% 20% 30%;
+  height: 48px;
+  background: #ECECF9;
+  align-items: center;
+  justify-content: start;
+  div {
+    margin-left: 24px;
+  }
+}

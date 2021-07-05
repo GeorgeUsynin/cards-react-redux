@@ -11,9 +11,11 @@ const axiosInstance = axios.create({
 //api types
 
 export const profileApi = {
-    editUserName(name: string) {
+    editUserNameAvatar(name: string, avatar: string) {
         return axiosInstance.put<{updatedUser: LoginResponseType}>('/auth/me', {
-            name
+            name,
+            avatar
         })
     }
+
 }
