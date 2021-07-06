@@ -13,4 +13,35 @@
   div {
     margin-left: 24px;
   }
+
+  .buttonsContainer {
+    text-align: left;
+
+    .deleteButton {
+      background: #F1453D;
+      border-radius: 5px;
+      cursor: pointer;
+
+      span {
+        @include primaryButtonText(5px);
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+        color: #FFFFFF;
+      }
+    }
+
+    .deleteButton:disabled{
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.tableData:nth-child(even) {
+  background: #FFFFFF;
+}
+
+.tableData:nth-child(odd) {
+  background: #F8F7FD;
 }

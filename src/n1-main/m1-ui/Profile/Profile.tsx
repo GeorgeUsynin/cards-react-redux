@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import cls from './Profile.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
-import {LoginResponseType} from "../../m3-dal/API";
+import {LoginResponseType} from "../../m3-dal/apiLogin";
 import {NavLink, Redirect} from 'react-router-dom';
 import {isLoggedInApp} from "../../m2-bll/authReducer";
 import {UserInfo} from "./UserInfo/UserInfo";

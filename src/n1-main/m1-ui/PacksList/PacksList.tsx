@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import cls from "./PacksList.module.scss"
 import SuperButton from "../common/SuperButton/SuperButton";
 import SuperInputText from "../common/SuperInput/SuperInputText";
@@ -6,7 +6,7 @@ import {TablePacks} from "./TablePacks/TablePacks";
 import Search from "../common/Search/Search";
 
 import {useDispatch} from "react-redux";
-import {createNewPack, getDataPacks} from "../../m2-bll/packsReducer";
+import {createNewPack, deletePack, getDataPacks} from "../../m2-bll/packsReducer";
 import Paginator from "../common/Paginator/Paginator";
 
 
@@ -19,11 +19,17 @@ export const PacksList = () => {
     }, [])
 
 
-    const onAddPackHandler = () => {
+    const addPack = useCallback(() => {
         const newPackName = prompt('Enter the name of the new pack: ')
         if (newPackName)
             dispatch(createNewPack(newPackName))
-    }
+    }, [dispatch])
+
+
+    const removePack = useCallback((packId: string) => {
+        dispatch(deletePack(packId))
+    }, [dispatch])
+
 
     return (
         <div className={cls.packlistContainer}>
@@ -43,10 +49,10 @@ export const PacksList = () => {
                         <Search className={cls.search}/>
                         <div className={cls.addButtonContainer}>
                             <SuperButton className={cls.addPackButton}
-                                         onClick={onAddPackHandler}><span>Add new pack</span></SuperButton>
+                                         onClick={addPack}><span>Add new pack</span></SuperButton>
                         </div>
                     </div>
-                    <TablePacks/>
+                    <TablePacks removePack={removePack}/>
                     <Paginator/>
                 </div>
             </div>

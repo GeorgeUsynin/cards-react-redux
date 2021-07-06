@@ -1,5 +1,6 @@
 import React from "react";
 import cls from "./TableData.module.scss"
+import SuperButton from "../../../common/SuperButton/SuperButton";
 
 type TableDataPropsType = {
     _id: string
@@ -11,7 +12,8 @@ type TableDataPropsType = {
     updatedTime: string
     createdDate: string
     createdTime: string
-    classNameFromTablePacks: string
+    removePack: (packId: string) => void
+    appUserId: string
 }
 
 
@@ -23,14 +25,15 @@ export const TableData: React.FC<TableDataPropsType> = ({
                                                             updatedTime,
                                                             createdDate,
                                                             createdTime,
-                                                            classNameFromTablePacks,
+                                                            removePack,
+                                                            appUserId,
                                                             user_id,
                                                             children
                                                         }) => {
 
     return (
-        <div className={`${cls.tableData} ${classNameFromTablePacks}`}>
-            <div>{name}</div>
+        <div className={cls.tableData}>
+            <div className={cls.red}>{name}</div>
             <div>{cardsCount}</div>
             <div>
                 <p>Date: {updatedDate}</p>
@@ -40,7 +43,12 @@ export const TableData: React.FC<TableDataPropsType> = ({
                 <p>Date: {createdDate}</p>
                 <p>Time: {createdTime}</p>
             </div>
-            <div>Actions</div>
+            <div className={cls.buttonsContainer}>
+                <SuperButton className={cls.deleteButton}
+                             onClick={() => removePack(_id)}
+                             disabled={user_id !== appUserId}
+                ><span>Delete</span></SuperButton>
+            </div>
         </div>
     )
 }

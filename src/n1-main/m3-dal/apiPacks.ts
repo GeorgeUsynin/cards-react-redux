@@ -46,6 +46,9 @@ export const packsApi = {
                 name,
                 isPrivate
             }
-        }).then(res => res.data)
+        })
+    },
+    deletePack(packId: string) {
+        return axiosInstance.delete<CardPackType>(`cards/pack?id=${packId}`)
     }
 }

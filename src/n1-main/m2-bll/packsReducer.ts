@@ -52,7 +52,7 @@ export const getDataPacks = (): AppThunkType => async (dispatch) => {
         const packs = await packsApi.getPacks()
         dispatch(setDataPacks(packs))
     } catch (e) {
-
+        console.log(e)
     }
 }
 
@@ -61,7 +61,7 @@ export const getSearchedPacks = (name: string): AppThunkType => async (dispatch)
         const packs = await packsApi.getPacks(name)
         dispatch(setDataPacks(packs))
     } catch (e) {
-
+        console.log(e)
     }
 }
 
@@ -70,15 +70,22 @@ export const setCurrentPage = (page: number): AppThunkType => async (dispatch) =
         const packs = await packsApi.getPage(page)
         dispatch(setDataPacks(packs))
     } catch (e) {
-
+        console.log(e)
     }
 }
 
 export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
-    debugger
     try {
         await packsApi.createNewPack(name,isPrivate)
-        debugger
+        dispatch(getDataPacks())
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const deletePack = (packId: string): AppThunkType => async (dispatch) => {
+    try {
+        await packsApi.deletePack(packId)
         dispatch(getDataPacks())
     } catch (e) {
         console.log(e)

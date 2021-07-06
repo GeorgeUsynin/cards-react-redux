@@ -1,4 +1,4 @@
-import {authAPI, LoginParamsType} from "../m3-dal/API";
+import {authAPI, LoginParamsType} from "../m3-dal/apiLogin";
 import {setInformationAboutUserAC} from "./profileReducer";
 import {AppThunkType} from "./store";
 import {REGISTER_ERROR, REGISTER_LOADING} from "./registerReducer";
