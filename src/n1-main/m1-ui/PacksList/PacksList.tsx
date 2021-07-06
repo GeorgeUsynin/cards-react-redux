@@ -34,9 +34,7 @@ export const PacksList = () => {
                 <div className={cls.packslist}>
                     <h2 className={cls.packslistTitle}>Packs list</h2>
                     <div className={cls.search_AddButtonContainer}>
-                        {/*----------------*/}
                         <Search className={cls.search}/>
-                        {/*search component will be HERE*/}
                         <div className={cls.addButtonContainer}>
                             <SuperButton className={cls.addPackButton}><span>Add new pack</span></SuperButton>
                         </div>

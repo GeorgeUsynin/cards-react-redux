@@ -15,7 +15,6 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "./m2-bll/store";
 import {PacksList} from "./m1-ui/PacksList/PacksList";
 
-
 export const PATH = {
     PROFILE: '/profile',
     PACKS_LIST: '/packslist',

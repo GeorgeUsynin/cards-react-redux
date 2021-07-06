@@ -12,7 +12,7 @@ export const TableHeader: React.FC<TableHeaderType> = ({className}) => {
             <div>Name</div>
             <div>Cards</div>
             <div>Last Updated</div>
-            <div>Created by</div>
+            <div>Created</div>
             <div>Actions</div>
         </div>
     )
