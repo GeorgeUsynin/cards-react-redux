@@ -74,4 +74,17 @@ export const setCurrentPage = (page: number): AppThunkType => async (dispatch) =
     }
 }
 
+export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
+    debugger
+    try {
+        await packsApi.createNewPack(name,isPrivate)
+        debugger
+        dispatch(getDataPacks())
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+
 export type PacksActionType = ReturnType<typeof startSearchingAC | typeof setDataPacks>

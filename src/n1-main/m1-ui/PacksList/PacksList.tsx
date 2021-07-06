@@ -6,7 +6,7 @@ import {TablePacks} from "./TablePacks/TablePacks";
 import Search from "../common/Search/Search";
 
 import {useDispatch} from "react-redux";
-import {getDataPacks} from "../../m2-bll/packsReducer";
+import {createNewPack, getDataPacks} from "../../m2-bll/packsReducer";
 import Paginator from "../common/Paginator/Paginator";
 
 
@@ -18,6 +18,12 @@ export const PacksList = () => {
         dispatch(getDataPacks())
     }, [])
 
+
+    const onAddPackHandler = () => {
+        const newPackName = prompt('Enter the name of the new pack: ')
+        if (newPackName)
+            dispatch(createNewPack(newPackName))
+    }
 
     return (
         <div className={cls.packlistContainer}>
@@ -36,7 +42,8 @@ export const PacksList = () => {
                     <div className={cls.search_AddButtonContainer}>
                         <Search className={cls.search}/>
                         <div className={cls.addButtonContainer}>
-                            <SuperButton className={cls.addPackButton}><span>Add new pack</span></SuperButton>
+                            <SuperButton className={cls.addPackButton}
+                                         onClick={onAddPackHandler}><span>Add new pack</span></SuperButton>
                         </div>
                     </div>
                     <TablePacks/>

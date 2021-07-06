@@ -39,5 +39,13 @@ export const packsApi = {
                 page
             }
         }).then(res => res.data)
+    },
+    createNewPack(name: string, isPrivate: boolean = false) {
+        return axiosInstance.post<CardPackType>("cards/pack", {
+            cardsPack: {
+                name,
+                isPrivate
+            }
+        }).then(res => res.data)
     }
 }
