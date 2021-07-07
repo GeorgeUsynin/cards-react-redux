@@ -9,7 +9,8 @@ export type CardPackType = {
     created: string
     updated: string
 }
-
+//
+// type PackRequestParameters
 
 type InitialStateType = {
     cardPacks: Array<CardPackType>
@@ -19,17 +20,24 @@ type InitialStateType = {
     minCardsCount: number
     page: number
     pageCount: number
+    isFetching: boolean
 }
 
 const initialState: InitialStateType = {
     cardPacks: [],
+    // packRequestParameters:{
+    //
+    // }
     request: "",
     cardPacksTotalCount: 0,
     maxCardsCount: 9,
     minCardsCount: 4,
     page: 1,
-    pageCount: 4
+    pageCount: 4,
+    isFetching:false
 }
+
+//actions
 
 export const startSearchingAC = (request: string) =>
     ({type: 'packs/START-SEARCHING', request} as const)
@@ -37,45 +45,60 @@ export const startSearchingAC = (request: string) =>
 const setDataPacks = (dataPacks: PacksResponseType) =>
     ({type: 'packs/SET-PACKS', dataPacks} as const)
 
+const setLoadingPacks = (isFetching: boolean) =>
+    ({type: 'packs/SET-LOADING-PACKS', isFetching} as const)
+
+
+
 export const packsReducer = (state: InitialStateType = initialState, action: PacksActionType): InitialStateType => {
     switch (action.type) {
         case "packs/SET-PACKS":
             return {...state, ...action.dataPacks}
+        case "packs/SET-LOADING-PACKS":
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
 }
 
+//thunks
 
-export const getDataPacks = (): AppThunkType => async (dispatch) => {
+export const getDataPacks = (): AppThunkType => async (dispatch,getState) => {
     try {
+
+
+        dispatch(setLoadingPacks(true))
         const packs = await packsApi.getPacks()
         dispatch(setDataPacks(packs))
     } catch (e) {
         console.log(e)
     }
-}
-
-export const getSearchedPacks = (name: string): AppThunkType => async (dispatch) => {
-    try {
-        const packs = await packsApi.getPacks(name)
-        dispatch(setDataPacks(packs))
-    } catch (e) {
-        console.log(e)
+    finally {
+        dispatch(setLoadingPacks(false))
     }
 }
 
-export const setCurrentPage = (page: number): AppThunkType => async (dispatch) => {
-    try {
-        const packs = await packsApi.getPage(page)
-        dispatch(setDataPacks(packs))
-    } catch (e) {
-        console.log(e)
-    }
-}
+// export const getSearchedPacks = (name: string): AppThunkType => async (dispatch) => {
+//     try {
+//         const packs = await packsApi.getPacks(name)
+//         dispatch(setDataPacks(packs))
+//     } catch (e) {
+//         console.log(e)
+//     }
+// }
+
+// export const setCurrentPage = (page: number): AppThunkType => async (dispatch) => {
+//     try {
+//         const packs = await packsApi.getPage(page)
+//         dispatch(setDataPacks(packs))
+//     } catch (e) {
+//         console.log(e)
+//     }
+// }
 
 export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
     try {
+        dispatch(setLoadingPacks(true))
         await packsApi.createNewPack(name,isPrivate)
         dispatch(getDataPacks())
     } catch (e) {
@@ -85,6 +108,7 @@ export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType =
 
 export const deletePack = (packId: string): AppThunkType => async (dispatch) => {
     try {
+        dispatch(setLoadingPacks(true))
         await packsApi.deletePack(packId)
         dispatch(getDataPacks())
     } catch (e) {
@@ -94,4 +118,4 @@ export const deletePack = (packId: string): AppThunkType => async (dispatch) => 
 
 
 
-export type PacksActionType = ReturnType<typeof startSearchingAC | typeof setDataPacks>
+export type PacksActionType = ReturnType<typeof startSearchingAC | typeof setDataPacks | typeof setLoadingPacks>

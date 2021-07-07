@@ -16,15 +16,17 @@ export const Profile = () => {
 
     const isFetchingAUTH = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
     const isFetchingPROFILE = useSelector<AppRootStateType, boolean>(state => state.profile.isFetching)
-    const info = useSelector<AppRootStateType, LoginResponseType>(state => state.profile.informationAboutUser)
+    const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
+    const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
+    const publicCardPacksCount = useSelector<AppRootStateType, number>(state => state.profile.informationAboutUser.publicCardPacksCount)
+    const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        if (!info._id) {
-            debugger
+        if (!id) {
             dispatch(isLoggedInApp())
         }
-    }, [info._id])
+    }, [id,dispatch])
 
 
     if (!isLoggedIn) {
@@ -40,8 +42,8 @@ export const Profile = () => {
                     :
                     <div className={cls.card}>
                         <div className={cls.info}>
-                            <UserInfo avatar={info.avatar} name={info.name}/>
-                            <UserInfoCards publicCardPacksCount={info.publicCardPacksCount}/>
+                            <UserInfo avatar={avatar} name={name}/>
+                            <UserInfoCards publicCardPacksCount={publicCardPacksCount}/>
                         </div>
                     </div>
             }

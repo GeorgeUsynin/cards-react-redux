@@ -5,18 +5,28 @@ import SuperInputText from "../common/SuperInput/SuperInputText";
 import {TablePacks} from "./TablePacks/TablePacks";
 import Search from "../common/Search/Search";
 
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {createNewPack, deletePack, getDataPacks} from "../../m2-bll/packsReducer";
 import Paginator from "../common/Paginator/Paginator";
+import {AppRootStateType} from "../../m2-bll/store";
+import {isLoggedInApp} from "../../m2-bll/authReducer";
+import {Redirect} from "react-router-dom";
 
 
 export const PacksList = () => {
 
     const dispatch = useDispatch()
 
+    const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
     useEffect(() => {
-        dispatch(getDataPacks())
-    }, [])
+        if (!id) {
+            dispatch(isLoggedInApp())
+        } else {
+            dispatch(getDataPacks())
+        }
+    }, [id, dispatch])
 
 
     const addPack = useCallback(() => {
@@ -30,6 +40,10 @@ export const PacksList = () => {
         dispatch(deletePack(packId))
     }, [dispatch])
 
+
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
+    }
 
     return (
         <div className={cls.packlistContainer}>
@@ -53,7 +67,6 @@ export const PacksList = () => {
                         </div>
                     </div>
                     <TablePacks removePack={removePack}/>
-                    <Paginator/>
                 </div>
             </div>
         </div>

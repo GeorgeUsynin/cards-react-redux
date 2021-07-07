@@ -15,7 +15,7 @@ const Paginator = () => {
     const dispatch = useDispatch()
 
     let pages = [];
-    for (let i = 1; i <= 30/pageCount; i++) {
+    for (let i = 1; i <= 30 / pageCount; i++) {
         pages.push(i);
     }
 
