@@ -6,7 +6,7 @@ import {TablePacks} from "./TablePacks/TablePacks";
 import Search from "../common/Search/Search";
 
 import {useDispatch, useSelector} from "react-redux";
-import {createNewPack, deletePack, getDataPacks} from "../../m2-bll/packsReducer";
+import {createNewPack, deletePack, getDataPacks, setUserId} from "../../m2-bll/packsReducer";
 import Paginator from "../common/Paginator/Paginator";
 import {AppRootStateType} from "../../m2-bll/store";
 import {isLoggedInApp} from "../../m2-bll/authReducer";
@@ -19,6 +19,12 @@ export const PacksList = () => {
 
     const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const page = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.page)
+    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.pageCount)
+    const packName = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.packName)
+    const currentUserId = useSelector<AppRootStateType, string>(state=>state.packs.cardPacksRequestParameters.user_id)
+    // const cardsCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacks)
+
 
     useEffect(() => {
         if (!id) {
@@ -26,7 +32,7 @@ export const PacksList = () => {
         } else {
             dispatch(getDataPacks())
         }
-    }, [id, dispatch])
+    }, [id, dispatch, page, pageCount, packName, currentUserId])
 
 
     const addPack = useCallback(() => {
@@ -41,6 +47,10 @@ export const PacksList = () => {
     }, [dispatch])
 
 
+    const getMyPacksList = () => {
+        dispatch(setUserId(id))
+    }
+
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>
     }
@@ -51,7 +61,7 @@ export const PacksList = () => {
                 <div className={cls.info}>
                     <p className={cls.ownerTitle}>Show packs cards</p>
                     <div className={cls.buttonsContainer}>
-                        <SuperButton className={cls.myButton}>My</SuperButton>
+                        <SuperButton className={cls.myButton} onClick={getMyPacksList}>My</SuperButton>
                         <SuperButton className={cls.allButton}>All</SuperButton>
                     </div>
                     <p className={cls.numberTitle}>Number of cards</p>
