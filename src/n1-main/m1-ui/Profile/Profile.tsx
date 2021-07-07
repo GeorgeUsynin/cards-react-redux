@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import cls from './Profile.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
-import {LoginResponseType} from "../../m3-dal/apiLogin";
-import {NavLink, Redirect, useHistory} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {isLoggedInApp} from "../../m2-bll/authReducer";
 import {UserInfo} from "./UserInfo/UserInfo";
 import {UserInfoCards} from "./UserInfoCards/UserInfoCards";
@@ -27,8 +26,6 @@ export const Profile = () => {
             dispatch(isLoggedInApp())
         }
     }, [id,dispatch])
-
-    debugger
 
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>
