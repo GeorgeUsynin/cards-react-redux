@@ -1,5 +1,6 @@
 import {AppThunkType} from "./store";
 import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
+import {UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
 
 export type CardPackType = {
     _id: string
@@ -62,6 +63,12 @@ const setLoadingPacks = (isFetching: boolean) =>
 export const setUserId = (userId: string) =>
     ({type: 'packs/SET-USER-ID', userId} as const)
 
+export const setPageCount = (count: number) =>
+    ({type: 'packs/SET-PAGE-COUNT', count} as const)
+
+export const setRangeSort = (range: number[]) =>
+    ({type: 'packs/SET-RANGE-SORT', range} as const)
+
 
 export const packsReducer = (state: InitialStateType = initialState, action: PacksActionType): InitialStateType => {
     switch (action.type) {
@@ -84,6 +91,20 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
                 ...state,
                 cardPacksRequestParameters: {...state.cardPacksRequestParameters, sortPacks: action.direction}
             }
+        case "packs/SET-PAGE-COUNT":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, pageCount: action.count}
+            }
+        case "packs/SET-RANGE-SORT":
+            return {
+                ...state,
+                cardPacksRequestParameters: {
+                    ...state.cardPacksRequestParameters,
+                    minCardsCount: action.range[0],
+                    maxCardsCount: action.range[1]
+                }
+            }
         case "packs/SET-LOADING-PACKS":
             return {...state, isFetching: action.isFetching}
         default:
@@ -96,8 +117,15 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
 export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
     try {
 
-        const {packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id} = getState().packs.cardPacksRequestParameters
-
+        const {
+            packName,
+            minCardsCount,
+            maxCardsCount,
+            sortPacks,
+            page,
+            pageCount,
+            user_id
+        } = getState().packs.cardPacksRequestParameters
         dispatch(setLoadingPacks(true))
         const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
         dispatch(setDataPacks(packs))
@@ -135,4 +163,5 @@ export type PacksActionType = ReturnType<typeof setSearchName
     | typeof setCurrentPage
     | typeof setUserId
     | typeof setUpdatedDirection
-    >
+    | typeof setPageCount
+    | typeof setRangeSort>

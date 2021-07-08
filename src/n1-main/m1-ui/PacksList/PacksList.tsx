@@ -11,6 +11,8 @@ import {AppRootStateType} from "../../m2-bll/store";
 import {isLoggedInApp, setPath} from "../../m2-bll/authReducer";
 import {Redirect, useHistory} from "react-router-dom";
 import {PATH} from "../../App";
+import {DoubleRange} from "./DoubleRange/DoubleRange";
+import Paginator from "../common/Paginator/Paginator";
 
 type ButtonNameType = 'my' | 'all'
 
@@ -26,8 +28,10 @@ export const PacksList = () => {
     const packName = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.packName)
     const updatedDirection = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.sortPacks)
     const currentUserId = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.user_id)
+    const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
+    const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
     // const cardsCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacks)
-
+    const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
 
@@ -41,7 +45,7 @@ export const PacksList = () => {
         } else {
             dispatch(getDataPacks())
         }
-    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection])
+    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection,minCards, maxCards])
 
 
     const addPack = useCallback(() => {
@@ -91,7 +95,7 @@ export const PacksList = () => {
                         >All</SuperButton>
                     </div>
                     <p className={cls.numberTitle}>Number of cards</p>
-                    <SuperInputText type={'range'} className={cls.range}/>
+                    <DoubleRange/>
                 </div>
                 <div className={cls.packslist}>
                     <h2 className={cls.packslistTitle}>Packs list</h2>
@@ -102,7 +106,8 @@ export const PacksList = () => {
                                          onClick={addPack}><span>Add new pack</span></SuperButton>
                         </div>
                     </div>
-                    <TablePacks removePack={removePack}/>
+                    <TablePacks removePack={removePack} pageCount={pageCount}/>
+                    <Paginator pageCount={pageCount}/>
                 </div>
             </div>
         </div>

@@ -10,9 +10,10 @@ import {Preloader} from "../../common/preloader/Preloader";
 
 type TablePacksProspType = {
     removePack: (packId: string) => void
+    pageCount: number
 }
 
-export const TablePacks: React.FC<TablePacksProspType> = ({removePack}) => {
+export const TablePacks: React.FC<TablePacksProspType> = ({removePack, pageCount}) => {
 
 
     const packsData = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
@@ -53,7 +54,6 @@ export const TablePacks: React.FC<TablePacksProspType> = ({removePack}) => {
                         )
                     })
             }
-            {!isFetchingPacks && <Paginator/>}
         </div>
     )
 }

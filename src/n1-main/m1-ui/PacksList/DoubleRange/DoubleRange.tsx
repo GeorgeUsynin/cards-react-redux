@@ -19,7 +19,6 @@ export const DoubleRange = () => {
   
   return (
     <>
-      <p className={styles.numberTitle}>Number of cards</p>
       <SuperDoubleRange
         value={[min, max]}
         min={0}
