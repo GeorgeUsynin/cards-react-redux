@@ -44,7 +44,7 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
       return {...state, pageCount: action.count}
     case 'packs/SEARCH-PACK':
       return {...state, packName: action.packName}
-    case 'packs/SET-RANGE-SORT':debugger
+    case 'packs/SET-RANGE-SORT':
       return {...state, minCardsCount: action.range[0], maxCardsCount: action.range[1]}
     default:
       return state
@@ -53,7 +53,7 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
 
 export const getPackList = (): AppThunkType =>
   async (dispatch
-    , getState: () => AppRootStateType) => {debugger
+    , getState: () => AppRootStateType) => {
     try {
       const {packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount} = getState().packs
       const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount)
