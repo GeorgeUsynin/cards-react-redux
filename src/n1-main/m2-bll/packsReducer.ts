@@ -1,6 +1,5 @@
 import {AppThunkType} from "./store";
 import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
-import {UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
 
 export type CardPackType = {
     _id: string

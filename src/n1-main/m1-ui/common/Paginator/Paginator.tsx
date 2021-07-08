@@ -1,40 +1,51 @@
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../m2-bll/store";
-import styles from "./Paginator.module.scss"
-import {getDataPacks, setCurrentPage} from "../../../m2-bll/packsReducer";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppRootStateType } from '../../../m2-bll/store'
+import { searchPack, setCurrentPage, setPageCount } from '../../../m2-bll/packsReducer'
+import styles from './Paginator.module.scss'
+import ReactPaginate from 'react-paginate'
+import SuperSelect from '../SuperSelect/SuperSelect'
 
-
-const Paginator = () => {
-
-    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-    const page = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.page)
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.pageCount)
-
-
-    const dispatch = useDispatch()
-
-    let pages = [];
-    for (let i = 1; i <= 30 / pageCount; i++) {
-        pages.push(i);
-    }
-
-    const onPageChanges = (page: number) => {
-        dispatch(setCurrentPage(page))
-    }
-
-    return <div>
-        <div>
-            {(pages || []).map((p) => {
-                return <span
-                    className={page === p ? styles.selectedPage : ""}
-                    key={p}
-                    onClick={() => {
-                        onPageChanges(p)
-                    }}>{p}</span>
-            })}
-        </div>
-    </div>
+type PaginatorPropsType = {
+  pageCount: number
 }
 
-export default Paginator;
+
+const Paginator = ({pageCount}:PaginatorPropsType) => {
+  const dispatch = useDispatch()
+
+  const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+
+  const onPageChanges = (page: number) => {
+    dispatch(setCurrentPage(page))
+  }
+  const changePageCount = (count: number) => {
+    dispatch(setPageCount(count))
+  }
+
+  return <div className={styles.paginatorPage}>
+    <ReactPaginate
+      pageCount={cardPacksTotalCount}
+      marginPagesDisplayed={3}
+      pageRangeDisplayed={5}
+      previousLabel={'<'}
+      previousClassName={styles.prev}
+      nextLabel={'>'}
+      nextClassName={styles.next}
+      activeClassName={styles.selectedPage}
+      onPageChange={(page) => onPageChanges(page.selected)}
+      containerClassName={styles.container}
+      pageClassName={styles.page}
+    />
+    <div className={styles.sortContainer}>
+      Show<SuperSelect
+        className={styles.superSelect}
+        options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        value={pageCount}
+        onChange={(e) => changePageCount(+e.currentTarget.value)}
+      /> Cards per Page
+    </div>
+  </div>
+}
+
+export default Paginator
