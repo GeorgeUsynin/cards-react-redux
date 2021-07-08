@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import cls from "./TablePacks.module.scss"
 import {TableHeader} from "./TableHeader/TableHeader";
 import {TableData} from "./TableData/TableData";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {CardPackType} from "../../../m2-bll/packsReducer";
 
