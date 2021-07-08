@@ -12,6 +12,7 @@ import {PATH} from "../../App";
 import {useFormik} from "formik";
 import {loginTC, setLoginError} from "../../m2-bll/authReducer";
 import {Preloader} from "../common/preloader/Preloader";
+import {scryRenderedComponentsWithType} from "react-dom/test-utils";
 
 type FormikErrorType = {
     email?: string
@@ -31,7 +32,7 @@ export const Login = () => {
 
     const [type, setType] = useState<InputTypeType>("password")
 
-    const path = useSelector<AppRootStateType, string>(state=>state.auth.pathHistory)
+    const path = useSelector<AppRootStateType, string>(state => state.auth.pathHistory)
 
     const formik = useFormik({
         initialValues: {
@@ -65,12 +66,14 @@ export const Login = () => {
     }
 
     if (isLoggedIn) {
-        if(path){
-            return <Redirect to={path}/>
-        }else{
-            return <Redirect to={PATH.PROFILE}/>
+        switch (path) {
+            case "":
+                return <Redirect to={PATH.PROFILE}/>
+            case PATH.PACKS_LIST:
+                return <Redirect to={PATH.PACKS_LIST}/>
+            case PATH.USER_INFO:
+                return <Redirect to={PATH.USER_INFO}/>
         }
-
     }
 
     return (
