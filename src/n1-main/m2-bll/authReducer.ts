@@ -1,4 +1,4 @@
-import {authAPI, LoginParamsType} from "../m3-dal/API";
+import {authAPI, LoginParamsType} from "../m3-dal/apiLogin";
 import {setInformationAboutUserAC} from "./profileReducer";
 import {AppThunkType} from "./store";
 import {REGISTER_ERROR, REGISTER_LOADING} from "./registerReducer";
@@ -7,12 +7,14 @@ type InitialStateType = {
     isFetching: boolean
     isLoggedIn: boolean
     error: string | null
+    pathHistory: string
 }
 
 const initialState: InitialStateType = {
     isFetching: false,
     isLoggedIn: false,
-    error: null
+    error: null,
+    pathHistory:''
 }
 
 // actions
@@ -21,6 +23,9 @@ export const setIsLoggedInAC = (value: boolean) =>
 
 export const setIsLoggedOutAC = (value: boolean) =>
     ({type: 'logout/SET-IS-LOGGED-OUT', value} as const)
+
+export const setPath = (path: string) =>
+    ({type: 'logout/SET-PATH', path} as const)
 
 export const setLoginError = (error: string | null) => {
     return {
@@ -45,6 +50,8 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
             return {...state, isLoggedIn: action.value}
         case "REGISTER/ERROR":
             return {...state, error: action.error}
+        case "logout/SET-PATH":
+            return {...state, pathHistory: action.path}
         case "REGISTER/LOADING":
             return {...state, isFetching: action.isFetching}
         default:
@@ -84,6 +91,7 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
         })
         .finally(() => {
             dispatch(setLoginLoading(false))
+            dispatch(setPath(""))
         })
 }
 
@@ -109,4 +117,6 @@ export type AuthActionsType = ReturnType<typeof setIsLoggedInAC
     | typeof setInformationAboutUserAC
     | typeof setIsLoggedOutAC
     | typeof setLoginError
-    | typeof setLoginLoading> // изменили запись в одну строчку !!
+    | typeof setLoginLoading
+    | typeof setPath
+    > // изменили запись в одну строчку !!

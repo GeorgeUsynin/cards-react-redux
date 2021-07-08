@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, KeyboardEvent} from 'react'
 import SuperInputText from "../SuperInput/SuperInputText";
 import {useDispatch} from "react-redux";
-import {getSearchedPacks, startSearchingAC} from "../../../m2-bll/packsReducer";
+import {setSearchName} from "../../../m2-bll/packsReducer";
 
 type SearchPropsType = {
     className: string
@@ -12,10 +12,9 @@ const Search: React.FC<SearchPropsType> = ({className}) => {
     const dispatch = useDispatch()
     const [request, setRequest] = useState<string>("")
 
-
-    const handlePress = () => {
-        dispatch(getSearchedPacks(request))
-        setRequest('')
+    const handlePress = (e: KeyboardEvent<HTMLInputElement>) => {
+        dispatch(setSearchName(request))
+        e.currentTarget.blur()
     }
 
     return (
