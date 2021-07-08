@@ -1,4 +1,4 @@
-import { RegisterAPI } from '../m3-dal/registerAPI'
+import { ApiRegister } from '../m3-dal/apiRegister'
 import { AppThunkType } from './store'
 
 export const REGISTER_LOADING = 'REGISTER/LOADING'
@@ -74,7 +74,7 @@ export const register =
   (email: string, password: string): AppThunkType => async (dispatch) => {
     dispatch(setRegisterLoading(true))
     try {
-      await RegisterAPI.register(email, password)
+      await ApiRegister.register(email, password)
       dispatch(setRegisterSuccess(true))
     } catch (e) {
       const error = e.response.data.error

@@ -9,7 +9,7 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 // (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
 type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
-    onEnter?: (e:KeyboardEvent<HTMLInputElement>) => void
+    onEnter?: (e: KeyboardEvent<HTMLInputElement>) => void
     error?: Array<string | null>
     spanClassName?: string
 }

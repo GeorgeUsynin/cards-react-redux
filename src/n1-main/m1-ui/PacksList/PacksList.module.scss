@@ -31,10 +31,26 @@
         display: flex;
 
         button {
+          @include text($fontFamilyText, 14px, 400, 17px, $textColor, center);
           display: block;
           flex-basis: 50%;
           height: 36px;
           margin-bottom: 45px;
+          border: none;
+          cursor: pointer;
+          background: white;
+        }
+        button:hover, .active{
+          color: white;
+          background: #9A91C8;
+        }
+
+        .myButton{
+          border-radius: 5px 0 0 5px;
+          border-right: solid 2px #635D80;
+        }
+        .allButton{
+          border-radius: 0 5px 5px 0;
         }
       }
 

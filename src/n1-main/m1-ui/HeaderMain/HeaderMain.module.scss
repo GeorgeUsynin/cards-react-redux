@@ -26,7 +26,6 @@
       align-items: center;
 
       .linkContainer {
-        //border-bottom: solid 2px $elementsColor;
         a {
           @include text($fontFamilyText, 16px, 500, 16px, $textColor, center);
           height: 60px;

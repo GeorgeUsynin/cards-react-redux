@@ -1,86 +1,167 @@
-import { AppRootStateType, AppThunkType } from './store'
-import { packsApi, PacksResponseType } from '../m3-dal/apiPacks'
+import {AppThunkType} from "./store";
+import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
+import {UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
 
 export type CardPackType = {
-  _id: string
-  user_id: string
-  name: string
-  cardsCount: number
-  created: string
-  updated: string
+    _id: string
+    user_id: string
+    name: string
+    cardsCount: number
+    created: string
+    updated: string
 }
 
+type PackRequestParameters = {
+    packName: string
+    maxCardsCount: number
+    minCardsCount: number
+    sortPacks: UpdatedDirectionType
+    pageCount: number
+    page: number
+    user_id: string
+}
 
 type InitialStateType = {
-  cardPacks: Array<CardPackType>
-  packName: string
-  cardPacksTotalCount: number
-  maxCardsCount: number
-  minCardsCount: number
-  sortPacks: string
-  page: number
-  pageCount: number
+    cardPacks: Array<CardPackType>
+    cardPacksRequestParameters: PackRequestParameters
+    cardPacksTotalCount: number
+    isFetching: boolean
 }
 
 const initialState: InitialStateType = {
-  cardPacks: [],
-  packName: '',
-  cardPacksTotalCount: 0,
-  maxCardsCount: 9,
-  minCardsCount: 4,
-  sortPacks: '',
-  page: 1,
-  pageCount: 4,
+    cardPacks: [],
+    cardPacksRequestParameters: {
+        page: 1,
+        pageCount: 6,
+        maxCardsCount: 0,
+        minCardsCount: 0,
+        sortPacks: "0updated",
+        packName: "",
+        user_id: ""
+    },
+    cardPacksTotalCount: 0,
+    isFetching: false
 }
+
+//actions
+
+export const setSearchName = (requestedName: string) =>
+    ({type: 'packs/SET-SEARCH-NAME', requestedName} as const)
+
+export const setCurrentPage = (requestedPage: number) =>
+    ({type: 'packs/SET-CURRENT-PAGE', requestedPage} as const)
+
+export const setUpdatedDirection = (direction: UpdatedDirectionType) =>
+    ({type: 'packs/SET-UPDATED-DIRECTION', direction} as const)
+
+const setDataPacks = (dataPacks: PacksResponseType) =>
+    ({type: 'packs/SET-PACKS', dataPacks} as const)
+
+const setLoadingPacks = (isFetching: boolean) =>
+    ({type: 'packs/SET-LOADING-PACKS', isFetching} as const)
+
+export const setUserId = (userId: string) =>
+    ({type: 'packs/SET-USER-ID', userId} as const)
+
+export const setPageCount = (count: number) =>
+    ({type: 'packs/SET-PAGE-COUNT', count} as const)
+
+export const setRangeSort = (range: number[]) =>
+    ({type: 'packs/SET-RANGE-SORT', range} as const)
 
 
 export const packsReducer = (state: InitialStateType = initialState, action: PacksActionType): InitialStateType => {
-  switch (action.type) {
-    case 'packs/SET-PACKS':
-      return {...state, ...action.dataPacks}
-    case 'packs/SET-CURRENT-PAGE':
-      return {...state, page: action.page}
-    case 'packs/SET-PAGE-COUNT':
-      return {...state, pageCount: action.count}
-    case 'packs/SEARCH-PACK':
-      return {...state, packName: action.packName}
-    case 'packs/SET-RANGE-SORT':
-      return {...state, minCardsCount: action.range[0], maxCardsCount: action.range[1]}
-    default:
-      return state
-  }
+    switch (action.type) {
+        case "packs/SET-PACKS":
+            return {...state, ...action.dataPacks}
+        case "packs/SET-USER-ID":
+            return {...state, cardPacksRequestParameters: {...state.cardPacksRequestParameters, user_id: action.userId}}
+        case "packs/SET-SEARCH-NAME":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, packName: action.requestedName}
+            }
+        case "packs/SET-CURRENT-PAGE":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, page: action.requestedPage}
+            }
+        case "packs/SET-UPDATED-DIRECTION":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, sortPacks: action.direction}
+            }
+        case "packs/SET-PAGE-COUNT":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, pageCount: action.count}
+            }
+        case "packs/SET-RANGE-SORT":
+            return {
+                ...state,
+                cardPacksRequestParameters: {
+                    ...state.cardPacksRequestParameters,
+                    minCardsCount: action.range[0],
+                    maxCardsCount: action.range[1]
+                }
+            }
+        case "packs/SET-LOADING-PACKS":
+            return {...state, isFetching: action.isFetching}
+        default:
+            return state
+    }
 }
 
-export const getPackList = (): AppThunkType =>
-  async (dispatch
-    , getState: () => AppRootStateType) => {
+//thunks
+
+export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
     try {
-      const {packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount} = getState().packs
-      const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount)
-      dispatch(setDataPacks(packs))
+
+        const {
+            packName,
+            minCardsCount,
+            maxCardsCount,
+            sortPacks,
+            page,
+            pageCount,
+            user_id
+        } = getState().packs.cardPacksRequestParameters
+        dispatch(setLoadingPacks(true))
+        const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
+        dispatch(setDataPacks(packs))
     } catch (e) {
-      console.log(e)
+        console.log(e)
+    } finally {
+        dispatch(setLoadingPacks(false))
     }
-  }
+}
 
-const setDataPacks = (dataPacks: PacksResponseType) =>
-  ({type: 'packs/SET-PACKS', dataPacks} as const)
+export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
+    try {
+        dispatch(setLoadingPacks(true))
+        await packsApi.createNewPack(name, isPrivate)
+        dispatch(getDataPacks())
+    } catch (e) {
+        console.log(e)
+    }
+}
 
-export const searchPack = (packName: string) =>
-  ({type: 'packs/SEARCH-PACK', packName} as const)
-
-export const setCurrentPage = (page: number) =>
-  ({type: 'packs/SET-CURRENT-PAGE', page} as const)
-
-export const setPageCount = (count: number) =>
-  ({type: 'packs/SET-PAGE-COUNT', count} as const)
-
-export const setRangeSort = (range: number[]) =>
-  ({type: 'packs/SET-RANGE-SORT', range} as const)
+export const deletePack = (packId: string): AppThunkType => async (dispatch) => {
+    try {
+        dispatch(setLoadingPacks(true))
+        await packsApi.deletePack(packId)
+        dispatch(getDataPacks())
+    } catch (e) {
+        console.log(e)
+    }
+}
 
 
-export type PacksActionType = ReturnType<typeof setDataPacks
-  | typeof setCurrentPage
-  | typeof setPageCount
-  | typeof searchPack
-  | typeof setRangeSort>
+export type PacksActionType = ReturnType<typeof setSearchName
+    | typeof setDataPacks
+    | typeof setLoadingPacks
+    | typeof setCurrentPage
+    | typeof setUserId
+    | typeof setUpdatedDirection
+    | typeof setPageCount
+    | typeof setRangeSort>

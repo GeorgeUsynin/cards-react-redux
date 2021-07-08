@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {LoginResponseType} from "./API";
+import {LoginResponseType} from "./apiLogin";
 
 
 const axiosInstance = axios.create({

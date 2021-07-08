@@ -21,7 +21,7 @@ const axiosInstance = axios.create({
 })
 
 export const packsApi = {
-    getPacks(packName?: string, min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number) {
+    getPacks(packName?: string, min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number, user_id?: string) {
         return axiosInstance.get<PacksResponseType>("/cards/pack", {
             params: {
                 packName,
@@ -30,6 +30,7 @@ export const packsApi = {
                 sortPacks,
                 page,
                 pageCount,
+                user_id
             }
         }).then(res => res.data)
     },
@@ -40,11 +41,15 @@ export const packsApi = {
             }
         }).then(res => res.data)
     },
-    getPageCount(pageCount: number) {
-        return axiosInstance.get<PacksResponseType>("/cards/pack", {
-            params: {
-                pageCount
+    createNewPack(name: string, isPrivate: boolean = false) {
+        return axiosInstance.post<CardPackType>("cards/pack", {
+            cardsPack: {
+                name,
+                isPrivate
             }
-        }).then(res => res.data)
+        })
+    },
+    deletePack(packId: string) {
+        return axiosInstance.delete<CardPackType>(`cards/pack?id=${packId}`)
     }
 }
