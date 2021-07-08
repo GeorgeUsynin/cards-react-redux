@@ -31,6 +31,8 @@ export const Login = () => {
 
     const [type, setType] = useState<InputTypeType>("password")
 
+    const path = useSelector<AppRootStateType, string>(state=>state.auth.pathHistory)
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -63,7 +65,12 @@ export const Login = () => {
     }
 
     if (isLoggedIn) {
-        return <Redirect to={PATH.PROFILE}/>
+        if(path){
+            return <Redirect to={path}/>
+        }else{
+            return <Redirect to={PATH.PROFILE}/>
+        }
+
     }
 
     return (

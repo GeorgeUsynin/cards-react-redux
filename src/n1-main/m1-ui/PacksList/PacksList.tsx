@@ -8,12 +8,15 @@ import Search from "../common/Search/Search";
 import {useDispatch, useSelector} from "react-redux";
 import {createNewPack, deletePack, getDataPacks, setUserId} from "../../m2-bll/packsReducer";
 import {AppRootStateType} from "../../m2-bll/store";
-import {isLoggedInApp} from "../../m2-bll/authReducer";
-import {Redirect} from "react-router-dom";
+import {isLoggedInApp, setPath} from "../../m2-bll/authReducer";
+import {Redirect, useHistory} from "react-router-dom";
+import {PATH} from "../../App";
 
 type ButtonNameType = 'my' | 'all'
 
 export const PacksList = () => {
+
+
 
     const dispatch = useDispatch()
 
@@ -28,13 +31,18 @@ export const PacksList = () => {
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
 
+    let history = useHistory()
+
+    dispatch(setPath(history.location.pathname))
+
     useEffect(() => {
-        if (!id) {
+        if (!isLoggedIn) {
             dispatch(isLoggedInApp())
         } else {
             dispatch(getDataPacks())
         }
-    }, [id, dispatch, page, pageCount, packName, currentUserId])
+    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId])
+
 
 
     const addPack = useCallback(() => {
@@ -61,7 +69,7 @@ export const PacksList = () => {
 
 
     if (!isLoggedIn) {
-        return <Redirect to={'/login'}/>
+        return <Redirect to={PATH.LOGIN}/>
     }
 
 

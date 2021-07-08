@@ -3,7 +3,7 @@ import {NavLink, useLocation} from "react-router-dom";
 import cls from "./HeaderMain.module.scss"
 import {PATH} from "../../App";
 import SuperButton from "../common/SuperButton/SuperButton";
-import {logoutTC} from "../../m2-bll/authReducer";
+import {logoutTC, setPath} from "../../m2-bll/authReducer";
 import {useDispatch} from "react-redux";
 
 
@@ -12,6 +12,7 @@ export const HeaderMain = () => {
     const dispatch = useDispatch()
 
     const [finalClass, setFinalClass] = useState(cls.active)
+
 
     let location = useLocation()
 
