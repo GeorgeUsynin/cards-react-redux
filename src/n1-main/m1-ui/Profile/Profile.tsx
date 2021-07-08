@@ -43,9 +43,6 @@ export const Profile = () => {
                             <UserInfo avatar={info.avatar} name={info.name}/>
                             <UserInfoCards publicCardPacksCount={info.publicCardPacksCount}/>
                         </div>
-                        <div>
-                            <NavLink to={'/profile/information_about_user'} className={cls.editProfile}>Edit Profile</NavLink>
-                        </div>
                     </div>
             }
         </div>
