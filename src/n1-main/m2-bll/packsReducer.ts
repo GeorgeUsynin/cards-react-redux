@@ -1,77 +1,86 @@
-import {AppThunkType} from "./store";
-import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
+import { AppRootStateType, AppThunkType } from './store'
+import { packsApi, PacksResponseType } from '../m3-dal/apiPacks'
 
 export type CardPackType = {
-    _id: string
-    user_id: string
-    name: string
-    cardsCount: number
-    created: string
-    updated: string
+  _id: string
+  user_id: string
+  name: string
+  cardsCount: number
+  created: string
+  updated: string
 }
 
 
 type InitialStateType = {
-    cardPacks: Array<CardPackType>
-    request: string
-    cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
-    page: number
-    pageCount: number
+  cardPacks: Array<CardPackType>
+  packName: string
+  cardPacksTotalCount: number
+  maxCardsCount: number
+  minCardsCount: number
+  sortPacks: string
+  page: number
+  pageCount: number
 }
 
 const initialState: InitialStateType = {
-    cardPacks: [],
-    request: "",
-    cardPacksTotalCount: 0,
-    maxCardsCount: 9,
-    minCardsCount: 4,
-    page: 1,
-    pageCount: 4
+  cardPacks: [],
+  packName: '',
+  cardPacksTotalCount: 0,
+  maxCardsCount: 9,
+  minCardsCount: 4,
+  sortPacks: '',
+  page: 1,
+  pageCount: 4,
 }
 
-export const startSearchingAC = (request: string) =>
-    ({type: 'packs/START-SEARCHING', request} as const)
-
-const setDataPacks = (dataPacks: PacksResponseType) =>
-    ({type: 'packs/SET-PACKS', dataPacks} as const)
 
 export const packsReducer = (state: InitialStateType = initialState, action: PacksActionType): InitialStateType => {
-    switch (action.type) {
-        case "packs/SET-PACKS":
-            return {...state, ...action.dataPacks}
-        default:
-            return state
-    }
+  switch (action.type) {
+    case 'packs/SET-PACKS':
+      return {...state, ...action.dataPacks}
+    case 'packs/SET-CURRENT-PAGE':
+      return {...state, page: action.page}
+    case 'packs/SET-PAGE-COUNT':
+      return {...state, pageCount: action.count}
+    case 'packs/SEARCH-PACK':
+      return {...state, packName: action.packName}
+    case 'packs/SET-RANGE-SORT':debugger
+      return {...state, minCardsCount: action.range[0], maxCardsCount: action.range[1]}
+    default:
+      return state
+  }
 }
 
-
-export const getDataPacks = (): AppThunkType => async (dispatch) => {
+export const getPackList = (): AppThunkType =>
+  async (dispatch
+    , getState: () => AppRootStateType) => {debugger
     try {
-        const packs = await packsApi.getPacks()
-        dispatch(setDataPacks(packs))
+      const {packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount} = getState().packs
+      const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount)
+      dispatch(setDataPacks(packs))
     } catch (e) {
-
+      console.log(e)
     }
-}
+  }
 
-export const getSearchedPacks = (name: string): AppThunkType => async (dispatch) => {
-    try {
-        const packs = await packsApi.getPacks(name)
-        dispatch(setDataPacks(packs))
-    } catch (e) {
+const setDataPacks = (dataPacks: PacksResponseType) =>
+  ({type: 'packs/SET-PACKS', dataPacks} as const)
 
-    }
-}
+export const searchPack = (packName: string) =>
+  ({type: 'packs/SEARCH-PACK', packName} as const)
 
-export const setCurrentPage = (page: number): AppThunkType => async (dispatch) => {
-    try {
-        const packs = await packsApi.getPage(page)
-        dispatch(setDataPacks(packs))
-    } catch (e) {
+export const setCurrentPage = (page: number) =>
+  ({type: 'packs/SET-CURRENT-PAGE', page} as const)
 
-    }
-}
+export const setPageCount = (count: number) =>
+  ({type: 'packs/SET-PAGE-COUNT', count} as const)
 
-export type PacksActionType = ReturnType<typeof startSearchingAC | typeof setDataPacks>
+export const setRangeSort = (range: number[]) =>
+  ({type: 'packs/SET-RANGE-SORT', range} as const)
+
+
+export type PacksActionType = ReturnType<typeof setDataPacks
+  | typeof setCurrentPage
+  | typeof setPageCount
+  | typeof searchPack
+  | typeof setRangeSort>

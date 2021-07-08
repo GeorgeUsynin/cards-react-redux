@@ -1,4 +1,52 @@
-.selectedPage{
-  padding: 0 10px;
+.paginatorPage {
+  display: flex;
+  align-items: center;
+  padding: 50px 50px 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  color: #2D2E46;
+  list-style: none;
+  cursor: pointer;
+}
+
+.selectedPage {
   font-weight: bold;
+  padding: 4px 6px;
+  background-color: #21268F;
+  color: #E6D4DE;
+  border-radius: 2px;
+}
+
+.page {
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+.page:hover {
+  color: #9890C7;
+  transition: linear .8s ease-in-out;
+}
+
+.prev {
+  font-size: 20px;
+}
+
+.next {
+  font-size: 20px;
+}
+
+.sortContainer {
+  padding-left: 20px;
+  color: #2D2E46;
+}
+
+.superSelect {
+  margin-left: 10px;
+  margin-right: 5px;
+  padding: 6px 3px;
+  font-size: 16px;
+  outline-color: #2D2E46;
 }

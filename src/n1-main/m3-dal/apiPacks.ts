@@ -21,7 +21,7 @@ const axiosInstance = axios.create({
 })
 
 export const packsApi = {
-    getPacks(packName?: string, min?: number, max?: number, sortPacks?: number, page?: number, pageCount?: number) {
+    getPacks(packName?: string, min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number) {
         return axiosInstance.get<PacksResponseType>("/cards/pack", {
             params: {
                 packName,
@@ -37,6 +37,13 @@ export const packsApi = {
         return axiosInstance.get<PacksResponseType>("/cards/pack", {
             params: {
                 page
+            }
+        }).then(res => res.data)
+    },
+    getPageCount(pageCount: number) {
+        return axiosInstance.get<PacksResponseType>("/cards/pack", {
+            params: {
+                pageCount
             }
         }).then(res => res.data)
     }
