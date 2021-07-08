@@ -1,4 +1,4 @@
-import {LoginResponseType} from "../m3-dal/API";
+import {LoginResponseType} from "../m3-dal/apiLogin";
 import {AppThunkType} from "./store";
 import {profileApi} from "../m3-dal/apiProfile";
 

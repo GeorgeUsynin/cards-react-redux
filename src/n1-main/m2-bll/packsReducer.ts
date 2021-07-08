@@ -1,5 +1,6 @@
 import {AppThunkType} from "./store";
 import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
+import {UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
 
 export type CardPackType = {
     _id: string
@@ -10,68 +11,129 @@ export type CardPackType = {
     updated: string
 }
 
+type PackRequestParameters = {
+    packName: string
+    maxCardsCount: number
+    minCardsCount: number
+    sortPacks: UpdatedDirectionType
+    pageCount: number
+    page: number
+    user_id: string
+}
 
 type InitialStateType = {
     cardPacks: Array<CardPackType>
-    request: string
+    cardPacksRequestParameters: PackRequestParameters
     cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
-    page: number
-    pageCount: number
+    isFetching: boolean
 }
 
 const initialState: InitialStateType = {
     cardPacks: [],
-    request: "",
+    cardPacksRequestParameters: {
+        page: 1,
+        pageCount: 6,
+        maxCardsCount: 0,
+        minCardsCount: 0,
+        sortPacks: "0updated",
+        packName: "",
+        user_id: ""
+    },
     cardPacksTotalCount: 0,
-    maxCardsCount: 9,
-    minCardsCount: 4,
-    page: 1,
-    pageCount: 4
+    isFetching: false
 }
 
-export const startSearchingAC = (request: string) =>
-    ({type: 'packs/START-SEARCHING', request} as const)
+//actions
+
+export const setSearchName = (requestedName: string) =>
+    ({type: 'packs/SET-SEARCH-NAME', requestedName} as const)
+
+export const setCurrentPage = (requestedPage: number) =>
+    ({type: 'packs/SET-CURRENT-PAGE', requestedPage} as const)
+
+export const setUpdatedDirection = (direction: UpdatedDirectionType) =>
+    ({type: 'packs/SET-UPDATED-DIRECTION', direction} as const)
 
 const setDataPacks = (dataPacks: PacksResponseType) =>
     ({type: 'packs/SET-PACKS', dataPacks} as const)
+
+const setLoadingPacks = (isFetching: boolean) =>
+    ({type: 'packs/SET-LOADING-PACKS', isFetching} as const)
+
+export const setUserId = (userId: string) =>
+    ({type: 'packs/SET-USER-ID', userId} as const)
+
 
 export const packsReducer = (state: InitialStateType = initialState, action: PacksActionType): InitialStateType => {
     switch (action.type) {
         case "packs/SET-PACKS":
             return {...state, ...action.dataPacks}
+        case "packs/SET-USER-ID":
+            return {...state, cardPacksRequestParameters: {...state.cardPacksRequestParameters, user_id: action.userId}}
+        case "packs/SET-SEARCH-NAME":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, packName: action.requestedName}
+            }
+        case "packs/SET-CURRENT-PAGE":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, page: action.requestedPage}
+            }
+        case "packs/SET-UPDATED-DIRECTION":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, sortPacks: action.direction}
+            }
+        case "packs/SET-LOADING-PACKS":
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
 }
 
+//thunks
 
-export const getDataPacks = (): AppThunkType => async (dispatch) => {
+export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
     try {
-        const packs = await packsApi.getPacks()
+
+        const {packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id} = getState().packs.cardPacksRequestParameters
+
+        dispatch(setLoadingPacks(true))
+        const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
         dispatch(setDataPacks(packs))
     } catch (e) {
-
+        console.log(e)
+    } finally {
+        dispatch(setLoadingPacks(false))
     }
 }
 
-export const getSearchedPacks = (name: string): AppThunkType => async (dispatch) => {
+export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
     try {
-        const packs = await packsApi.getPacks(name)
-        dispatch(setDataPacks(packs))
+        dispatch(setLoadingPacks(true))
+        await packsApi.createNewPack(name, isPrivate)
+        dispatch(getDataPacks())
     } catch (e) {
-
+        console.log(e)
     }
 }
 
-export const setCurrentPage = (page: number): AppThunkType => async (dispatch) => {
+export const deletePack = (packId: string): AppThunkType => async (dispatch) => {
     try {
-        const packs = await packsApi.getPage(page)
-        dispatch(setDataPacks(packs))
+        dispatch(setLoadingPacks(true))
+        await packsApi.deletePack(packId)
+        dispatch(getDataPacks())
     } catch (e) {
-
+        console.log(e)
     }
 }
 
-export type PacksActionType = ReturnType<typeof startSearchingAC | typeof setDataPacks>
+
+export type PacksActionType = ReturnType<typeof setSearchName
+    | typeof setDataPacks
+    | typeof setLoadingPacks
+    | typeof setCurrentPage
+    | typeof setUserId
+    | typeof setUpdatedDirection
+    >
