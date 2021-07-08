@@ -5,6 +5,7 @@ import {PATH} from "../../App";
 import SuperButton from "../common/SuperButton/SuperButton";
 import {logoutTC, setPath} from "../../m2-bll/authReducer";
 import {useDispatch} from "react-redux";
+import {Redirect} from "react-router";
 
 
 export const HeaderMain = () => {
