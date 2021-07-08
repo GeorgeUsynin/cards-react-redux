@@ -15,7 +15,6 @@ const Search: React.FC<SearchPropsType> = ({className}) => {
 
     const handlePress = () => {
         dispatch(setSearchName(request))
-        setRequest('')
     }
 
     return (

@@ -1,5 +1,6 @@
 import {AppThunkType} from "./store";
 import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
+import {UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
 
 export type CardPackType = {
     _id: string
@@ -14,7 +15,7 @@ type PackRequestParameters = {
     packName: string
     maxCardsCount: number
     minCardsCount: number
-    sortPacks: string
+    sortPacks: UpdatedDirectionType
     pageCount: number
     page: number
     user_id: string
@@ -50,6 +51,9 @@ export const setSearchName = (requestedName: string) =>
 export const setCurrentPage = (requestedPage: number) =>
     ({type: 'packs/SET-CURRENT-PAGE', requestedPage} as const)
 
+export const setUpdatedDirection = (direction: UpdatedDirectionType) =>
+    ({type: 'packs/SET-UPDATED-DIRECTION', direction} as const)
+
 const setDataPacks = (dataPacks: PacksResponseType) =>
     ({type: 'packs/SET-PACKS', dataPacks} as const)
 
@@ -75,6 +79,11 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
             return {
                 ...state,
                 cardPacksRequestParameters: {...state.cardPacksRequestParameters, page: action.requestedPage}
+            }
+        case "packs/SET-UPDATED-DIRECTION":
+            return {
+                ...state,
+                cardPacksRequestParameters: {...state.cardPacksRequestParameters, sortPacks: action.direction}
             }
         case "packs/SET-LOADING-PACKS":
             return {...state, isFetching: action.isFetching}
@@ -126,4 +135,5 @@ export type PacksActionType = ReturnType<typeof setSearchName
     | typeof setLoadingPacks
     | typeof setCurrentPage
     | typeof setUserId
+    | typeof setUpdatedDirection
     >

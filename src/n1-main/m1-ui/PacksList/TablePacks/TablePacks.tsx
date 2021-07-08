@@ -5,8 +5,8 @@ import {TableData} from "./TableData/TableData";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {CardPackType} from "../../../m2-bll/packsReducer";
-import {Preloader} from "../../common/preloader/Preloader";
 import Paginator from "../../common/Paginator/Paginator";
+import {Preloader} from "../../common/preloader/Preloader";
 
 type TablePacksProspType = {
     removePack: (packId: string) => void

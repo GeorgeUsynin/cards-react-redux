@@ -17,7 +17,6 @@ type ButtonNameType = 'my' | 'all'
 export const PacksList = () => {
 
 
-
     const dispatch = useDispatch()
 
     const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
@@ -25,6 +24,7 @@ export const PacksList = () => {
     const page = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.pageCount)
     const packName = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.packName)
+    const updatedDirection = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.sortPacks)
     const currentUserId = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.user_id)
     // const cardsCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacks)
 
@@ -41,8 +41,7 @@ export const PacksList = () => {
         } else {
             dispatch(getDataPacks())
         }
-    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId])
-
+    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection])
 
 
     const addPack = useCallback(() => {
@@ -84,10 +83,11 @@ export const PacksList = () => {
                                      onMouseEnter={() => setActiveClass("")}
                                      onMouseOut={() => setActiveClass(cls.active)}
                         >My</SuperButton>
-                        <SuperButton className={buttonName ==="all" ? `${cls.allButton} ${activeClass}` : cls.allButton}
-                                     onClick={getAllPacksList}
-                                     onMouseEnter={() => setActiveClass("")}
-                                     onMouseOut={() => setActiveClass(cls.active)}
+                        <SuperButton
+                            className={buttonName === "all" ? `${cls.allButton} ${activeClass}` : cls.allButton}
+                            onClick={getAllPacksList}
+                            onMouseEnter={() => setActiveClass("")}
+                            onMouseOut={() => setActiveClass(cls.active)}
                         >All</SuperButton>
                     </div>
                     <p className={cls.numberTitle}>Number of cards</p>
