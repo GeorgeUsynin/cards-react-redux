@@ -14,6 +14,7 @@ import {HeaderMain} from "./m1-ui/HeaderMain/HeaderMain";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./m2-bll/store";
 import {PacksList} from "./m1-ui/PacksList/PacksList";
+import {Redirect} from "react-router";
 
 export const PATH = {
     PROFILE: '/profile',
@@ -36,6 +37,7 @@ const App = () => {
             <Header/>
             {isLoggedIn && <HeaderMain/>}
             <div className='app-wrapper-content'>
+                <Route exact path={'/'} render={() => <Redirect to={PATH.PROFILE}/>}/>
                 <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
