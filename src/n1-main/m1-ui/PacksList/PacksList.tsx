@@ -30,7 +30,7 @@ export const PacksList = () => {
     const currentUserId = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.user_id)
     const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
-    // const cardsCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacks)
+    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
@@ -45,7 +45,7 @@ export const PacksList = () => {
         } else {
             dispatch(getDataPacks())
         }
-    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection,minCards, maxCards])
+    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
 
 
     const addPack = useCallback(() => {
