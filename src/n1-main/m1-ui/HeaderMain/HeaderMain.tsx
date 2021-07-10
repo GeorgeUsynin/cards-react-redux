@@ -3,9 +3,8 @@ import {NavLink, useLocation} from "react-router-dom";
 import cls from "./HeaderMain.module.scss"
 import {PATH} from "../../App";
 import SuperButton from "../common/SuperButton/SuperButton";
-import {logoutTC, setPath} from "../../m2-bll/authReducer";
+import {logoutTC} from "../../m2-bll/authReducer";
 import {useDispatch} from "react-redux";
-import {Redirect} from "react-router";
 
 
 export const HeaderMain = () => {
@@ -13,7 +12,6 @@ export const HeaderMain = () => {
     const dispatch = useDispatch()
 
     const [finalClass, setFinalClass] = useState(cls.active)
-
 
     let location = useLocation()
 

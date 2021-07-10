@@ -1,10 +1,10 @@
 import {LoginResponseType} from "../m3-dal/apiLogin";
 import {AppThunkType} from "./store";
 import {profileApi} from "../m3-dal/apiProfile";
+import {setLoginLoading} from "./authReducer";
 
 type InitialStateType = {
     informationAboutUser: LoginResponseType
-    isFetching: boolean
 }
 
 const initialState: InitialStateType = {
@@ -20,8 +20,7 @@ const initialState: InitialStateType = {
         rememberMe: false,
         avatar: "",
         error: ""
-    },
-    isFetching: false
+    }
 }
 
 /*export type LoginResponseType = {
@@ -44,8 +43,6 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             return {...state, informationAboutUser: action.data}
         case "profile/SET-UPDATED-USER":
             return {...state, informationAboutUser: action.updatedUser}
-        case "profile/SET-PERSONAL-INFO-LOADING":
-            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
@@ -57,16 +54,9 @@ export const setInformationAboutUserAC = (data: LoginResponseType) =>
 export const setUpdatedUserAC = (updatedUser: LoginResponseType) =>
     ({type: 'profile/SET-UPDATED-USER', updatedUser} as const)
 
-export const setPersonalInfoLoading = (isFetching: boolean) => {
-    return {
-        type: 'profile/SET-PERSONAL-INFO-LOADING',
-        isFetching
-    } as const
-}
-
 
 export const editUserProfileTC = (name: string, avatar: string): AppThunkType => (dispatch) => {
-    dispatch(setPersonalInfoLoading(true))
+    dispatch(setLoginLoading(true))
     profileApi.editUserNameAvatar(name, avatar)
         .then(res => {
             dispatch(setUpdatedUserAC(res.data.updatedUser))
@@ -80,8 +70,8 @@ export const editUserProfileTC = (name: string, avatar: string): AppThunkType =>
             console.log(`error: ${error}`)
         })
         .finally(()=>{
-            dispatch(setPersonalInfoLoading(false))
+            dispatch(setLoginLoading(false))
         })
 }
 
-export type ProfileActionsType = ReturnType<typeof setInformationAboutUserAC | typeof setUpdatedUserAC | typeof setPersonalInfoLoading>
+export type ProfileActionsType = ReturnType<typeof setInformationAboutUserAC | typeof setUpdatedUserAC>

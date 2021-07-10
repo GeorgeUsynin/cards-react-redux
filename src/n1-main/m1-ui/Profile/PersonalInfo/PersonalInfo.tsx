@@ -6,21 +6,20 @@ import {PATH} from "../../../App";
 import {AppRootStateType} from "../../../m2-bll/store";
 import defaultAvatar from '../../../../assets/images/avatar.png'
 import SuperInputText from "../../common/SuperInput/SuperInputText";
-import {isLoggedInApp, setPath} from "../../../m2-bll/authReducer";
-import {Redirect, useHistory} from 'react-router-dom';
+import {isLoggedInApp} from "../../../m2-bll/authReducer";
+import {Redirect} from 'react-router-dom';
 import {Preloader} from "../../common/preloader/Preloader";
+
 
 export const PersonalInfo: React.FC = () => {
     const dispatch = useDispatch()
 
-    let history = useHistory()
-
-    dispatch(setPath(history.location.pathname))
-
     const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
     const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
 
     useEffect(() => {
         if (!id) {
@@ -32,18 +31,23 @@ export const PersonalInfo: React.FC = () => {
     let [nickname, setNickname] = useState<string>(name)
 
     const cancelHandler = () => {
-        history.push(PATH.PROFILE)
+        debugger
+        return <Redirect to={PATH.PROFILE}/>
     }
     const saveHandler = () => {
         dispatch(editUserProfileTC(nickname, ava))
-        history.push(PATH.PROFILE)
+        return <Redirect to={PATH.PROFILE}/>
     }
 
-    if (!isLoggedIn) {
+    if (error) {
         return <Redirect to={PATH.LOGIN}/>
     }
 
     return (
+        isFetching
+            ?
+            <Preloader/>
+            :
             <div className={cls.infoContainer}>
                 <div className={cls.card}>
                     <h2 className={cls.title}>Personal Inforamtion</h2>

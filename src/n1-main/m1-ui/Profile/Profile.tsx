@@ -7,44 +7,44 @@ import {isLoggedInApp} from "../../m2-bll/authReducer";
 import {UserInfo} from "./UserInfo/UserInfo";
 import {UserInfoCards} from "./UserInfoCards/UserInfoCards";
 import {Preloader} from "../common/preloader/Preloader";
+import {PATH} from "../../App";
 
 
 export const Profile = () => {
 
+    debugger
     const dispatch = useDispatch()
 
-    const isFetchingAUTH = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
-    const isFetchingPROFILE = useSelector<AppRootStateType, boolean>(state => state.profile.isFetching)
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
+    const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
+
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
     const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
     const publicCardPacksCount = useSelector<AppRootStateType, number>(state => state.profile.informationAboutUser.publicCardPacksCount)
     const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
         if (!id) {
             dispatch(isLoggedInApp())
         }
-    }, [id,dispatch])
+    }, [id, dispatch])
 
-    if (!isLoggedIn) {
-        return <Redirect to={'/login'}/>
+    if (error) {
+        return <Redirect to={PATH.LOGIN}/>
     }
 
     return (
-        <div className={cls.profileContainer}>
-            {
-                isFetchingAUTH || isFetchingPROFILE
-                    ?
-                    <Preloader/>
-                    :
-                    <div className={cls.card}>
-                        <div className={cls.info}>
-                            <UserInfo avatar={avatar} name={name}/>
-                            <UserInfoCards publicCardPacksCount={publicCardPacksCount}/>
-                        </div>
+        isFetching
+            ?
+            <Preloader/>
+            :
+            <div className={cls.profileContainer}>
+                <div className={cls.card}>
+                    <div className={cls.info}>
+                        <UserInfo avatar={avatar} name={name}/>
+                        <UserInfoCards publicCardPacksCount={publicCardPacksCount}/>
                     </div>
-            }
-        </div>
+                </div>
+            </div>
     )
 }

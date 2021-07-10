@@ -34,13 +34,6 @@ export const packsApi = {
             }
         }).then(res => res.data)
     },
-    getPage(page: number) {
-        return axiosInstance.get<PacksResponseType>("/cards/pack", {
-            params: {
-                page
-            }
-        }).then(res => res.data)
-    },
     createNewPack(name: string, isPrivate: boolean = false) {
         return axiosInstance.post<CardPackType>("cards/pack", {
             cardsPack: {
