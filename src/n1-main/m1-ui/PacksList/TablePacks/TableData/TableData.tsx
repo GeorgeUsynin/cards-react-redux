@@ -7,13 +7,11 @@ type TableDataPropsType = {
     user_id: string
     name: string
     cardsCount: number
-    created: string
     updatedDate: string
     updatedTime: string
-    createdDate: string
-    createdTime: string
     removePack: (packId: string) => void
     appUserId: string
+    createdBy: string
 }
 
 
@@ -23,11 +21,10 @@ export const TableData: React.FC<TableDataPropsType> = ({
                                                             cardsCount,
                                                             updatedDate,
                                                             updatedTime,
-                                                            createdDate,
-                                                            createdTime,
                                                             removePack,
                                                             appUserId,
                                                             user_id,
+                                                            createdBy,
                                                             children
                                                         }) => {
 
@@ -40,8 +37,7 @@ export const TableData: React.FC<TableDataPropsType> = ({
                 <p>Time: {updatedTime}</p>
             </div>
             <div>
-                <p>Date: {createdDate}</p>
-                <p>Time: {createdTime}</p>
+                <p>{createdBy}</p>
             </div>
             <div className={cls.buttonsContainer}>
                 <SuperButton className={cls.deleteButton}

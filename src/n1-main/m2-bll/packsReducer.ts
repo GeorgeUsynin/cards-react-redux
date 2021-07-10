@@ -1,6 +1,6 @@
 import {AppThunkType} from "./store";
 import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
-import {UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
+import {CardsCountDirectionType, UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
 
 export type CardPackType = {
     _id: string
@@ -9,13 +9,14 @@ export type CardPackType = {
     cardsCount: number
     created: string
     updated: string
+    user_name: string
 }
 
 type PackRequestParameters = {
     packName: string
     maxCardsCount: number
     minCardsCount: number
-    sortPacks: UpdatedDirectionType
+    sortPacks: UpdatedDirectionType | CardsCountDirectionType
     pageCount: number
     page: number
     user_id: string
@@ -54,6 +55,9 @@ export const setCurrentPage = (requestedPage: number) =>
 export const setUpdatedDirection = (direction: UpdatedDirectionType) =>
     ({type: 'packs/SET-UPDATED-DIRECTION', direction} as const)
 
+export const setCardsCountDirection = (direction: CardsCountDirectionType) =>
+    ({type: 'packs/SET-CARDS-COUNT-DIRECTION', direction} as const)
+
 const setDataPacks = (dataPacks: PacksResponseType) =>
     ({type: 'packs/SET-PACKS', dataPacks} as const)
 
@@ -87,6 +91,7 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
                 cardPacksRequestParameters: {...state.cardPacksRequestParameters, page: action.requestedPage}
             }
         case "packs/SET-UPDATED-DIRECTION":
+        case "packs/SET-CARDS-COUNT-DIRECTION":
             return {
                 ...state,
                 cardPacksRequestParameters: {...state.cardPacksRequestParameters, sortPacks: action.direction}
@@ -126,6 +131,7 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
             pageCount,
             user_id
         } = getState().packs.cardPacksRequestParameters
+        debugger
         dispatch(setLoadingPacks(true))
         const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
         dispatch(setDataPacks(packs))
@@ -164,4 +170,5 @@ export type PacksActionType = ReturnType<typeof setSearchName
     | typeof setUserId
     | typeof setUpdatedDirection
     | typeof setPageCount
-    | typeof setRangeSort>
+    | typeof setRangeSort
+    | typeof setCardsCountDirection>

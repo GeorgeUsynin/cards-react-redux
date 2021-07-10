@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import cls from "./TableHeader.module.scss"
-import {useDispatch, useSelector} from "react-redux";
-import {setUpdatedDirection} from "../../../../m2-bll/packsReducer";
-import {AppRootStateType} from "../../../../m2-bll/store";
+import {useDispatch} from "react-redux";
+import {setCardsCountDirection, setUpdatedDirection} from "../../../../m2-bll/packsReducer";
 import downArrow from "../../../../../assets/images/DownSort.svg"
 import upArrow from "../../../../../assets/images/UpSort.svg"
 
@@ -12,25 +11,37 @@ type TableHeaderType = {
 }
 type ArrowType = "down" | "up"
 
-
 export type UpdatedDirectionType = "0updated" | "1updated"
+
+export type CardsCountDirectionType = "0cardsCount" | "1cardsCount"
 
 export const TableHeader: React.FC<TableHeaderType> = ({className}) => {
 
     const dispatch = useDispatch()
 
-    const updatedDirection = useSelector<AppRootStateType, UpdatedDirectionType>(state => state.packs.cardPacksRequestParameters.sortPacks)
-
-    const [arrow, setArrow] = useState<ArrowType>('down')
+    const [cardsArrow, setCardsArrow] = useState<ArrowType>('down')
+    const [updatedArrow, setUpdatedArrow] = useState<ArrowType>('down')
 
     const changeUpdatedDirection = () => {
-        setArrow(arrow === "down" ? "up" : "down")
-        switch (updatedDirection) {
-            case "0updated":
+        setUpdatedArrow(updatedArrow === "down" ? "up" : "down")
+        switch (updatedArrow) {
+            case "down":
                 dispatch(setUpdatedDirection("1updated"))
                 break
-            case "1updated":
+            case "up":
                 dispatch(setUpdatedDirection("0updated"))
+                break
+        }
+    }
+
+    const changeCardsCountDirection = () => {
+        setCardsArrow(cardsArrow === "down" ? "up" : "down")
+        switch (cardsArrow) {
+            case "down":
+                dispatch(setCardsCountDirection("1cardsCount"))
+                break
+            case "up":
+                dispatch(setCardsCountDirection("0cardsCount"))
                 break
         }
     }
@@ -38,11 +49,13 @@ export const TableHeader: React.FC<TableHeaderType> = ({className}) => {
     return (
         <div className={`${className} ${cls.tableHeader}`}>
             <div>Name</div>
-            <div>Cards</div>
-            <div>Last Updated <span onClick={changeUpdatedDirection}>
-                <img src={arrow === "down" ? downArrow : upArrow} alt=""/>
+            <div>Cards <span onClick={changeCardsCountDirection}>
+                <img src={cardsArrow === "down" ? downArrow : upArrow} alt=""/>
             </span></div>
-            <div>Last Created</div>
+            <div>Last Updated <span onClick={changeUpdatedDirection}>
+                <img src={updatedArrow === "down" ? downArrow : upArrow} alt=""/>
+            </span></div>
+            <div>Created by</div>
             <div>Actions</div>
         </div>
     )

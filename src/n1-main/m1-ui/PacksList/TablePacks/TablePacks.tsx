@@ -33,19 +33,15 @@ export const TablePacks: React.FC<TablePacksProspType> = ({removePack, pageCount
 
                         const updatedDate = pack.updated.slice(0, 10)
                         const updatedTime = pack.updated.slice(11, 19)
-                        const createdDate = pack.created.slice(0, 10)
-                        const createdTime = pack.created.slice(11, 19)
 
                         return (
                             <TableData
                                 name={pack.name}
                                 _id={pack._id}
                                 cardsCount={pack.cardsCount}
-                                created={pack.created}
+                                createdBy={pack.user_name}
                                 updatedDate={updatedDate}
                                 updatedTime={updatedTime}
-                                createdDate={createdDate}
-                                createdTime={createdTime}
                                 user_id={pack.user_id}
                                 key={pack._id}
                                 removePack={removePack}

@@ -40,7 +40,7 @@ const App = () => {
             <Preloader/>
             :
             <div className='app-wrapper'>
-                <Header/>
+                {/*<Header/>*/}
                 {isLoggedIn && <HeaderMain/>}
                 <div className='app-wrapper-content'>
                     <Route exact path={'/'} render={() => <Redirect to={PATH.PROFILE}/>}/>
