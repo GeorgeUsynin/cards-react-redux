@@ -12,10 +12,8 @@ import {PATH} from "../../App";
 
 export const Profile = () => {
 
-    debugger
     const dispatch = useDispatch()
 
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching) //isFetching from AUTH reducer!!!
     const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
 
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
@@ -34,10 +32,6 @@ export const Profile = () => {
     }
 
     return (
-        isFetching
-            ?
-            <Preloader/>
-            :
             <div className={cls.profileContainer}>
                 <div className={cls.card}>
                     <div className={cls.info}>

@@ -12,7 +12,6 @@ import {Redirect} from "react-router-dom";
 import {PATH} from "../../App";
 import {DoubleRange} from "./DoubleRange/DoubleRange";
 import Paginator from "../common/Paginator/Paginator";
-import {Preloader} from "../common/preloader/Preloader";
 
 type ButtonNameType = 'my' | 'all'
 
@@ -22,8 +21,8 @@ export const PacksList = () => {
 
     const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
 
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
     const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     const page = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.pageCount)
@@ -37,12 +36,12 @@ export const PacksList = () => {
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
 
     useEffect(() => {
-        if (!id) {
-            dispatch(isLoggedInApp())
+        if (!isLoggedIn) {
+            if(!error) dispatch(isLoggedInApp())
         } else {
             dispatch(getDataPacks())
         }
-    }, [id, dispatch, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
+    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
 
 
     const addPack = useCallback(() => {
@@ -73,10 +72,6 @@ export const PacksList = () => {
     }
 
     return (
-        isFetching
-            ?
-            <Preloader/>
-            :
             <div className={cls.packlistContainer}>
                 <div className={cls.card}>
                     <div className={cls.info}>

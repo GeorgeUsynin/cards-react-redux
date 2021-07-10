@@ -7,8 +7,7 @@ import {AppRootStateType} from "../../../m2-bll/store";
 import defaultAvatar from '../../../../assets/images/avatar.png'
 import SuperInputText from "../../common/SuperInput/SuperInputText";
 import {isLoggedInApp} from "../../../m2-bll/authReducer";
-import {Redirect} from 'react-router-dom';
-import {Preloader} from "../../common/preloader/Preloader";
+import {Redirect, useHistory} from 'react-router-dom';
 
 
 export const PersonalInfo: React.FC = () => {
@@ -18,36 +17,35 @@ export const PersonalInfo: React.FC = () => {
     const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
 
+    const history = useHistory()
+
     const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
+
+    let [ava, setAva] = useState<string>('')
+    let [nickname, setNickname] = useState<string>(name)
 
     useEffect(() => {
         if (!id) {
             dispatch(isLoggedInApp())
         }
+        setNickname(name)
     }, [id])
 
-    let [ava, setAva] = useState<string>('')
-    let [nickname, setNickname] = useState<string>(name)
 
     const cancelHandler = () => {
-        debugger
-        return <Redirect to={PATH.PROFILE}/>
+        history.push(PATH.PROFILE)
     }
     const saveHandler = () => {
         dispatch(editUserProfileTC(nickname, ava))
-        return <Redirect to={PATH.PROFILE}/>
+        history.push(PATH.PROFILE)
     }
 
     if (error) {
         return <Redirect to={PATH.LOGIN}/>
     }
 
+
     return (
-        isFetching
-            ?
-            <Preloader/>
-            :
             <div className={cls.infoContainer}>
                 <div className={cls.card}>
                     <h2 className={cls.title}>Personal Inforamtion</h2>
