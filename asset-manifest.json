@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cards-react-redux/static/css/main.18e6b595.chunk.css",
-    "main.js": "/cards-react-redux/static/js/main.7750bd2b.chunk.js",
-    "main.js.map": "/cards-react-redux/static/js/main.7750bd2b.chunk.js.map",
+    "main.js": "/cards-react-redux/static/js/main.b83a2dc8.chunk.js",
+    "main.js.map": "/cards-react-redux/static/js/main.b83a2dc8.chunk.js.map",
     "runtime-main.js": "/cards-react-redux/static/js/runtime-main.5c15c896.js",
     "runtime-main.js.map": "/cards-react-redux/static/js/runtime-main.5c15c896.js.map",
     "static/css/2.4a35ef0a.chunk.css": "/cards-react-redux/static/css/2.4a35ef0a.chunk.css",
@@ -14,8 +14,8 @@
     "static/css/2.4a35ef0a.chunk.css.map": "/cards-react-redux/static/css/2.4a35ef0a.chunk.css.map",
     "static/css/main.18e6b595.chunk.css.map": "/cards-react-redux/static/css/main.18e6b595.chunk.css.map",
     "static/js/2.b536a364.chunk.js.LICENSE.txt": "/cards-react-redux/static/js/2.b536a364.chunk.js.LICENSE.txt",
-    "static/media/DownSort.911416cf.svg": "/cards-react-redux/static/media/DownSort.911416cf.svg",
-    "static/media/UpSort.0899dd9b.svg": "/cards-react-redux/static/media/UpSort.0899dd9b.svg",
+    "static/media/DownSort.f30a3c93.svg": "/cards-react-redux/static/media/DownSort.f30a3c93.svg",
+    "static/media/UpSort.f8b45093.svg": "/cards-react-redux/static/media/UpSort.f8b45093.svg",
     "static/media/avatar.e5117e8e.png": "/cards-react-redux/static/media/avatar.e5117e8e.png",
     "static/media/closedEye.41390b0c.svg": "/cards-react-redux/static/media/closedEye.41390b0c.svg",
     "static/media/eye.109a1739.svg": "/cards-react-redux/static/media/eye.109a1739.svg",
@@ -26,6 +26,6 @@
     "static/css/2.4a35ef0a.chunk.css",
     "static/js/2.b536a364.chunk.js",
     "static/css/main.18e6b595.chunk.css",
-    "static/js/main.7750bd2b.chunk.js"
+    "static/js/main.b83a2dc8.chunk.js"
   ]
 }
