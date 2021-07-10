@@ -12,6 +12,7 @@ import {Redirect} from "react-router-dom";
 import {PATH} from "../../App";
 import {DoubleRange} from "./DoubleRange/DoubleRange";
 import Paginator from "../common/Paginator/Paginator";
+import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeaderPacks/TableHeaderPacks";
 
 type ButtonNameType = 'my' | 'all'
 
@@ -27,7 +28,7 @@ export const PacksList = () => {
     const page = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.pageCount)
     const packName = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.packName)
-    const updatedDirection = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.sortPacks)
+    const updatedDirection = useSelector<AppRootStateType, UpdatedDirectionType | CardsCountDirectionType>(state => state.packs.cardPacksRequestParameters.sortPacks)
     const currentUserId = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.user_id)
     const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
@@ -37,7 +38,7 @@ export const PacksList = () => {
 
     useEffect(() => {
         if (!isLoggedIn) {
-            if(!error) dispatch(isLoggedInApp())
+            if (!error) dispatch(isLoggedInApp())
         } else {
             dispatch(getDataPacks())
         }
@@ -72,40 +73,40 @@ export const PacksList = () => {
     }
 
     return (
-            <div className={cls.packlistContainer}>
-                <div className={cls.card}>
-                    <div className={cls.info}>
-                        <p className={cls.ownerTitle}>Show packs cards</p>
-                        <div className={cls.buttonsContainer}>
-                            <SuperButton
-                                className={buttonName === 'my' ? `${cls.myButton} ${activeClass}` : cls.myButton}
-                                onClick={getMyPacksList}
-                                onMouseEnter={() => setActiveClass("")}
-                                onMouseOut={() => setActiveClass(cls.active)}
-                            >My</SuperButton>
-                            <SuperButton
-                                className={buttonName === "all" ? `${cls.allButton} ${activeClass}` : cls.allButton}
-                                onClick={getAllPacksList}
-                                onMouseEnter={() => setActiveClass("")}
-                                onMouseOut={() => setActiveClass(cls.active)}
-                            >All</SuperButton>
-                        </div>
-                        <p className={cls.numberTitle}>Number of cards</p>
-                        <DoubleRange/>
+        <div className={cls.packlistContainer}>
+            <div className={cls.card}>
+                <div className={cls.info}>
+                    <p className={cls.ownerTitle}>Show packs cards</p>
+                    <div className={cls.buttonsContainer}>
+                        <SuperButton
+                            className={buttonName === 'my' ? `${cls.myButton} ${activeClass}` : cls.myButton}
+                            onClick={getMyPacksList}
+                            onMouseEnter={() => setActiveClass("")}
+                            onMouseOut={() => setActiveClass(cls.active)}
+                        >My</SuperButton>
+                        <SuperButton
+                            className={buttonName === "all" ? `${cls.allButton} ${activeClass}` : cls.allButton}
+                            onClick={getAllPacksList}
+                            onMouseEnter={() => setActiveClass("")}
+                            onMouseOut={() => setActiveClass(cls.active)}
+                        >All</SuperButton>
                     </div>
-                    <div className={cls.packslist}>
-                        <h2 className={cls.packslistTitle}>Packs list</h2>
-                        <div className={cls.search_AddButtonContainer}>
-                            <Search className={cls.search}/>
-                            <div className={cls.addButtonContainer}>
-                                <SuperButton className={cls.addPackButton}
-                                             onClick={addPack}><span>Add new pack</span></SuperButton>
-                            </div>
+                    <p className={cls.numberTitle}>Number of cards</p>
+                    <DoubleRange/>
+                </div>
+                <div className={cls.packslist}>
+                    <h2 className={cls.packslistTitle}>Packs list</h2>
+                    <div className={cls.search_AddButtonContainer}>
+                        <Search className={cls.search}/>
+                        <div className={cls.addButtonContainer}>
+                            <SuperButton className={cls.addPackButton}
+                                         onClick={addPack}><span>Add new pack</span></SuperButton>
                         </div>
-                        <TablePacks removePack={removePack} pageCount={pageCount}/>
-                        <Paginator pageCount={pageCount}/>
                     </div>
+                    <TablePacks removePack={removePack} pageCount={pageCount}/>
+                    <Paginator pageCount={pageCount}/>
                 </div>
             </div>
+        </div>
     )
 }
