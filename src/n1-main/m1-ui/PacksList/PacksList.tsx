@@ -12,7 +12,7 @@ import {Redirect} from "react-router-dom";
 import {PATH} from "../../App";
 import {DoubleRange} from "./DoubleRange/DoubleRange";
 import Paginator from "../common/Paginator/Paginator";
-import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeader/TableHeader";
+import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeaderPacks/TableHeaderPacks";
 
 type ButtonNameType = 'my' | 'all'
 

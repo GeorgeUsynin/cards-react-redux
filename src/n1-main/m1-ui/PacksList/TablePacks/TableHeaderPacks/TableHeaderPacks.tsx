@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import cls from "./TableHeader.module.scss"
+import cls from "./TableHeaderPacks.module.scss"
 import {useDispatch} from "react-redux";
 import {setCardsCountDirection, setUpdatedDirection} from "../../../../m2-bll/packsReducer";
 import downArrow from "../../../../../assets/images/DownSort.svg"
@@ -15,7 +15,7 @@ export type UpdatedDirectionType = "0updated" | "1updated"
 
 export type CardsCountDirectionType = "0cardsCount" | "1cardsCount"
 
-export const TableHeader: React.FC<TableHeaderType> = ({className}) => {
+export const TableHeaderPacks: React.FC<TableHeaderType> = ({className}) => {
 
     const dispatch = useDispatch()
 

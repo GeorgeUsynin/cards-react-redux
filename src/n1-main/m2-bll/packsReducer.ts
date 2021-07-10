@@ -1,6 +1,6 @@
 import {AppThunkType} from "./store";
 import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
-import {CardsCountDirectionType, UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeader/TableHeader";
+import {CardsCountDirectionType, UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeaderPacks/TableHeaderPacks";
 
 export type CardPackType = {
     _id: string
@@ -131,7 +131,6 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
             pageCount,
             user_id
         } = getState().packs.cardPacksRequestParameters
-        debugger
         dispatch(setLoadingPacks(true))
         const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
         dispatch(setDataPacks(packs))

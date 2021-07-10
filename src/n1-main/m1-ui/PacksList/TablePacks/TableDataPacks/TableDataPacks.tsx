@@ -1,6 +1,8 @@
 import React from "react";
-import cls from "./TableData.module.scss"
+import cls from "./TableDataPacks.module.scss"
 import SuperButton from "../../../common/SuperButton/SuperButton";
+import {NavLink} from "react-router-dom";
+import {PATH} from "../../../../App";
 
 type TableDataPropsType = {
     _id: string
@@ -15,7 +17,7 @@ type TableDataPropsType = {
 }
 
 
-export const TableData: React.FC<TableDataPropsType> = ({
+export const TableDataPacks: React.FC<TableDataPropsType> = ({
                                                             name,
                                                             _id,
                                                             cardsCount,
@@ -30,15 +32,15 @@ export const TableData: React.FC<TableDataPropsType> = ({
 
     return (
         <div className={cls.tableData}>
-            <div className={cls.red}>{name}</div>
+            <NavLink to={`/cardslist/${_id}`}>
+                <div>{name}</div>
+            </NavLink>
             <div>{cardsCount}</div>
             <div>
                 <p>Date: {updatedDate}</p>
                 <p>Time: {updatedTime}</p>
             </div>
-            <div>
-                <p>{createdBy}</p>
-            </div>
+            <div>{createdBy}</div>
             <div className={cls.buttonsContainer}>
                 <SuperButton className={cls.deleteButton}
                              onClick={() => removePack(_id)}

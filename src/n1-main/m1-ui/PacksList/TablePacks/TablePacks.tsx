@@ -1,19 +1,18 @@
 import React from "react";
 import cls from "./TablePacks.module.scss"
-import {TableHeader} from "./TableHeader/TableHeader";
-import {TableData} from "./TableData/TableData";
+import {TableHeaderPacks} from "./TableHeaderPacks/TableHeaderPacks";
+import {TableDataPacks} from "./TableDataPacks/TableDataPacks";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {CardPackType} from "../../../m2-bll/packsReducer";
-import Paginator from "../../common/Paginator/Paginator";
 import {Preloader} from "../../common/preloader/Preloader";
 
-type TablePacksProspType = {
+type TablePacksPropsType = {
     removePack: (packId: string) => void
     pageCount: number
 }
 
-export const TablePacks: React.FC<TablePacksProspType> = ({removePack, pageCount}) => {
+export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, pageCount}) => {
 
 
     const packsData = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
@@ -23,7 +22,7 @@ export const TablePacks: React.FC<TablePacksProspType> = ({removePack, pageCount
 
     return (
         <div className={cls.tableContainer}>
-            <TableHeader className={cls.tableHeader}/>
+            <TableHeaderPacks className={cls.tableHeader}/>
             {
                 isFetchingPacks
                     ?
@@ -35,7 +34,7 @@ export const TablePacks: React.FC<TablePacksProspType> = ({removePack, pageCount
                         const updatedTime = pack.updated.slice(11, 19)
 
                         return (
-                            <TableData
+                            <TableDataPacks
                                 name={pack.name}
                                 _id={pack._id}
                                 cardsCount={pack.cardsCount}
