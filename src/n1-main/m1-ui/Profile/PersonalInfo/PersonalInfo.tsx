@@ -6,30 +6,31 @@ import {PATH} from "../../../App";
 import {AppRootStateType} from "../../../m2-bll/store";
 import defaultAvatar from '../../../../assets/images/avatar.png'
 import SuperInputText from "../../common/SuperInput/SuperInputText";
-import {isLoggedInApp, setPath} from "../../../m2-bll/authReducer";
+import {isLoggedInApp} from "../../../m2-bll/authReducer";
 import {Redirect, useHistory} from 'react-router-dom';
-import {Preloader} from "../../common/preloader/Preloader";
+
 
 export const PersonalInfo: React.FC = () => {
     const dispatch = useDispatch()
 
-    let history = useHistory()
-
-    dispatch(setPath(history.location.pathname))
-
     const id = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
     const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    const history = useHistory()
+
+    const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
+
+    let [ava, setAva] = useState<string>('')
+    let [nickname, setNickname] = useState<string>(name)
 
     useEffect(() => {
         if (!id) {
             dispatch(isLoggedInApp())
         }
+        setNickname(name)
     }, [id])
 
-    let [ava, setAva] = useState<string>('')
-    let [nickname, setNickname] = useState<string>(name)
 
     const cancelHandler = () => {
         history.push(PATH.PROFILE)
@@ -39,9 +40,10 @@ export const PersonalInfo: React.FC = () => {
         history.push(PATH.PROFILE)
     }
 
-    if (!isLoggedIn) {
+    if (error) {
         return <Redirect to={PATH.LOGIN}/>
     }
+
 
     return (
             <div className={cls.infoContainer}>

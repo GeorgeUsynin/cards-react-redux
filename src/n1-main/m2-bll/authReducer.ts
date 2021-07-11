@@ -7,14 +7,12 @@ type InitialStateType = {
     isFetching: boolean
     isLoggedIn: boolean
     error: string | null
-    pathHistory: string
 }
 
 const initialState: InitialStateType = {
     isFetching: false,
     isLoggedIn: false,
-    error: null,
-    pathHistory:''
+    error: null
 }
 
 // actions
@@ -23,9 +21,6 @@ export const setIsLoggedInAC = (value: boolean) =>
 
 export const setIsLoggedOutAC = (value: boolean) =>
     ({type: 'logout/SET-IS-LOGGED-OUT', value} as const)
-
-export const setPath = (path: string) =>
-    ({type: 'logout/SET-PATH', path} as const)
 
 export const setLoginError = (error: string | null) => {
     return {
@@ -50,8 +45,6 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
             return {...state, isLoggedIn: action.value}
         case "REGISTER/ERROR":
             return {...state, error: action.error}
-        case "logout/SET-PATH":
-            return {...state, pathHistory: action.path}
         case "REGISTER/LOADING":
             return {...state, isFetching: action.isFetching}
         default:
@@ -83,6 +76,7 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
     authAPI.logout()
         .then(res => {
             dispatch(setIsLoggedOutAC(false))
+            dispatch(setLoginError("logout"))
         })
         .catch((e) => {
             const error = e.response
@@ -91,7 +85,6 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
         })
         .finally(() => {
             dispatch(setLoginLoading(false))
-            dispatch(setPath(""))
         })
 }
 
@@ -106,7 +99,7 @@ export const isLoggedInApp = (): AppThunkType => (dispatch) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.messages + ', more details in the console')
-            console.log('Error: ', {...e})
+            dispatch(setLoginError(error))
         })
         .finally(() => {
             dispatch(setLoginLoading(false))
@@ -118,5 +111,4 @@ export type AuthActionsType = ReturnType<typeof setIsLoggedInAC
     | typeof setIsLoggedOutAC
     | typeof setLoginError
     | typeof setLoginLoading
-    | typeof setPath
     > // изменили запись в одну строчку !!

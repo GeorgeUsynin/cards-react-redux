@@ -27,8 +27,8 @@ export const DoubleRange = () => {
         included={true}
         onChangeRange={onChangeRange}
         onAfterChange={handleRange}
-        handleStyle={[{borderColor: 'blue', backgroundColor: 'blue'}]}
-        trackStyle={[{width: '20px', backgroundColor: 'blue'}]}
+        handleStyle={[{borderColor: '#21268F', backgroundColor: '#21268F'}]}
+        trackStyle={[{width: '20px', backgroundColor: '#21268F'}]}
         railStyle={{backgroundColor: 'grey'}}
         dotStyle={{backgroundColor: 'red'}}
         activeDotStyle={{borderColor: 'green'}}

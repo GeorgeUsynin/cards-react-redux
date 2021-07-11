@@ -1,7 +1,10 @@
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+
 .paginatorPage {
   display: flex;
   align-items: center;
-  padding: 50px 50px 0;
+  padding: 0;
 }
 
 .container {
@@ -10,12 +13,14 @@
   color: #2D2E46;
   list-style: none;
   cursor: pointer;
+  margin: 24px 0;
+  padding: 0;
 }
 
 .selectedPage {
   font-weight: bold;
   padding: 4px 6px;
-  background-color: #21268F;
+  background-color: $elementsColor;
   color: #E6D4DE;
   border-radius: 2px;
 }
@@ -44,9 +49,9 @@
 }
 
 .superSelect {
+  outline: none;
   margin-left: 10px;
   margin-right: 5px;
   padding: 6px 3px;
   font-size: 16px;
-  outline-color: #2D2E46;
 }

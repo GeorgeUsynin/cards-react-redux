@@ -15,6 +15,7 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "./m2-bll/store";
 import {PacksList} from "./m1-ui/PacksList/PacksList";
 import {Redirect} from "react-router";
+import {Preloader} from "./m1-ui/common/preloader/Preloader";
 
 export const PATH = {
     PROFILE: '/profile',
@@ -31,25 +32,30 @@ export const PATH = {
 const App = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
 
     return (
-        <div className='app-wrapper'>
-            <Header/>
-            {isLoggedIn && <HeaderMain/>}
-            <div className='app-wrapper-content'>
-                <Route exact path={'/'} render={() => <Redirect to={PATH.PROFILE}/>}/>
-                <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
-                <Route path={PATH.PROFILE} render={() => <Profile/>}/>
-                <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
-                <Route path={PATH.USER_INFO} render={() => <PersonalInfo/>}/>
-                <Route path={PATH.REGISTRATION} render={() => <Register/>}/>
-                <Route path={PATH.TEST_COMPONENTS} render={() => <TestComponents/>}/>
-                <Route path={PATH.PAGE_NOT_FOUND} render={() => <PageNotFound/>}/>
-                <Route path={PATH.RESTORE_PASSWORD} render={() => <RestorePassword/>}/>
-                <Route path={PATH.NEW_PASSWORD}
-                       render={() => <NewPassword/>}/> {/* для отображения <NewPassword/> после token стоит "?" */}
+        isFetching
+            ?
+            <Preloader/>
+            :
+            <div className='app-wrapper'>
+                <Header/>
+                {isLoggedIn && <HeaderMain/>}
+                <div className='app-wrapper-content'>
+                    <Route exact path={'/'} render={() => <Redirect to={PATH.PROFILE}/>}/>
+                    <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
+                    <Route path={PATH.PROFILE} render={() => <Profile/>}/>
+                    <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
+                    <Route path={PATH.USER_INFO} render={() => <PersonalInfo/>}/>
+                    <Route path={PATH.REGISTRATION} render={() => <Register/>}/>
+                    <Route path={PATH.TEST_COMPONENTS} render={() => <TestComponents/>}/>
+                    <Route path={PATH.PAGE_NOT_FOUND} render={() => <PageNotFound/>}/>
+                    <Route path={PATH.RESTORE_PASSWORD} render={() => <RestorePassword/>}/>
+                    <Route path={PATH.NEW_PASSWORD}
+                           render={() => <NewPassword/>}/> {/* для отображения <NewPassword/> после token стоит "?" */}
+                </div>
             </div>
-        </div>
     )
 }
 
