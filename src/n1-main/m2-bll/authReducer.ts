@@ -76,7 +76,7 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
     authAPI.logout()
         .then(res => {
             dispatch(setIsLoggedOutAC(false))
-            dispatch(setLoginError("logout"))
+            dispatch(setLoginError("logout"))//why this dispatch in then ????? may be in catch
         })
         .catch((e) => {
             const error = e.response
