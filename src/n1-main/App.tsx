@@ -16,10 +16,12 @@ import {AppRootStateType} from "./m2-bll/store";
 import {PacksList} from "./m1-ui/PacksList/PacksList";
 import {Redirect} from "react-router";
 import {Preloader} from "./m1-ui/common/preloader/Preloader";
+import {CardsList} from "./m1-ui/CardsList/CardsList";
 
 export const PATH = {
     PROFILE: '/profile',
     PACKS_LIST: '/packslist',
+    CARDS_LIST: '/cardslist/:packId?',
     USER_INFO: '/information_about_user',
     LOGIN: '/login',
     REGISTRATION: '/registration',
@@ -40,13 +42,14 @@ const App = () => {
             <Preloader/>
             :
             <div className='app-wrapper'>
-                <Header/>
+                {/*<Header/>*/}
                 {isLoggedIn && <HeaderMain/>}
                 <div className='app-wrapper-content'>
                     <Route exact path={'/'} render={() => <Redirect to={PATH.PROFILE}/>}/>
                     <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
                     <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                     <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
+                    <Route path={PATH.CARDS_LIST} render={() => <CardsList/>}/>
                     <Route path={PATH.USER_INFO} render={() => <PersonalInfo/>}/>
                     <Route path={PATH.REGISTRATION} render={() => <Register/>}/>
                     <Route path={PATH.TEST_COMPONENTS} render={() => <TestComponents/>}/>

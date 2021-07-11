@@ -1,48 +1,46 @@
 import React from "react";
-import cls from "./TableData.module.scss"
+import cls from "./TableDataPacks.module.scss"
 import SuperButton from "../../../common/SuperButton/SuperButton";
+import {NavLink} from "react-router-dom";
+import {PATH} from "../../../../App";
 
 type TableDataPropsType = {
     _id: string
     user_id: string
     name: string
     cardsCount: number
-    created: string
     updatedDate: string
     updatedTime: string
-    createdDate: string
-    createdTime: string
     removePack: (packId: string) => void
     appUserId: string
+    createdBy: string
 }
 
 
-export const TableData: React.FC<TableDataPropsType> = ({
+export const TableDataPacks: React.FC<TableDataPropsType> = ({
                                                             name,
                                                             _id,
                                                             cardsCount,
                                                             updatedDate,
                                                             updatedTime,
-                                                            createdDate,
-                                                            createdTime,
                                                             removePack,
                                                             appUserId,
                                                             user_id,
+                                                            createdBy,
                                                             children
                                                         }) => {
 
     return (
         <div className={cls.tableData}>
-            <div className={cls.red}>{name}</div>
+            <NavLink to={`/cardslist/${_id}`}>
+                <div>{name}</div>
+            </NavLink>
             <div>{cardsCount}</div>
             <div>
                 <p>Date: {updatedDate}</p>
                 <p>Time: {updatedTime}</p>
             </div>
-            <div>
-                <p>Date: {createdDate}</p>
-                <p>Time: {createdTime}</p>
-            </div>
+            <div>{createdBy}</div>
             <div className={cls.buttonsContainer}>
                 <SuperButton className={cls.deleteButton}
                              onClick={() => removePack(_id)}
