@@ -9,16 +9,16 @@ import {Preloader} from "../../common/preloader/Preloader";
 
 type TablePacksPropsType = {
     removePack: (packId: string) => void
-    pageCount: number
+    editPackHandler: (packId: string) => void
 }
 
-export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, pageCount}) => {
+export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, editPackHandler}) => {
 
 
     const packsData = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
     const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
     const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
-
+    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
 
     return (
         <div className={cls.tableContainer}>
@@ -28,26 +28,31 @@ export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, pageCount
                     ?
                     <Preloader/>
                     :
-                    packsData.map(pack => {
+                    cardPacksTotalCount !== 0
+                        ?
+                        packsData.map(pack => {
 
-                        const updatedDate = pack.updated.slice(0, 10)
-                        const updatedTime = pack.updated.slice(11, 19)
+                            const updatedDate = pack.updated.slice(0, 10)
+                            const updatedTime = pack.updated.slice(11, 19)
 
-                        return (
-                            <TableDataPacks
-                                name={pack.name}
-                                _id={pack._id}
-                                cardsCount={pack.cardsCount}
-                                createdBy={pack.user_name}
-                                updatedDate={updatedDate}
-                                updatedTime={updatedTime}
-                                user_id={pack.user_id}
-                                key={pack._id}
-                                removePack={removePack}
-                                appUserId={appUserId}
-                            />
-                        )
-                    })
+                            return (
+                                <TableDataPacks
+                                    name={pack.name}
+                                    _id={pack._id}
+                                    cardsCount={pack.cardsCount}
+                                    createdBy={pack.user_name}
+                                    updatedDate={updatedDate}
+                                    updatedTime={updatedTime}
+                                    user_id={pack.user_id}
+                                    key={pack._id}
+                                    removePack={removePack}
+                                    editPackHandler={editPackHandler}
+                                    appUserId={appUserId}
+                                />
+                            )
+                        })
+                        :
+                        <p className={cls.noPacksTitle}>You don't have any packs. Please create a new one</p>
             }
         </div>
     )

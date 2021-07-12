@@ -1,6 +1,9 @@
 import {AppThunkType} from "./store";
 import {packsApi, PacksResponseType} from "../m3-dal/apiPacks";
-import {CardsCountDirectionType, UpdatedDirectionType} from "../m1-ui/PacksList/TablePacks/TableHeaderPacks/TableHeaderPacks";
+import {
+    CardsCountDirectionType,
+    UpdatedDirectionType
+} from "../m1-ui/PacksList/TablePacks/TableHeaderPacks/TableHeaderPacks";
 
 export type CardPackType = {
     _id: string
@@ -155,6 +158,16 @@ export const deletePack = (packId: string): AppThunkType => async (dispatch) => 
     try {
         dispatch(setLoadingPacks(true))
         await packsApi.deletePack(packId)
+        dispatch(getDataPacks())
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const editPack = (packId: string, name: string): AppThunkType => async (dispatch) => {
+    try {
+        dispatch(setLoadingPacks(true))
+        await packsApi.editPack(packId, name)
         dispatch(getDataPacks())
     } catch (e) {
         console.log(e)

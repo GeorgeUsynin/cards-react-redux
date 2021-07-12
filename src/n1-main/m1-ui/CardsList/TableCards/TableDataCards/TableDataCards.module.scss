@@ -9,6 +9,7 @@
   background: #ECECF9;
   align-items: center;
   justify-content: start;
+  padding: 10px 0;
 
   div {
     margin-left: 24px;
@@ -21,6 +22,7 @@
       background: #F1453D;
       border-radius: 5px;
       cursor: pointer;
+      margin-right: 15px;
 
       span {
         @include primaryButtonText(5px);
@@ -31,11 +33,30 @@
       }
     }
 
+    .editButton{
+      background: #D7D8EF;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 15px;
+
+      span {
+        @include primaryButtonText(5px);
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+        color: $elementsColor;
+      }
+    }
+
     .deleteButton:disabled{
       opacity: 0.3;
       cursor: not-allowed;
     }
   }
+}
+
+.gridChangeClass{
+  grid-template-columns: 25% 25% 15% 15% 20%;
 }
 
 .tableData:nth-child(even) {

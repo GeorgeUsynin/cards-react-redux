@@ -44,5 +44,13 @@ export const packsApi = {
     },
     deletePack(packId: string) {
         return axiosInstance.delete<CardPackType>(`cards/pack?id=${packId}`)
+    },
+    editPack(_id: string, name: string) {
+        return axiosInstance.put<CardPackType>(`cards/pack`, {
+            cardsPack: {
+                _id,
+                name
+            }
+        })
     }
 }
