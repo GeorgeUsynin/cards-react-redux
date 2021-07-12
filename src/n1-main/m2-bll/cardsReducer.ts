@@ -12,6 +12,7 @@ type InitialStateType = {
         pageCount: number
     }
     cardsPack_id: string
+    cardPackName: string
 }
 
 const initialState: InitialStateType = {
@@ -20,10 +21,11 @@ const initialState: InitialStateType = {
         cardQuestion: "",
         sortCards: "",
         page: 1,
-        pageCount: 4
+        pageCount: 6
     },
     cardsTotalCount: 0,
-    cardsPack_id: ""
+    cardsPack_id: "",
+    cardPackName: ""
 }
 
 // //actions
@@ -46,6 +48,15 @@ export const setDataCards = (dataCards: CardsResponseType) =>
 export const setPackId = (packId: string) =>
     ({type: 'cards/SET-PACK-ID', packId} as const)
 
+export const setCardPackName = (packName: string) =>
+    ({type: 'cards/SET-PACK-NAME', packName} as const)
+
+export const setCurrentPage = (requestedPage: number) =>
+    ({type: 'cards/SET-CURRENT-PAGE', requestedPage} as const)
+
+export const setPageCount = (count: number) =>
+    ({type: 'cards/SET-PAGE-COUNT', count} as const)
+
 // const setLoadingPacks = (isFetching: boolean) =>
 //     ({type: 'packs/SET-LOADING-PACKS', isFetching} as const)
 //
@@ -65,6 +76,12 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
             return {...state, ...action.dataCards}
         case "cards/SET-PACK-ID":
             return {...state, cardsPack_id: action.packId}
+        case "cards/SET-PACK-NAME":
+            return {...state, cardPackName: action.packName}
+        case "cards/SET-CURRENT-PAGE":
+            return {...state, cardsRequestParameters: {...state.cardsRequestParameters, page: action.requestedPage}}
+        case "cards/SET-PAGE-COUNT":
+            return {...state, cardsRequestParameters: {...state.cardsRequestParameters, pageCount: action.count}}
         default:
             return state
     }
@@ -113,4 +130,7 @@ export const getDataCards = (): AppThunkType => async (dispatch, getState) => {
 
 //
 export type CardsActionType = ReturnType<typeof setDataCards
-    | typeof setPackId>
+    | typeof setPackId
+    | typeof setCardPackName
+    | typeof setCurrentPage
+    | typeof setPageCount>

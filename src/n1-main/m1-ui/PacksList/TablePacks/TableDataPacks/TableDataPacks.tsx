@@ -3,6 +3,8 @@ import cls from "./TableDataPacks.module.scss"
 import SuperButton from "../../../common/SuperButton/SuperButton";
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../../../App";
+import {useDispatch} from "react-redux";
+import {setCardPackName} from "../../../../m2-bll/cardsReducer";
 
 type TableDataPropsType = {
     _id: string
@@ -18,21 +20,23 @@ type TableDataPropsType = {
 
 
 export const TableDataPacks: React.FC<TableDataPropsType> = ({
-                                                            name,
-                                                            _id,
-                                                            cardsCount,
-                                                            updatedDate,
-                                                            updatedTime,
-                                                            removePack,
-                                                            appUserId,
-                                                            user_id,
-                                                            createdBy,
-                                                            children
-                                                        }) => {
+                                                                 name,
+                                                                 _id,
+                                                                 cardsCount,
+                                                                 updatedDate,
+                                                                 updatedTime,
+                                                                 removePack,
+                                                                 appUserId,
+                                                                 user_id,
+                                                                 createdBy,
+                                                                 children
+                                                             }) => {
+
+    const dispatch = useDispatch()
 
     return (
         <div className={cls.tableData}>
-            <NavLink to={`/cardslist/${_id}`}>
+            <NavLink to={`/cardslist/${_id}`} onClick={() => dispatch(setCardPackName(name))}>
                 <div>{name}</div>
             </NavLink>
             <div>{cardsCount}</div>

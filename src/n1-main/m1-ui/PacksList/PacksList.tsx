@@ -5,7 +5,14 @@ import {TablePacks} from "./TablePacks/TablePacks";
 import Search from "../common/Search/Search";
 
 import {useDispatch, useSelector} from "react-redux";
-import {createNewPack, deletePack, getDataPacks, setUserId} from "../../m2-bll/packsReducer";
+import {
+    createNewPack,
+    deletePack,
+    getDataPacks,
+    setCurrentPage,
+    setPageCount,
+    setUserId
+} from "../../m2-bll/packsReducer";
 import {AppRootStateType} from "../../m2-bll/store";
 import {isLoggedInApp} from "../../m2-bll/authReducer";
 import {Redirect} from "react-router-dom";
@@ -13,6 +20,7 @@ import {PATH} from "../../App";
 import {DoubleRange} from "./DoubleRange/DoubleRange";
 import Paginator from "../common/Paginator/Paginator";
 import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeaderPacks/TableHeaderPacks";
+import {Preloader} from "../common/preloader/Preloader";
 
 type ButtonNameType = 'my' | 'all'
 
@@ -32,6 +40,9 @@ export const PacksList = () => {
     const currentUserId = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.user_id)
     const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
+    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
+
 
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
@@ -67,10 +78,18 @@ export const PacksList = () => {
         dispatch(setUserId(""))
     }, [dispatch])
 
+    const onPacksPageChanges = useCallback((page: number) => {
+        dispatch(setCurrentPage(page+1))
+    },[dispatch])
+
+    const changePacksPageCount = useCallback((count: number) => {
+        dispatch(setPageCount(count))
+    },[dispatch])
 
     if (error) {
         return <Redirect to={PATH.LOGIN}/>
     }
+
 
     return (
         <div className={cls.packlistContainer}>
@@ -104,7 +123,12 @@ export const PacksList = () => {
                         </div>
                     </div>
                     <TablePacks removePack={removePack} pageCount={pageCount}/>
-                    <Paginator pageCount={pageCount}/>
+                    {!!cardPacksTotalCount && <Paginator
+                        pageCount={pageCount}
+                        itemsTotalCount={cardPacksTotalCount}
+                        onPageChanges={onPacksPageChanges}
+                        changePageCount={changePacksPageCount}
+                    />}
                 </div>
             </div>
         </div>
