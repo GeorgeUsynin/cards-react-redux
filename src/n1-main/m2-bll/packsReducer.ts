@@ -30,6 +30,8 @@ type InitialStateType = {
     cardPacksRequestParameters: PackRequestParameters
     cardPacksTotalCount: number
     isFetching: boolean
+    maxCardsCount: number
+    minCardsCount: number
 }
 
 const initialState: InitialStateType = {
@@ -44,7 +46,9 @@ const initialState: InitialStateType = {
         user_id: ""
     },
     cardPacksTotalCount: 0,
-    isFetching: false
+    isFetching: false,
+    maxCardsCount: 0,
+    minCardsCount: 0
 }
 
 //actions

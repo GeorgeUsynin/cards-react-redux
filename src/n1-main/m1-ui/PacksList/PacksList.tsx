@@ -7,7 +7,8 @@ import Search from "../common/Search/Search";
 import {useDispatch, useSelector} from "react-redux";
 import {
     createNewPack,
-    deletePack, editPack,
+    deletePack,
+    editPack,
     getDataPacks,
     setCurrentPage,
     setPageCount,
@@ -41,8 +42,8 @@ export const PacksList = () => {
     const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-    const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
-
+    const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
+    const minCount = useSelector<AppRootStateType, number>(state => state.packs.minCardsCount)
 
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
@@ -122,8 +123,11 @@ export const PacksList = () => {
                             onMouseOut={() => setActiveClass(cls.active)}
                         >All</SuperButton>
                     </div>
-                    <p className={cls.numberTitle}>Number of cards</p>
-                    <DoubleRange/>
+                    {<p className={cls.numberTitle}>Number of cards</p>}
+                    <DoubleRange
+                        maxCount={maxCount}
+                        minCount={minCount}
+                    />
                 </div>
                 <div className={cls.packslist}>
                     <h2 className={cls.packslistTitle}>Packs list</h2>
