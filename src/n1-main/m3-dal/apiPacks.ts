@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {CardPackType} from "../m2-bll/packsReducer";
-import {CardResponseType} from "./apiCards";
 
 
 export type PacksResponseType = {
