@@ -52,15 +52,25 @@ export const cardsApi = {
             }
         }).then(res => res.data)
     },
-    // createNewPack(name: string, isPrivate: boolean = false) {
-    //     return axiosInstance.post<CardPackType>("cards/pack", {
-    //         cardsPack: {
-    //             name,
-    //             isPrivate
-    //         }
-    //     })
-    // },
-    // deletePack(packId: string) {
-    //     return axiosInstance.delete<CardPackType>(`cards/pack?id=${packId}`)
-    // }
+    createNewCard(cardsPack_id: string, question: string, answer: string) {
+        return axiosInstance.post<CardResponseType>("cards/card", {
+            card: {
+                cardsPack_id,
+                question,
+                answer
+            }
+        })
+    },
+    deleteCard(cardId: string) {
+        return axiosInstance.delete<CardResponseType>(`cards/card?id=${cardId}`)
+    },
+    editCard(_id: string, question: string, answer: string){
+        return axiosInstance.put<CardResponseType>(`cards/card`,{
+            card: {
+                _id,
+                question,
+                answer
+            }
+        })
+    }
 }

@@ -7,4 +7,9 @@
     background: #ECECF9;;
   }
 
+  .noCardsTitle {
+    @include text($fontFamilyTitle, 22px, 600, 39px, $elementsColor, center);
+    margin: 150px 0;
+  }
+
 }

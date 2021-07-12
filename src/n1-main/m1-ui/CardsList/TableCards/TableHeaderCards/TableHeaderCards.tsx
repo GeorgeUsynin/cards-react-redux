@@ -1,9 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import cls from "./TableHeaderCards.module.scss"
-import {useDispatch} from "react-redux";
-import {setCardsCountDirection, setUpdatedDirection} from "../../../../m2-bll/packsReducer";
-import downArrow from "../../../../../assets/images/DownSort.svg"
-import upArrow from "../../../../../assets/images/UpSort.svg"
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../../../../m2-bll/store";
 
 
 type TableHeaderType = {
@@ -16,6 +14,9 @@ type TableHeaderType = {
 // export type CardsCountDirectionType = "0cardsCount" | "1cardsCount"
 
 export const TableHeaderCards: React.FC<TableHeaderType> = ({className}) => {
+
+    const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
+    const currentPackUserId = useSelector<AppRootStateType, string>(state => state.cards.currentPackUserId)
 
     // const dispatch = useDispatch()
     //
@@ -46,12 +47,15 @@ export const TableHeaderCards: React.FC<TableHeaderType> = ({className}) => {
     //     }
     // }
 
+    const gridChangeClass = appUserId === currentPackUserId ? cls.gridChangeClass : ""
+
     return (
-        <div className={`${className} ${cls.tableHeader}`}>
+        <div className={`${className} ${cls.tableHeader} ${gridChangeClass}`}>
             <div>Question</div>
             <div>Answer</div>
             <div>Last Updated</div>
             <div>Grade</div>
+            {appUserId === currentPackUserId && <div>Actions</div>}
         </div>
     )
 }

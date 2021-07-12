@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {CardPackType} from "../m2-bll/packsReducer";
+import {CardResponseType} from "./apiCards";
 
 
 export type PacksResponseType = {
@@ -44,5 +45,13 @@ export const packsApi = {
     },
     deletePack(packId: string) {
         return axiosInstance.delete<CardPackType>(`cards/pack?id=${packId}`)
+    },
+    editPack(_id: string, name: string) {
+        return axiosInstance.put<CardPackType>(`cards/pack`, {
+            cardsPack: {
+                _id,
+                name
+            }
+        })
     }
 }

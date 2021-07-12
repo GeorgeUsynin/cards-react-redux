@@ -9,10 +9,10 @@ import {Preloader} from "../../common/preloader/Preloader";
 
 type TablePacksPropsType = {
     removePack: (packId: string) => void
-    pageCount: number
+    editPackHandler: (packId: string) => void
 }
 
-export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, pageCount}) => {
+export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, editPackHandler}) => {
 
 
     const packsData = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
@@ -46,12 +46,13 @@ export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, pageCount
                                     user_id={pack.user_id}
                                     key={pack._id}
                                     removePack={removePack}
+                                    editPackHandler={editPackHandler}
                                     appUserId={appUserId}
                                 />
                             )
                         })
                         :
-                        <p className={cls.noPacksTitle}>You don't have any packs. Please create a new one.</p>
+                        <p className={cls.noPacksTitle}>You don't have any packs. Please create a new one</p>
             }
         </div>
     )

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {KeyboardEvent, useCallback, useEffect, useState} from "react";
 import cls from "./PacksList.module.scss"
 import SuperButton from "../common/SuperButton/SuperButton";
 import {TablePacks} from "./TablePacks/TablePacks";
@@ -7,10 +7,11 @@ import Search from "../common/Search/Search";
 import {useDispatch, useSelector} from "react-redux";
 import {
     createNewPack,
-    deletePack,
+    deletePack, editPack,
     getDataPacks,
     setCurrentPage,
     setPageCount,
+    setSearchName,
     setUserId
 } from "../../m2-bll/packsReducer";
 import {AppRootStateType} from "../../m2-bll/store";
@@ -20,7 +21,6 @@ import {PATH} from "../../App";
 import {DoubleRange} from "./DoubleRange/DoubleRange";
 import Paginator from "../common/Paginator/Paginator";
 import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeaderPacks/TableHeaderPacks";
-import {Preloader} from "../common/preloader/Preloader";
 
 type ButtonNameType = 'my' | 'all'
 
@@ -62,6 +62,12 @@ export const PacksList = () => {
             dispatch(createNewPack(newPackName))
     }, [dispatch])
 
+    const editPackHandler = useCallback((packId: string) => {
+        const newPackName = prompt('Enter the name of the new pack: ')
+        if (newPackName)
+            dispatch(editPack(packId, newPackName))
+    }, [dispatch])
+
 
     const removePack = useCallback((packId: string) => {
         dispatch(deletePack(packId))
@@ -79,12 +85,18 @@ export const PacksList = () => {
     }, [dispatch])
 
     const onPacksPageChanges = useCallback((page: number) => {
-        dispatch(setCurrentPage(page+1))
-    },[dispatch])
+        dispatch(setCurrentPage(page + 1))
+    }, [dispatch])
 
     const changePacksPageCount = useCallback((count: number) => {
         dispatch(setPageCount(count))
-    },[dispatch])
+    }, [dispatch])
+
+    const handlePressSearch = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+        dispatch(setSearchName(e.currentTarget.value))
+        e.currentTarget.blur()
+    }, [dispatch])
+
 
     if (error) {
         return <Redirect to={PATH.LOGIN}/>
@@ -116,13 +128,16 @@ export const PacksList = () => {
                 <div className={cls.packslist}>
                     <h2 className={cls.packslistTitle}>Packs list</h2>
                     <div className={cls.search_AddButtonContainer}>
-                        <Search className={cls.search}/>
+                        <Search className={cls.search} handlePressSearch={handlePressSearch}/>
                         <div className={cls.addButtonContainer}>
                             <SuperButton className={cls.addPackButton}
                                          onClick={addPack}><span>Add new pack</span></SuperButton>
                         </div>
                     </div>
-                    <TablePacks removePack={removePack} pageCount={pageCount}/>
+                    <TablePacks
+                        removePack={removePack}
+                        editPackHandler={editPackHandler}
+                    />
                     {!!cardPacksTotalCount && <Paginator
                         pageCount={pageCount}
                         itemsTotalCount={cardPacksTotalCount}

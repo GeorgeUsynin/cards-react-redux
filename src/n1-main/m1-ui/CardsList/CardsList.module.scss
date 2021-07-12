@@ -18,11 +18,23 @@
       padding: 24px 48px;
       width: 100%;
 
-      .cardslistTitle {
-        @include text($fontFamilyTitle, 22px, 600, 33px, $textColor, left);
-        margin: 0 0 15px;
-      }
+      .arrowTitleContainer{
+        display: flex;
+        margin-left: -10px;
+        .arrow{
+          height: 30px;
+          width: 50px;
+          cursor: pointer;
+        }
 
+        .cardslistTitle {
+          @include text($fontFamilyTitle, 22px, 600, 33px, $textColor, left);
+          margin: 0 0 15px;
+          span{
+            color: #ab8dc9;
+          }
+        }
+      }
       .search_AddButtonContainer {
         display: flex;
         margin-bottom: 24px;
