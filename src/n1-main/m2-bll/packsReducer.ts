@@ -29,6 +29,8 @@ type InitialStateType = {
     cardPacks: Array<CardPackType>
     cardPacksRequestParameters: PackRequestParameters
     cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
     isFetching: boolean
 }
 
@@ -43,6 +45,8 @@ const initialState: InitialStateType = {
         packName: "",
         user_id: ""
     },
+    maxCardsCount: 0,
+    minCardsCount: 0,
     cardPacksTotalCount: 0,
     isFetching: false
 }
@@ -135,6 +139,7 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
             user_id
         } = getState().packs.cardPacksRequestParameters
         dispatch(setLoadingPacks(true))
+        debugger
         const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
         dispatch(setDataPacks(packs))
     } catch (e) {
