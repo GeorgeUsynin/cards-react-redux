@@ -30,9 +30,9 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
 
 
     const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
-    const currentPackUserId = useSelector<AppRootStateType, string>(state => state.cards.currentPackUserId)
+    const packUserId = useSelector<AppRootStateType, string>(state => state.cards.packUserId)
 
-    const gridChangeClass = appUserId === currentPackUserId ? cls.gridChangeClass : ""
+    const gridChangeClass = appUserId === packUserId ? cls.gridChangeClass : ""
 
     return (
         <div className={`${cls.tableData} ${gridChangeClass}`}>
@@ -45,7 +45,7 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
             <div>{grade}</div>
 
             {
-                appUserId === currentPackUserId
+                appUserId === packUserId
                 &&
                 <div className={cls.buttonsContainer}>
                     <SuperButton
@@ -56,7 +56,6 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
                         onClick={() => editCardHandler(card_id)}
                         className={cls.editButton}
                     ><span>Edit</span></SuperButton>
-
                 </div>
             }
         </div>

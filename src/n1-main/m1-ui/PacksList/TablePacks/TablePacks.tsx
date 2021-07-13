@@ -48,6 +48,7 @@ export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, editPackH
                                     removePack={removePack}
                                     editPackHandler={editPackHandler}
                                     appUserId={appUserId}
+
                                 />
                             )
                         })

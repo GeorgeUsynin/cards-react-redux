@@ -13,7 +13,8 @@ type InitialStateType = {
     }
     cardsPack_id: string
     cardPackName: string
-    currentPackUserId: string
+    packUserId: string
+    isFetching: boolean
 }
 
 const initialState: InitialStateType = {
@@ -27,23 +28,10 @@ const initialState: InitialStateType = {
     cardsTotalCount: 0,
     cardsPack_id: "",
     cardPackName: "",
-    currentPackUserId: ""
+    packUserId: "",
+    isFetching: false
 }
 
-// //actions
-//
-// export const setSearchName = (requestedName: string) =>
-//     ({type: 'packs/SET-SEARCH-NAME', requestedName} as const)
-//
-// export const setCurrentPage = (requestedPage: number) =>
-//     ({type: 'packs/SET-CURRENT-PAGE', requestedPage} as const)
-//
-// export const setUpdatedDirection = (direction: UpdatedDirectionType) =>
-//     ({type: 'packs/SET-UPDATED-DIRECTION', direction} as const)
-//
-// export const setCardsCountDirection = (direction: CardsCountDirectionType) =>
-//     ({type: 'packs/SET-CARDS-COUNT-DIRECTION', direction} as const)
-//
 
 export const setSearchName = (requestedName: string) =>
     ({type: 'cards/SET-SEARCH-NAME', requestedName} as const)
@@ -57,8 +45,8 @@ export const setPackId = (packId: string) =>
 export const setCardPackName = (packName: string) =>
     ({type: 'cards/SET-PACK-NAME', packName} as const)
 
-export const setCurrentPackUserId = (id: string) =>
-    ({type: 'cards/SET-CURRENT-PACK-USER-ID', id} as const)
+export const setCurrentPackId = (packId: string) =>
+    ({type: 'cards/SET-CURRENT-PACK-ID', packId} as const)
 
 export const setCurrentPage = (requestedPage: number) =>
     ({type: 'cards/SET-CURRENT-PAGE', requestedPage} as const)
@@ -66,17 +54,8 @@ export const setCurrentPage = (requestedPage: number) =>
 export const setPageCount = (count: number) =>
     ({type: 'cards/SET-PAGE-COUNT', count} as const)
 
-// const setLoadingPacks = (isFetching: boolean) =>
-//     ({type: 'packs/SET-LOADING-PACKS', isFetching} as const)
-//
-// export const setUserId = (userId: string) =>
-//     ({type: 'packs/SET-USER-ID', userId} as const)
-//
-// export const setPageCount = (count: number) =>
-//     ({type: 'packs/SET-PAGE-COUNT', count} as const)
-//
-// export const setRangeSort = (range: number[]) =>
-//     ({type: 'packs/SET-RANGE-SORT', range} as const)
+export const setLoadingCards = (isFetching: boolean) =>
+    ({type: 'cards/SET-LOADING-CARDS', isFetching} as const)
 
 
 export const cardsReducer = (state: InitialStateType = initialState, action: CardsActionType): InitialStateType => {
@@ -91,13 +70,15 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
             return {...state, cardsRequestParameters: {...state.cardsRequestParameters, page: action.requestedPage}}
         case "cards/SET-PAGE-COUNT":
             return {...state, cardsRequestParameters: {...state.cardsRequestParameters, pageCount: action.count}}
-        case "cards/SET-CURRENT-PACK-USER-ID":
-            return {...state, currentPackUserId: action.id}
+        case "cards/SET-CURRENT-PACK-ID":
+            return {...state, cardsPack_id: action.packId}
         case "cards/SET-SEARCH-NAME":
             return {
                 ...state,
                 cardsRequestParameters: {...state.cardsRequestParameters, cardQuestion: action.requestedName}
             }
+        case "cards/SET-LOADING-CARDS":
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
@@ -106,6 +87,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
 //thunks
 
 export const getDataCards = (): AppThunkType => async (dispatch, getState) => {
+    dispatch(setLoadingCards(true))
     try {
         const {
             cardQuestion,
@@ -119,14 +101,13 @@ export const getDataCards = (): AppThunkType => async (dispatch, getState) => {
     } catch (e) {
         console.log(e)
     } finally {
-
+        dispatch(setLoadingCards(false))
     }
 }
 
 export const createNewCard = (question: string, answer: string): AppThunkType => async (dispatch, getState) => {
-
+    dispatch(setLoadingCards(true))
     const cardsPack_id = getState().cards.cardsPack_id
-
     try {
         await cardsApi.createNewCard(cardsPack_id, question, answer)
         dispatch(getDataCards())
@@ -136,6 +117,7 @@ export const createNewCard = (question: string, answer: string): AppThunkType =>
 }
 
 export const deleteCard = (cardId: string): AppThunkType => async (dispatch) => {
+    dispatch(setLoadingCards(true))
     try {
         await cardsApi.deleteCard(cardId)
         dispatch(getDataCards())
@@ -145,6 +127,7 @@ export const deleteCard = (cardId: string): AppThunkType => async (dispatch) => 
 }
 
 export const editCard = (cardId: string, question: string, answer: string): AppThunkType => async (dispatch) => {
+    dispatch(setLoadingCards(true))
     try {
         await cardsApi.editCard(cardId, question, answer)
         dispatch(getDataCards())
@@ -159,5 +142,6 @@ export type CardsActionType = ReturnType<typeof setDataCards
     | typeof setCardPackName
     | typeof setCurrentPage
     | typeof setPageCount
-    | typeof setCurrentPackUserId
-    | typeof setSearchName>
+    | typeof setSearchName
+    | typeof setLoadingCards
+    | typeof setCurrentPackId>

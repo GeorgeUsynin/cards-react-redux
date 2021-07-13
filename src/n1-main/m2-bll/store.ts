@@ -7,6 +7,7 @@ import {RegisterActions, registerReducer} from './registerReducer'
 import {RestorePasswordActionsType, restorePasswordReducer} from "./restorePasswordReducer";
 import {PacksActionType, packsReducer} from "./packsReducer";
 import {CardsActionType, cardsReducer} from "./cardsReducer";
+import {LearnActionsType, learnReducer} from "./learnReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,10 +16,11 @@ const rootReducer = combineReducers({
     restorePassword: restorePasswordReducer,
     register: registerReducer,
     packs: packsReducer,
-    cards: cardsReducer
+    cards: cardsReducer,
+    learn: learnReducer
 })
 
-export type AppActionsType = RestorePasswordActionsType | RegisterActions | AuthActionsType | ProfileActionsType | PacksActionType | CardsActionType
+export type AppActionsType = RestorePasswordActionsType | RegisterActions | AuthActionsType | ProfileActionsType | PacksActionType | CardsActionType | LearnActionsType
 
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 

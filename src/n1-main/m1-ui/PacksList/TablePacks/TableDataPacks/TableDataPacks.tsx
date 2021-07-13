@@ -3,7 +3,8 @@ import cls from "./TableDataPacks.module.scss"
 import SuperButton from "../../../common/SuperButton/SuperButton";
 import {NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setCardPackName, setCurrentPackUserId, setSearchName} from "../../../../m2-bll/cardsReducer";
+import {setCardPackName, setSearchName} from "../../../../m2-bll/cardsReducer";
+import {setPackName} from "../../../../m2-bll/learnReducer";
 
 type TableDataPropsType = {
     _id: string
@@ -37,13 +38,16 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
 
     const onPackClickHandler = () => {
         dispatch(setCardPackName(name))
-        dispatch(setCurrentPackUserId(user_id))
         dispatch(setSearchName(''))
+        localStorage.setItem("packName", name)
     }
+
+    const hidden = user_id !== appUserId ? cls.none : ""
+    const justifyContent = user_id !== appUserId ? cls.flexEnd : cls.flexBetween
 
     return (
         <div className={cls.tableData}>
-            <NavLink to={`/cardslist/${_id}`} onClick={onPackClickHandler}>
+            <NavLink to={`/cardslist/${_id}`} onClick={onPackClickHandler} className={cls.name}>
                 <div>{name}</div>
             </NavLink>
             <div>{cardsCount}</div>
@@ -52,15 +56,28 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
                 <p>Time: {updatedTime}</p>
             </div>
             <div>{createdBy}</div>
-            <div className={cls.buttonsContainer}>
-                <SuperButton className={cls.deleteButton}
+            <div className={`${cls.buttonsContainer} ${justifyContent}` }>
+                <SuperButton className={`${cls.deleteButton} ${hidden}`}
                              onClick={() => removePack(_id)}
                              disabled={user_id !== appUserId}
                 ><span>Delete</span></SuperButton>
-                <SuperButton className={cls.editButton}
+                <SuperButton className={`${cls.editLearnButton} ${hidden}`}
                              onClick={() => editPackHandler(_id)}
-                             disabled={user_id !== appUserId}
                 ><span>Edit</span></SuperButton>
+
+                <SuperButton className={cls.editLearnButton}
+                             onClick={() => dispatch(setPackName(name))}
+                             disabled={cardsCount === 0}
+                >
+                    {
+                        cardsCount === 0
+                            ?
+                            <span>Learn</span>
+                            :
+                            <NavLink to={`/learn/${_id}`}>Learn</NavLink>
+                    }
+
+                </SuperButton>
             </div>
         </div>
     )

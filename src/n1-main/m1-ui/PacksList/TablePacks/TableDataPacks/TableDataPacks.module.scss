@@ -14,8 +14,20 @@
     margin-left: 24px;
   }
 
+  .name {
+    text-decoration: none;
+    color: black;
+  }
+
+  .name:hover {
+    transform: scale(1.2);
+    color: $elementsColor;
+  }
+
   .buttonsContainer {
     text-align: left;
+    display: flex;
+    justify-content: flex-start;
 
     .deleteButton {
       background: #F1453D;
@@ -32,27 +44,41 @@
       }
     }
 
-    .editButton{
+    .editLearnButton {
       background: #D7D8EF;
       border-radius: 5px;
       cursor: pointer;
       margin-right: 15px;
 
-      span {
+      span, a {
         @include primaryButtonText(5px);
         font-weight: 500;
         font-size: 12px;
         line-height: 14px;
         color: $elementsColor;
+        text-decoration: none;
       }
     }
 
-    .deleteButton:disabled, .editButton:disabled{
+    .none {
+      display: none;
+    }
+
+    .deleteButton:disabled, .editLearnButton:disabled {
       opacity: 0.3;
       cursor: not-allowed;
     }
   }
+
+  .flexEnd {
+    justify-content: flex-end;
+  }
+
+  .flexBetween {
+    justify-content: space-between;
+  }
 }
+
 
 .tableData:nth-child(even) {
   background: #FFFFFF;

@@ -22,6 +22,7 @@ import {PATH} from "../../App";
 import {DoubleRange} from "./DoubleRange/DoubleRange";
 import Paginator from "../common/Paginator/Paginator";
 import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeaderPacks/TableHeaderPacks";
+import {getDataCards, setCurrentPackId} from "../../m2-bll/cardsReducer";
 
 type ButtonNameType = 'my' | 'all'
 
@@ -68,7 +69,6 @@ export const PacksList = () => {
         if (newPackName)
             dispatch(editPack(packId, newPackName))
     }, [dispatch])
-
 
     const removePack = useCallback((packId: string) => {
         dispatch(deletePack(packId))

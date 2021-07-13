@@ -127,8 +127,9 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
 //thunks
 
 export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
-    try {
+    dispatch(setLoadingPacks(true))
 
+    try {
         const {
             packName,
             minCardsCount,
@@ -138,7 +139,6 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
             pageCount,
             user_id
         } = getState().packs.cardPacksRequestParameters
-        dispatch(setLoadingPacks(true))
         const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
         dispatch(setDataPacks(packs))
     } catch (e) {
@@ -149,8 +149,8 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
 }
 
 export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
+    dispatch(setLoadingPacks(true))
     try {
-        dispatch(setLoadingPacks(true))
         await packsApi.createNewPack(name, isPrivate)
         dispatch(getDataPacks())
     } catch (e) {
@@ -159,8 +159,8 @@ export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType =
 }
 
 export const deletePack = (packId: string): AppThunkType => async (dispatch) => {
+    dispatch(setLoadingPacks(true))
     try {
-        dispatch(setLoadingPacks(true))
         await packsApi.deletePack(packId)
         dispatch(getDataPacks())
     } catch (e) {
@@ -169,8 +169,8 @@ export const deletePack = (packId: string): AppThunkType => async (dispatch) => 
 }
 
 export const editPack = (packId: string, name: string): AppThunkType => async (dispatch) => {
+    dispatch(setLoadingPacks(true))
     try {
-        dispatch(setLoadingPacks(true))
         await packsApi.editPack(packId, name)
         dispatch(getDataPacks())
     } catch (e) {
