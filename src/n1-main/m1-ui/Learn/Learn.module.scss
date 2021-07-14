@@ -1,0 +1,62 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.learnContainer {
+  height: 100vh;
+  background: $bgColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card{
+    flex-basis: 460px;
+    background: $bgCard;
+    border-radius: 8px;
+
+    .title{
+      @include text($fontFamilyTitle, 26px, 600, 39px, $textColor, center);
+      margin: 36px 0 32px;
+    }
+
+    p{
+      @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
+      margin: 33px 30px 0px;
+      span{
+        font-weight: bold;
+      }
+    }
+
+    .buttonsContainer {
+      text-align: center;
+      padding: 0 30px;
+
+      .cancelButton {
+        @include primaryButton();
+        background: #D7D8EF;
+        margin-top: 90px;
+        margin-bottom: 60px;
+        margin-right: 60px;
+
+        span {
+          @include primaryButtonText(9px 36px);
+          color: $elementsColor;
+        }
+      }
+
+      .showAnswerButton {
+        @include primaryButton();
+
+        span {
+          @include primaryButtonText(9px 43px);
+        }
+      }
+    }
+
+  }
+  .noCards{
+    @include text($fontFamilyTitle, 22px, 600, 33px, $textColor, center);
+    padding: 25px 0 32px;
+  }
+
+
+}
