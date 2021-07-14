@@ -1,25 +1,13 @@
 @import "src/n1-main/m1-ui/common/styles/sass/mixins";
 @import "src/n1-main/m1-ui/common/styles/sass/variables";
 
-.form {
-  width: 100%;
-  padding: 0 40px 20px;
-
-}
-
-.formWrapper {
-  min-width: 400px;
+.formContainer {
+  min-height: 200px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-}
-
-.title {
-  font-weight: 600;
-  font-family: $fontFamilyTitle;
-  font-size: 22px;
-  line-height: 33px;
+  align-items: center;
+  padding: 20px 30px;
 }
 
 .label {
@@ -31,19 +19,21 @@
   opacity: .5;
 }
 
-
 .inputForm {
-  width: 250px;
+  width: 100%;
   height: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 4px 8px;
+
   border-color: transparent;
-  border-bottom: 1.5px solid gray;
-  margin-top: 5px;
-  padding: 4px 6px;
+  border-bottom: 2px solid grey;
   outline: none;
 }
 
 .errorContainer {
   height: 30px;
+
   .error {
     color: red;
     padding-top: 10px;
@@ -51,12 +41,11 @@
 }
 
 
-
-.buttonContainer {
+.buttonWrapper {
   display: flex;
   justify-content: space-between;
-  width: 80%;
-  margin-top: 50px;
+  width: 100%;
+  margin-top: 20px;
 
   .cancelButton {
     @include primaryButton();
@@ -70,32 +59,14 @@
     }
   }
 
-  .saveButton {
+  .updateButton {
     @include primaryButton();
     width: 120px;
     height: 36px;
-    color: aliceblue;
+    color: white;
 
     span {
       @include primaryButtonText(9px 64px);
     }
-  }
-}
-
-@media (max-width: 420px) {
-  .formWrapper {
-    max-width: 350px;
-  }
-}
-
-@media (max-width: 360px) {
-  .formWrapper {
-    max-width: 300px;
-  }
-}
-
-@media (max-width: 315px) {
-  .formWrapper {
-    max-width: 250px;
   }
 }

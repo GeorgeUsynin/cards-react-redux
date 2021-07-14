@@ -3,7 +3,7 @@ import mainStyles from '../../../App.module.scss'
 import styles from './Form.module.scss'
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { createNewPack } from '../../../m2-bll/packsReducer'
+import { createNewPack, setLoadingPacks } from '../../../m2-bll/packsReducer'
 import SuperInputText from '../../common/SuperInput/SuperInputText'
 import SuperButton from '../../common/SuperButton/SuperButton'
 
@@ -32,9 +32,9 @@ export const Form = ({setActive}: FormPropsType) => {
       packName: '',
     },
     onSubmit: async (packName: FormValues) => {
+      setActive(false)
       await dispatch(createNewPack(packName.packName))
       packName.packName = ''
-      setActive(false)
     },
     onReset: (values, {resetForm}) => resetForm(),
   })
@@ -72,7 +72,7 @@ export const Form = ({setActive}: FormPropsType) => {
             Cancel
           </SuperButton>
           <SuperButton
-            className={styles.registerButton}
+            className={styles.saveButton}
             title={'Save'}
             type={'submit'}
           >

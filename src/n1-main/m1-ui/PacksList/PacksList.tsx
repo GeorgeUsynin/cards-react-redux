@@ -63,13 +63,6 @@ export const PacksList = () => {
     setActiveModal(true)
   }
   
-  const editPackHandler = useCallback((packId: string) => {
-    const newPackName = prompt('Enter the name of the new pack: ')
-    if (newPackName)
-      dispatch(editPack(packId, newPackName))
-  }, [dispatch])
-  
-  
   const removePack = useCallback((packId: string) => {
     dispatch(deletePack(packId))
   }, [dispatch])
@@ -139,10 +132,7 @@ export const PacksList = () => {
               </SuperButton>
             </div>
           </div>
-          <TablePacks
-            removePack={removePack}
-            editPackHandler={editPackHandler}
-          />
+          <TablePacks />
           {!!cardPacksTotalCount && <Paginator
             pageCount={pageCount}
             itemsTotalCount={cardPacksTotalCount}

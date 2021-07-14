@@ -68,7 +68,7 @@ export const setCardsCountDirection = (direction: CardsCountDirectionType) =>
 const setDataPacks = (dataPacks: PacksResponseType) =>
     ({type: 'packs/SET-PACKS', dataPacks} as const)
 
-const setLoadingPacks = (isFetching: boolean) =>
+export const setLoadingPacks = (isFetching: boolean) =>
     ({type: 'packs/SET-LOADING-PACKS', isFetching} as const)
 
 export const setUserId = (userId: string) =>
@@ -150,6 +150,7 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
 }
 
 export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
+    debugger
     try {
         dispatch(setLoadingPacks(true))
         await packsApi.createNewPack(name, isPrivate)

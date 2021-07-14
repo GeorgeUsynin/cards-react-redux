@@ -23,7 +23,7 @@
   align-items: center;
   border-radius: 12px;
   background-color: white;
-  width: 40vw;
+  min-width: 40vw;
   transform: scale(0.5);
   transition: 0.4s all;
 }
