@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import {Redirect, useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {CardResponseType} from "../../m3-dal/apiCards";
 import cls from "./Learn.module.scss"
 import {Preloader} from "../common/preloader/Preloader";
-import {getCardsToLearn, setPackId} from "../../m2-bll/learnReducer";
+import {addCard, getCardsToLearn, sendCardGrade, setChangeCard, setPackId} from "../../m2-bll/learnReducer";
 import SuperButton from "../common/SuperButton/SuperButton";
+import {PATH} from "../../App";
+import {isLoggedInApp} from "../../m2-bll/authReducer";
+import {getDataPacks} from "../../m2-bll/packsReducer";
 
 const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'];
 
@@ -16,9 +19,14 @@ export const Learn = () => {
 
     const [showAnswer, setShowAnswer] = useState(false)
 
+    const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
     const cards = useSelector<AppRootStateType, Array<CardResponseType>>(state => state.learn.cards)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.learn.isFetching)
-    const packName = useSelector<AppRootStateType, string>(state => state.learn.packName)
+    const packName = localStorage.getItem("packName")
+    const changeCard = useSelector<AppRootStateType, boolean>(state => state.learn.changeCard)
+    const card = useSelector<AppRootStateType, CardResponseType | null>(state => state.learn.card)
 
     let history = useHistory()
 
@@ -27,7 +35,11 @@ export const Learn = () => {
     dispatch(setPackId(packId))
 
     useEffect(() => {
-        dispatch(getCardsToLearn())
+        if (!isLoggedIn) {
+            if (!error) dispatch(isLoggedInApp())
+        } else {
+            dispatch(getCardsToLearn())
+        }
     }, [dispatch])
 
     const getCard = (cards: Array<CardResponseType>) => {
@@ -46,17 +58,28 @@ export const Learn = () => {
         history.goBack()
     }
 
-    const setAnswer = (e:any) => {
-        console.log(e)
+    const setAnswer = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(sendCardGrade(+e.target.defaultValue))
     }
 
-    let generatedCard = cards.length !== 0 ? getCard(cards) : null
+    const nextHandler = () => {
+        setShowAnswer(false)
+        dispatch(setChangeCard(true))
+    }
 
+    if (changeCard) {
+        dispatch(addCard(getCard(cards)))
+        dispatch(setChangeCard(false))
+    }
+
+    if (error) {
+        return <Redirect to={PATH.LOGIN}/>
+    }
 
     return (
         <div className={cls.learnContainer}>
             {
-                showAnswer
+                !showAnswer
                     ?
                     isFetching
                         ?
@@ -70,7 +93,7 @@ export const Learn = () => {
                             :
                             <div className={cls.card}>
                                 <h2 className={cls.title}>{`Learn "${packName}"`}</h2>
-                                <p><span>Question: </span>{generatedCard && generatedCard.question}</p>
+                                <p><span>Question: </span>{card && card.question}</p>
                                 <div className={cls.buttonsContainer}>
                                     <SuperButton className={cls.cancelButton}
                                                  onClick={cancelHandler}
@@ -79,7 +102,9 @@ export const Learn = () => {
                                         Cancel
                                     </span>
                                     </SuperButton>
-                                    <SuperButton className={cls.showAnswerButton}>
+                                    <SuperButton className={cls.showAnswerButton}
+                                                 onClick={() => setShowAnswer(true)}
+                                    >
                                     <span>
                                         Show answer
                                     </span>
@@ -87,25 +112,41 @@ export const Learn = () => {
                                 </div>
                             </div>
                     :
-                    !generatedCard
+                    !card
                         ?
                         <Preloader/>
                         :
                         <div className={cls.card}>
                             <h2 className={cls.title}>{`Learn "${packName}"`}</h2>
-                            <p><span>Question: </span>{generatedCard && generatedCard.question}</p>
-                            <p><span>Answer: </span>{generatedCard && generatedCard.answer}</p>
+                            <p><span>Question: </span>{card && card.question}</p>
+                            <p><span>Answer: </span>{card && card.answer}</p>
+                            <p className={cls.answerTitle}>Rate yourself:</p>
                             {
                                 grades.map((grade, index) => {
                                     return (
-                                        <div key={index}>
-                                            <input type={"radio"} name={"answer"} value={index}
-                                                   onClick={(e) => setAnswer(e)}/>{grade}
+                                        <div key={index} className={cls.answers}>
+                                            <input type={"radio"} name={"answer"} value={index + 1}
+                                                   onChange={setAnswer}/>{`${grade}`}
                                         </div>
                                     )
                                 })
                             }
-
+                            <div className={cls.buttonsContainerAnswer}>
+                                <SuperButton className={cls.cancelAnswerButton}
+                                             onClick={cancelHandler}
+                                >
+                                    <span>
+                                        Cancel
+                                    </span>
+                                </SuperButton>
+                                <SuperButton className={cls.nextButton}
+                                             onClick={nextHandler}
+                                >
+                                    <span>
+                                        Next
+                                    </span>
+                                </SuperButton>
+                            </div>
                         </div>
             }
         </div>

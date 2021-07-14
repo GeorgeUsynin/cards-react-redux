@@ -4,7 +4,7 @@ import SuperButton from "../../../common/SuperButton/SuperButton";
 import {NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setCardPackName, setSearchName} from "../../../../m2-bll/cardsReducer";
-import {setPackName} from "../../../../m2-bll/learnReducer";
+import {setIsFetching, setPackName} from "../../../../m2-bll/learnReducer";
 
 type TableDataPropsType = {
     _id: string
@@ -45,6 +45,12 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
     const hidden = user_id !== appUserId ? cls.none : ""
     const justifyContent = user_id !== appUserId ? cls.flexEnd : cls.flexBetween
 
+    const onClickLearnButtonHandler = () => {
+        localStorage.setItem("packName", name)
+        dispatch(setIsFetching(true))
+    }
+
+
     return (
         <div className={cls.tableData}>
             <NavLink to={`/cardslist/${_id}`} onClick={onPackClickHandler} className={cls.name}>
@@ -66,7 +72,7 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
                 ><span>Edit</span></SuperButton>
 
                 <SuperButton className={cls.editLearnButton}
-                             onClick={() => dispatch(setPackName(name))}
+                             onClick={onClickLearnButtonHandler}
                              disabled={cardsCount === 0}
                 >
                     {

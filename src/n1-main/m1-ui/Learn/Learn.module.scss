@@ -2,40 +2,60 @@
 @import "src/n1-main/m1-ui/common/styles/sass/variables";
 
 .learnContainer {
-  height: 100vh;
+  min-height: 100vh;
   background: $bgColor;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .card{
+  .card {
+    margin: 30px 0;
     flex-basis: 460px;
     background: $bgCard;
     border-radius: 8px;
+    padding: 0 50px;
+    box-sizing: border-box;
 
-    .title{
+    .title {
       @include text($fontFamilyTitle, 26px, 600, 39px, $textColor, center);
       margin: 36px 0 32px;
     }
 
-    p{
+    p {
       @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
-      margin: 33px 30px 0px;
-      span{
+      margin: 33px 0px;
+
+      span {
         font-weight: bold;
       }
     }
 
+    .answerTitle {
+      @include text($fontFamilyText, 16px, 600, 24px, $textColor, left);
+      margin-top: 48px;
+      margin-bottom: 5px;
+    }
+
+    .answers {
+      @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
+      padding: 7px 0;
+
+      input {
+        margin: 0 8px 0 0;
+      }
+
+    }
+
     .buttonsContainer {
       text-align: center;
-      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 60px 0;
 
       .cancelButton {
         @include primaryButton();
         background: #D7D8EF;
-        margin-top: 90px;
-        margin-bottom: 60px;
-        margin-right: 60px;
 
         span {
           @include primaryButtonText(9px 36px);
@@ -52,8 +72,36 @@
       }
     }
 
+    .buttonsContainerAnswer {
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 60px 0;
+
+      .cancelAnswerButton {
+        @include primaryButton();
+        background: #D7D8EF;
+        margin-right: 60px;
+
+        span {
+          @include primaryButtonText(9px 36px);
+          color: $elementsColor;
+        }
+      }
+
+      .nextButton {
+        @include primaryButton();
+
+        span {
+          @include primaryButtonText(9px 43px);
+        }
+      }
+    }
+
   }
-  .noCards{
+
+  .noCards {
     @include text($fontFamilyTitle, 22px, 600, 33px, $textColor, center);
     padding: 25px 0 32px;
   }
