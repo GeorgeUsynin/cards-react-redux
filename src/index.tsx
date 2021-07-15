@@ -10,13 +10,11 @@ import App from "./n1-main/App";
 
 
 ReactDOM.render(
-  <React.StrictMode>
     <HashRouter>
       <Provider store={store}>
         <App/>
       </Provider>
-    </HashRouter>
-  </React.StrictMode>,
+    </HashRouter>,
   document.getElementById('root'),
 )
 
