@@ -1,22 +1,23 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import cls from './TableDataPacks.module.scss'
 import SuperButton from '../../../common/SuperButton/SuperButton'
-import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import {NavLink} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
 import {setCardPackName, setCurrentPackId, setSearchName} from '../../../../m2-bll/cardsReducer'
 import Modal from '../../../common/Modal/Modal'
-import { DeletePackForm } from './DeletePackForm/DeletePackForm'
-import { EditPackForm } from './EditPackform/EditPackForm'
+import {DeletePackForm} from './DeletePackForm/DeletePackForm'
+import {EditPackForm} from './EditPackform/EditPackForm'
+import {setIsFetching} from "../../../../m2-bll/learnReducer";
 
 type TableDataPropsType = {
-  _id: string
-  user_id: string
-  name: string
-  cardsCount: number
-  updatedDate: string
-  updatedTime: string
-  appUserId: string
-  createdBy: string
+    _id: string
+    user_id: string
+    name: string
+    cardsCount: number
+    updatedDate: string
+    updatedTime: string
+    appUserId: string
+    createdBy: string
 }
 
 
@@ -45,7 +46,10 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
     const openEditModal = () => {
         setActiveEditModal(true)
     }
-
+    const onClickLearnButtonHandler = () => {
+        localStorage.setItem("packName", name)
+        dispatch(setIsFetching(true))
+    }
 
     const onPackClickHandler = () => {
         dispatch(setCardPackName(name))
@@ -84,6 +88,19 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
                     disabled={user_id !== appUserId}
                 >
                     <span>Edit</span>
+                </SuperButton>
+                <SuperButton className={cls.editLearnButton}
+                             onClick={onClickLearnButtonHandler}
+                             disabled={cardsCount === 0}
+                >
+                    {
+                        cardsCount === 0
+                            ?
+                            <span>Learn</span>
+                            :
+                            <NavLink to={`/learn/${_id}`}>Learn</NavLink>
+                    }
+
                 </SuperButton>
             </div>
         </div>
