@@ -5,7 +5,14 @@ import {PATH} from "../../App";
 import SuperButton from "../common/SuperButton/SuperButton";
 import {logoutTC} from "../../m2-bll/authReducer";
 import {useDispatch} from "react-redux";
-import {setCurrentPage, setPageCount, setRangeSort, setSearchName, setUserId} from "../../m2-bll/packsReducer";
+import {
+    setCurrentPage,
+    setPageCount,
+    setRangeSort,
+    setSearchName,
+    setUpdatedDirection,
+    setUserId
+} from "../../m2-bll/packsReducer";
 
 
 export const HeaderMain = () => {
@@ -25,6 +32,7 @@ export const HeaderMain = () => {
         dispatch(setRangeSort([0,0]))
         dispatch(setCurrentPage(1))
         dispatch(setSearchName(""))
+        dispatch(setUpdatedDirection("0updated"))
         dispatch(setPageCount(6))
     }
 
