@@ -42,6 +42,8 @@ export const Learn = () => {
         }
     }, [dispatch])
 
+
+    //algorithm for getting card
     const getCard = (cards: Array<CardResponseType>) => {
         const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
         const rand = Math.random() * sum;
@@ -54,11 +56,12 @@ export const Learn = () => {
         return cards[res.id + 1];
     }
 
+
     const cancelHandler = () => {
         history.goBack()
     }
 
-    const setAnswer = (e: ChangeEvent<HTMLInputElement>) => {
+    const setGradeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(sendCardGrade(+e.target.defaultValue))
     }
 
@@ -126,7 +129,7 @@ export const Learn = () => {
                                     return (
                                         <div key={index} className={cls.answers}>
                                             <input type={"radio"} name={"answer"} value={index + 1}
-                                                   onChange={setAnswer}/>{`${grade}`}
+                                                   onChange={setGradeHandler}/>{`${grade}`}
                                         </div>
                                     )
                                 })

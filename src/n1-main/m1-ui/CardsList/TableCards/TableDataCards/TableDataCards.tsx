@@ -3,6 +3,7 @@ import cls from "./TableDataCards.module.scss"
 import SuperButton from "../../../common/SuperButton/SuperButton";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
+import ReactStars from 'react-stars'
 
 type TableDataCardsPropsType = {
     question: string
@@ -34,6 +35,7 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
 
     const gridChangeClass = appUserId === packUserId ? cls.gridChangeClass : ""
 
+
     return (
         <div className={`${cls.tableData} ${gridChangeClass}`}>
             <div>{question}</div>
@@ -42,7 +44,15 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
                 <p>Date: {updatedDate}</p>
                 <p>Time: {updatedTime}</p>
             </div>
-            <div>{grade}</div>
+            <div>
+                <ReactStars
+                    count={5}
+                    size={24}
+                    color2={'#ffd700'}
+                    value={grade}
+                    className={cls.stars}
+                />
+            </div>
 
             {
                 appUserId === packUserId

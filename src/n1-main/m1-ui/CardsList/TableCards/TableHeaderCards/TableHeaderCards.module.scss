@@ -5,7 +5,7 @@
 .tableHeader {
   @include text($fontFamilyText, 16px, 600, 19px, $textColor, left);
   display: grid;
-  grid-template-columns: 20% 55% 15% 10%;
+  grid-template-columns: 20% 50% 15% 15%;
   height: 48px;
   background: #ECECF9;
   align-items: center;

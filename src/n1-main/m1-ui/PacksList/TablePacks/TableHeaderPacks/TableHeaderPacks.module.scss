@@ -16,7 +16,9 @@
   .actions{
     text-align: center;
   }
-
+  .cardsTitle, .updatedTitle{
+    cursor: pointer;
+  }
   img{
     cursor: pointer;
     display: inline-block;

@@ -92,7 +92,7 @@ export const CardsList = () => {
                 <div className={cls.cardslist}>
                     <div className={cls.arrowTitleContainer}><img className={cls.arrow}
                                                                   onClick={() => {
-                                                                      history.push(PATH.PACKS_LIST)
+                                                                      history.goBack()
                                                                   }}
                                                                   src={arrow}
                                                                   alt={""}

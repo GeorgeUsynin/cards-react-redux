@@ -43,7 +43,6 @@ export const PacksList = () => {
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
-    const minCount = useSelector<AppRootStateType, number>(state => state.packs.minCardsCount)
 
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
@@ -52,16 +51,12 @@ export const PacksList = () => {
         if (!isLoggedIn) {
             if (!error) dispatch(isLoggedInApp())
         } else {
+            if(buttonName === "all"){
+                dispatch(setUserId(""))
+            }
             dispatch(getDataPacks())
         }
-    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
-
-
-    const addPack = useCallback(() => {
-        const newPackName = prompt('Enter the name of the new pack: ')
-        if (newPackName)
-            dispatch(createNewPack(newPackName))
-    }, [dispatch])
+    }, [isLoggedIn, dispatch, buttonName,page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
 
     const editPackHandler = useCallback((packId: string) => {
         const newPackName = prompt('Enter the name of the new pack: ')
@@ -73,6 +68,11 @@ export const PacksList = () => {
         dispatch(deletePack(packId))
     }, [dispatch])
 
+    const addPack = useCallback(() => {
+        const newPackName = prompt('Enter the name of the new pack: ')
+        if (newPackName)
+            dispatch(createNewPack(newPackName))
+    }, [dispatch])
 
     const getMyPacksList = useCallback(() => {
         setButtonName('my')
@@ -122,10 +122,10 @@ export const PacksList = () => {
                             onMouseOut={() => setActiveClass(cls.active)}
                         >All</SuperButton>
                     </div>
-                    {<p className={cls.numberTitle}>Number of cards</p>}
+                    <p className={cls.numberTitle}>Number of cards</p>
                     <DoubleRange
                         maxCount={maxCount}
-                        minCount={minCount}
+                        minCount={0}
                     />
                 </div>
                 <div className={cls.packslist}>

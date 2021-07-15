@@ -5,12 +5,15 @@
 .tableData {
   @include text($fontFamilyText, 13px, 500, 16px, black, left);
   display: grid;
-  grid-template-columns: 20% 55% 15% 10%;
+  grid-template-columns: 20% 50% 15% 15%;
   background: #ECECF9;
   align-items: center;
   justify-content: start;
   padding: 10px 0;
 
+  .stars{
+    margin: 0;
+  }
   div {
     margin-left: 24px;
   }

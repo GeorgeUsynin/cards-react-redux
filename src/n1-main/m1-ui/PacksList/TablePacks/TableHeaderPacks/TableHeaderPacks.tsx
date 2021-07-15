@@ -49,10 +49,10 @@ export const TableHeaderPacks: React.FC<TableHeaderType> = ({className}) => {
     return (
         <div className={`${className} ${cls.tableHeader}`}>
             <div>Name</div>
-            <div>Cards <span onClick={changeCardsCountDirection}>
+            <div onClick={changeCardsCountDirection} className={cls.cardsTitle}>Cards <span>
                 <img src={cardsArrow === "down" ? downArrow : upArrow} alt=""/>
             </span></div>
-            <div>Last Updated <span onClick={changeUpdatedDirection}>
+            <div onClick={changeUpdatedDirection} className={cls.updatedTitle}>Last Updated <span>
                 <img src={updatedArrow === "down" ? downArrow : upArrow} alt=""/>
             </span></div>
             <div>Created by</div>

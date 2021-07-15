@@ -11,12 +11,53 @@
     margin: 24px auto 0;
     background: #FEFEFF;
     border-radius: 8px;
+    display: flex;
 
     .info {
       width: 25%;
       background: #ECECF9;
       border-radius: 8px 0 0 8px;
       border-bottom: solid 1px transparent;
+    }
+    .packslist {
+      padding: 24px 48px;
+      width: 100%;
+
+      .packslistTitle {
+        @include text($fontFamilyTitle, 22px, 600, 33px, $textColor, left);
+        margin: 0 0 15px;
+      }
+
+      .search_AddButtonContainer {
+        display: flex;
+        margin-bottom: 24px;
+
+        .search {
+          @include text($fontFamilyText, 13px, 600, 16px, $textColor, left);
+          flex-grow: 2;
+          display: block;
+          outline: none;
+          padding: 0 5px;
+          background: #ECECF9;
+          border: 1px solid #635D80;
+          border-radius: 5px;
+        }
+
+        .addButtonContainer {
+          text-align: center;
+
+          .addPackButton {
+            @include primaryButton();
+            margin-left: 24px;
+
+            span {
+              @include primaryButtonText(9px 40px);
+            }
+          }
+        }
+
+      }
+
     }
   }
 }

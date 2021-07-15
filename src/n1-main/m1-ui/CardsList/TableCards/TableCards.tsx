@@ -17,6 +17,8 @@ export const TableCards: React.FC<TableCardsPropsType> = ({removeCard, editCardH
     const cardsData = useSelector<AppRootStateType, Array<CardResponseType>>(state => state.cards.cards)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
     const isFetchingCards = useSelector<AppRootStateType, boolean>(state => state.cards.isFetching)
+    const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
+    const packUserId = useSelector<AppRootStateType, string>(state => state.cards.packUserId)
 
     return (
         <div className={cls.tableContainer}>
@@ -49,7 +51,17 @@ export const TableCards: React.FC<TableCardsPropsType> = ({removeCard, editCardH
                             )
                         })
                         :
-                        <p className={cls.noCardsTitle}>This pack is empty. Click add new card to fill this pack</p>
+                        <>
+                            {
+                                appUserId === packUserId
+                                    ?
+                                    <p className={cls.noCardsTitle}>This pack is empty. Click add new card to fill this
+                                        pack</p>
+                                    :
+                                    <p className={cls.noCardsTitle}>This pack is empty</p>
+
+                            }
+                        </>
             }
         </div>
     )
