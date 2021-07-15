@@ -124,7 +124,6 @@ export const getDataCards = (): AppThunkType => async (dispatch, getState) => {
 }
 
 export const createNewCard = (question: string, answer: string): AppThunkType => async (dispatch, getState) => {
-
     const cardsPack_id = getState().cards.cardsPack_id
 
     try {

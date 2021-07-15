@@ -6,8 +6,7 @@ import Search from '../common/Search/Search'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  createNewPack,
-  deletePack, editPack,
+  deletePack,
   getDataPacks,
   setCurrentPage,
   setPageCount,
@@ -21,8 +20,8 @@ import { PATH } from '../../App'
 import { DoubleRange } from './DoubleRange/DoubleRange'
 import Paginator from '../common/Paginator/Paginator'
 import { CardsCountDirectionType, UpdatedDirectionType } from './TablePacks/TableHeaderPacks/TableHeaderPacks'
-import { Form } from './Form/Form'
 import Modal from '../common/Modal/Modal'
+import { AddPackForm } from './AddPackForm/AddPackForm'
 
 type ButtonNameType = 'my' | 'all'
 
@@ -124,7 +123,7 @@ export const PacksList = () => {
           <div className={cls.search_AddButtonContainer}>
             <Search className={cls.search} handlePressSearch={handlePressSearch}/>
             <Modal active={activeModal} setActive={setActiveModal}>
-              <Form active={activeModal} setActive={setActiveModal}/>
+              <AddPackForm active={activeModal} setActive={setActiveModal}/>
             </Modal>
             <div className={cls.addButtonContainer}>
               <SuperButton className={cls.addPackButton} onClick={openModal}>
@@ -132,7 +131,7 @@ export const PacksList = () => {
               </SuperButton>
             </div>
           </div>
-          <TablePacks />
+          <TablePacks/>
           {!!cardPacksTotalCount && <Paginator
             pageCount={pageCount}
             itemsTotalCount={cardPacksTotalCount}

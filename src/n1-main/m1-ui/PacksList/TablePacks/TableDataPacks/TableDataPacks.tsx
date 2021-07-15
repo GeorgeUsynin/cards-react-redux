@@ -20,20 +20,17 @@ type TableDataPropsType = {
 }
 
 
-export const TableDataPacks: React.FC<TableDataPropsType> = ({
-                                                               name,
-                                                               _id,
-                                                               cardsCount,
-                                                               updatedDate,
-                                                               updatedTime,
-                                                               appUserId,
-                                                               user_id,
-                                                               createdBy,
-                                                               children,
-                                                             }) => {
+export const TableDataPacks: React.FC<TableDataPropsType> = (
+  {
+    name, _id, cardsCount,
+    updatedDate, updatedTime,
+    appUserId, user_id,
+    createdBy, children,
+  },
+) => {
   
-  const [activeDeleteModal,setActiveDeleteModal] = useState<boolean>(false)
-  const [activeEditModal,setActiveEditModal] = useState<boolean>(false)
+  const [activeDeleteModal, setActiveDeleteModal] = useState<boolean>(false)
+  const [activeEditModal, setActiveEditModal] = useState<boolean>(false)
   
   const dispatch = useDispatch()
   

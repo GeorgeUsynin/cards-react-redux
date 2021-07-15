@@ -6,12 +6,7 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {CardResponseType} from "../../../m3-dal/apiCards";
 
-type TableCardsPropsType = {
-    removeCard: (cardId: string) => void
-    editCardHandler: (cardId: string) => void
-}
-
-export const TableCards: React.FC<TableCardsPropsType> = ({removeCard, editCardHandler}) => {
+export const TableCards: React.FC = () => {
 
     const cardsData = useSelector<AppRootStateType, Array<CardResponseType>>(state => state.cards.cards)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
@@ -37,8 +32,6 @@ export const TableCards: React.FC<TableCardsPropsType> = ({removeCard, editCardH
                                 updatedDate={updatedDate}
                                 updatedTime={updatedTime}
                                 grade={card.grade}
-                                removeCard={removeCard}
-                                editCardHandler={editCardHandler}
                             />
                         )
                     })

@@ -1,9 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import mainStyles from '../../../App.module.scss'
-import styles from './Form.module.scss'
+import styles from './AddPackForm.module.scss'
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { createNewPack, setLoadingPacks } from '../../../m2-bll/packsReducer'
+import { createNewPack } from '../../../m2-bll/packsReducer'
 import SuperInputText from '../../common/SuperInput/SuperInputText'
 import SuperButton from '../../common/SuperButton/SuperButton'
 
@@ -16,7 +15,7 @@ type FormValues = {
   packName: string
 }
 
-export const Form = ({setActive}: FormPropsType) => {
+export const AddPackForm = ({setActive}: FormPropsType) => {
   const dispatch = useDispatch()
   const formik = useFormik({
     validate: (packName) => {
@@ -27,20 +26,19 @@ export const Form = ({setActive}: FormPropsType) => {
         }
       }
     },
-    
     initialValues: {
       packName: '',
     },
-    onSubmit: async (packName: FormValues) => {
+    onSubmit: async (values: FormValues) => {
       setActive(false)
-      await dispatch(createNewPack(packName.packName))
-      packName.packName = ''
+      await dispatch(createNewPack(values.packName))
+      values.packName = ''
     },
-    onReset: (values, {resetForm}) => resetForm(),
   })
   
-  const handleCancel = (e: any) => {
+  const handleCancel = () => {
     setActive(false)
+    formik.resetForm()
   }
   
   return (
@@ -56,7 +54,6 @@ export const Form = ({setActive}: FormPropsType) => {
             onChange={formik.handleChange}
             value={formik.values.packName}
           />
-          {/*{formik.touched.packName}*/}
         </div>
         <div className={styles.errorContainer}>
           {formik.errors.packName ? (

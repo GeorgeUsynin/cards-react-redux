@@ -1,7 +1,8 @@
 import { useFormik } from 'formik'
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deletePack, editPack } from '../../../../../m2-bll/packsReducer'
+import { AppRootStateType } from '../../../../../m2-bll/store'
 import SuperButton from '../../../../common/SuperButton/SuperButton'
 import SuperInputText from '../../../../common/SuperInput/SuperInputText'
 import styles from './EditPackForm.module.scss'
@@ -18,7 +19,6 @@ type FormValues = {
 
 export const EditPackForm = ({packName, packId, setActive}: EditPackFormPropsType) => {
   const dispatch = useDispatch()
-  
   const formik = useFormik({
     validate: (packName) => {
       
@@ -28,13 +28,12 @@ export const EditPackForm = ({packName, packId, setActive}: EditPackFormPropsTyp
         }
       }
     },
-    
     initialValues: {
-      packName: '',
+      packName: packName,
     },
     onSubmit: async (packName: FormValues) => {
       setActive(false)
-      await dispatch(editPack(packId,packName.packName))
+      await dispatch(editPack(packId, packName.packName))
       packName.packName = ''
     },
     onReset: (values, {resetForm}) => resetForm(),
