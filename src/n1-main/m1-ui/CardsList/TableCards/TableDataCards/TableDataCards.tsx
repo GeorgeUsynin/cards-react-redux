@@ -51,6 +51,7 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
                     color2={'#ffd700'}
                     value={grade}
                     className={cls.stars}
+                    edit={false}
                 />
             </div>
 
