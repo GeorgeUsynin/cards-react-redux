@@ -3,7 +3,7 @@ import cls from './TableDataPacks.module.scss'
 import SuperButton from '../../../common/SuperButton/SuperButton'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setCardPackName, setSearchName } from '../../../../m2-bll/cardsReducer'
+import {setCardPackName, setCurrentPackId, setSearchName} from '../../../../m2-bll/cardsReducer'
 import Modal from '../../../common/Modal/Modal'
 import { DeletePackForm } from './DeletePackForm/DeletePackForm'
 import { EditPackForm } from './EditPackform/EditPackForm'
@@ -49,7 +49,7 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
 
     const onPackClickHandler = () => {
         dispatch(setCardPackName(name))
-        dispatch(setCurrentPackUserId(user_id))
+        dispatch(setCurrentPackId(user_id))
         dispatch(setSearchName(''))
     }
 

@@ -18,7 +18,6 @@ export const UserInfoCards: React.FC<UserInfoCardsType> = ({publicCardPacksCount
             <div className={cls.doubleRangeContainer}>
                 <DoubleRange
                     maxCount={maxCount}
-                    minCount={0}
                 />
             </div>
         </div>

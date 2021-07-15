@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import cls from './TableDataCards.module.scss'
 import SuperButton from '../../../common/SuperButton/SuperButton'
-import { useSelector } from 'react-redux'
-import { AppRootStateType } from '../../../../m2-bll/store'
+import {useSelector} from 'react-redux'
+import {AppRootStateType} from '../../../../m2-bll/store'
 import Modal from '../../../common/Modal/Modal'
-import { EditCardForm } from './EditCardForm/EditCardForm'
-import { DeleteCardForm } from './DeleteCardForm/DeleteCardForm'
+import {EditCardForm} from './EditCardForm/EditCardForm'
+import {DeleteCardForm} from './DeleteCardForm/DeleteCardForm'
+import ReactStars from 'react-stars'
 
 type TableDataCardsPropsType = {
-  question: string
-  answer: string
-  updatedDate: string
-  updatedTime: string
-  grade: number
-  card_id: string
+    question: string
+    answer: string
+    updatedDate: string
+    updatedTime: string
+    grade: number
+    card_id: string
 }
 
 
@@ -31,7 +32,7 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
     const [activeEditModal, setActiveEditModal] = useState<boolean>(false)
 
     const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
-    const currentPackUserId = useSelector<AppRootStateType, string>(state => state.cards.currentPackUserId)
+    const currentPackUserId = useSelector<AppRootStateType, string>(state => state.cards.packUserId)
 
     const gridChangeClass = appUserId === currentPackUserId ? cls.gridChangeClass : ""
 
@@ -50,7 +51,14 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
                 <p>Date: {updatedDate}</p>
                 <p>Time: {updatedTime}</p>
             </div>
-            <div>{grade}</div>
+            <div>
+                <ReactStars
+                    count={5}
+                    size={24}
+                    value={grade}
+                    edit={false}
+                    color2={'#ffd700'}/>
+            </div>
 
             {
                 appUserId === currentPackUserId

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import SuperDoubleRange from '../../common/SuperDoubleRange/SuperDoubleRange'
 import styles from './DoubleRange.module.scss'
 import { useDispatch } from 'react-redux'

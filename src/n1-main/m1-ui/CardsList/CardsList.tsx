@@ -1,17 +1,9 @@
-import React, {KeyboardEvent, useCallback, useEffect} from "react";
+import React, {KeyboardEvent, useCallback, useEffect, useState} from "react";
 import cls from "./CardsList.module.scss"
 import Search from "../common/Search/Search";
 import SuperButton from "../common/SuperButton/SuperButton";
 import {useHistory, useParams} from "react-router-dom";
-import {
-    createNewCard,
-    deleteCard, editCard,
-    getDataCards,
-    setCurrentPage,
-    setPackId,
-    setPageCount,
-    setSearchName
-} from "../../m2-bll/cardsReducer";
+import {getDataCards, setCurrentPage, setPackId, setPageCount, setSearchName} from "../../m2-bll/cardsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {TableCards} from "./TableCards/TableCards";
 import {PATH} from "../../App";
@@ -19,6 +11,7 @@ import {AppRootStateType} from "../../m2-bll/store";
 import Paginator from "../common/Paginator/Paginator";
 import arrow from "../../../assets/images/LeftArrow.svg"
 import Modal from '../common/Modal/Modal'
+import {AddCardForm} from "./AddCardForm/AddCardForm";
 
 export const CardsList = () => {
 
@@ -34,7 +27,7 @@ export const CardsList = () => {
 
 
     const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
-    const currentPackUserId = useSelector<AppRootStateType, string>(state => state.cards.currentPackUserId)
+    const currentPackUserId = useSelector<AppRootStateType, string>(state => state.cards.packUserId)
 
     const {packId} = useParams<{ packId: string }>()
     const [activeModal, setActiveModal] = useState<boolean>(false)
@@ -87,11 +80,7 @@ export const CardsList = () => {
                             </SuperButton>}
                         </div>
                     </div>
-
-
-                    <TableCards
-
-                    />
+                    <TableCards/>
                     {!!cardsTotalCount && <Paginator
                         pageCount={pageCount}
                         itemsTotalCount={cardsTotalCount}

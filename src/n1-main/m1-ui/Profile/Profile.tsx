@@ -98,10 +98,7 @@ export const Profile = () => {
                                          onClick={addPack}><span>Add new pack</span></SuperButton>
                         </div>
                     </div>
-                    <TablePacks
-                        removePack={removePack}
-                        editPackHandler={editPackHandler}
-                    />
+                    <TablePacks/>
                     {!!cardPacksTotalCount && <Paginator
                         pageCount={pageCount}
                         itemsTotalCount={cardPacksTotalCount}
