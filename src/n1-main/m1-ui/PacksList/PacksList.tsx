@@ -11,7 +11,7 @@ import {
     editPack,
     getDataPacks,
     setCurrentPage,
-    setPageCount,
+    setPageCount, setRangeSort,
     setSearchName,
     setUserId
 } from "../../m2-bll/packsReducer";
@@ -54,6 +54,17 @@ export const PacksList = () => {
             dispatch(getDataPacks())
         }
     }, [isLoggedIn, dispatch, buttonName, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
+
+    useEffect(()=>{
+        if(buttonName === "all"){
+            dispatch(setUserId(""))
+            dispatch(setRangeSort([0,0]))
+            dispatch(setCurrentPage(1))
+            dispatch(setSearchName(""))
+            dispatch(setPageCount(6))
+            dispatch(setPageCount(6))
+        }
+    },[dispatch])
 
     const editPackHandler = useCallback((packId: string) => {
         const newPackName = prompt('Enter the name of the new pack: ')

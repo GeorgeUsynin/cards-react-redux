@@ -26,7 +26,6 @@ export const HeaderMain = () => {
         dispatch(setCurrentPage(1))
         dispatch(setSearchName(""))
         dispatch(setPageCount(6))
-        dispatch(setPageCount(6))
     }
 
     return (
