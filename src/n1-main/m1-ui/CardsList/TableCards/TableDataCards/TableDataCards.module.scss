@@ -11,11 +11,16 @@
   justify-content: start;
   padding: 10px 0;
 
-  .stars{
+  .stars {
     margin: 0;
   }
+
   div {
     margin-left: 24px;
+
+    .rating {
+      margin-left: 0;
+    }
   }
 
   .buttonsContainer {
@@ -36,7 +41,7 @@
       }
     }
 
-    .editButton{
+    .editButton {
       background: #D7D8EF;
       border-radius: 5px;
       cursor: pointer;
@@ -51,14 +56,14 @@
       }
     }
 
-    .deleteButton:disabled{
+    .deleteButton:disabled {
       opacity: 0.3;
       cursor: not-allowed;
     }
   }
 }
 
-.gridChangeClass{
+.gridChangeClass {
   grid-template-columns: 25% 25% 15% 15% 20%;
 }
 

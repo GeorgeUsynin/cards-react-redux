@@ -43,7 +43,8 @@ export const PacksList = () => {
     const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-        const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
+    const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
+    const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
 
     const [activeModal, setActiveModal] = useState<boolean>(false)
 
@@ -112,7 +113,7 @@ export const PacksList = () => {
                         >All</SuperButton>
                     </div>
                     <p className={cls.numberTitle}>Number of cards</p>
-                    <DoubleRange maxCount={maxCount}/>
+                    {!isFetchingPacks && <DoubleRange maxCount={maxCount}/>}
                 </div>
                 <div className={cls.packslist}>
                     <h2 className={cls.packslistTitle}>Packs list</h2>

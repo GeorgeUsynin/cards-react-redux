@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import SuperDoubleRange from '../../common/SuperDoubleRange/SuperDoubleRange'
 import styles from './DoubleRange.module.scss'
-import { useDispatch } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { setRangeSort } from '../../../m2-bll/packsReducer'
+import {AppRootStateType} from "../../../m2-bll/store";
 
 type DoubleRangeType = {
   maxCount: number
 }
 
 export const DoubleRange: React.FC<DoubleRangeType> = ({maxCount}) => {
+
   const dispatch = useDispatch()
 
   const [min, setMin] = useState<number>(0)
@@ -43,7 +45,7 @@ export const DoubleRange: React.FC<DoubleRangeType> = ({maxCount}) => {
         activeDotStyle={{borderColor: 'green'}}
       />
       <div className={styles.rangeContainer}>
-        <span>{min}</span>
+        {<span>{min}</span>}
         <span>{max}</span>
       </div>
     </>

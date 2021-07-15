@@ -9,7 +9,6 @@ import {addCard, getCardsToLearn, sendCardGrade, setChangeCard, setPackId} from 
 import SuperButton from "../common/SuperButton/SuperButton";
 import {PATH} from "../../App";
 import {isLoggedInApp} from "../../m2-bll/authReducer";
-import {getDataPacks} from "../../m2-bll/packsReducer";
 
 const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'];
 
@@ -128,8 +127,10 @@ export const Learn = () => {
                                 grades.map((grade, index) => {
                                     return (
                                         <div key={index} className={cls.answers}>
+                                            <label className={cls.label}>
                                             <input type={"radio"} name={"answer"} value={index + 1}
                                                    onChange={setGradeHandler}/>{`${grade}`}
+                                            </label>
                                         </div>
                                     )
                                 })

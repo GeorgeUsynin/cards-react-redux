@@ -11,14 +11,15 @@ type UserInfoCardsType = {
 export const UserInfoCards: React.FC<UserInfoCardsType> = ({publicCardPacksCount}) => {
 
     const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
+    const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
 
     return (
         <div className={cls.infoUserCards}>
             <p className={cls.numberTitle}>Number of cards</p>
             <div className={cls.doubleRangeContainer}>
-                <DoubleRange
+                {!isFetchingPacks && <DoubleRange
                     maxCount={maxCount}
-                />
+                />}
             </div>
         </div>
     )

@@ -40,6 +40,10 @@
       @include text($fontFamilyText, 16px, 400, 24px, $textColor, left);
       padding: 7px 0;
 
+      .label{
+        cursor: pointer;
+      }
+
       input {
         margin: 0 8px 0 0;
       }

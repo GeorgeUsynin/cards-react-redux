@@ -59,9 +59,14 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
 
     return (
         <div className={cls.tableData}>
-            <NavLink to={`/cardslist/${_id}`} onClick={onPackClickHandler}>
-                <div>{name}</div>
-            </NavLink>
+            <div className={cls.name}>
+                <NavLink to={`/cardslist/${_id}`}
+                         onClick={onPackClickHandler}
+                className={cls.name}
+                >
+                    {name}
+                </NavLink>
+            </div>
             <div>{cardsCount}</div>
             <div>
                 <p>Date: {updatedDate}</p>
@@ -83,7 +88,7 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
                     <EditPackForm packName={name} packId={_id} setActive={setActiveEditModal}/>
                 </Modal>
                 <SuperButton
-                    className={cls.editButton}
+                    className={cls.editLearnButton}
                     onClick={openEditModal}
                     disabled={user_id !== appUserId}
                 >
