@@ -7,14 +7,7 @@ import {AppRootStateType} from "../../../m2-bll/store";
 import {CardPackType} from "../../../m2-bll/packsReducer";
 import {Preloader} from "../../common/preloader/Preloader";
 
-type TablePacksPropsType = {
-    removePack: (packId: string) => void
-    editPackHandler: (packId: string) => void
-}
-
-export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, editPackHandler}) => {
-
-
+export const TablePacks: React.FC = () => {
     const packsData = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
     const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
     const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
@@ -45,8 +38,6 @@ export const TablePacks: React.FC<TablePacksPropsType> = ({removePack, editPackH
                                     updatedTime={updatedTime}
                                     user_id={pack.user_id}
                                     key={pack._id}
-                                    removePack={removePack}
-                                    editPackHandler={editPackHandler}
                                     appUserId={appUserId}
 
                                 />

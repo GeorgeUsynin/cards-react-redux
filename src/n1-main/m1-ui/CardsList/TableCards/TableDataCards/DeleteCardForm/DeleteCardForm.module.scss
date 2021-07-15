@@ -1,0 +1,49 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.formContainer {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+.question {
+  font-size: 16px;
+
+  div {
+    margin-top: 10px;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .cancelButton {
+    @include primaryButton();
+    width: 120px;
+    height: 36px;
+    background: #D7D8EF;
+
+    span {
+      @include primaryButtonText(9px 36px);
+      color: $elementsColor;
+    }
+  }
+
+  .deleteButton {
+    @include primaryButton();
+    width: 120px;
+    height: 36px;
+    color: white;
+    background-color: red;
+
+    span {
+      @include primaryButtonText(9px 64px);
+    }
+  }
+}

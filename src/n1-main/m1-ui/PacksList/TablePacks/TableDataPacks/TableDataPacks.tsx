@@ -1,22 +1,22 @@
-import React from "react";
-import cls from "./TableDataPacks.module.scss"
-import SuperButton from "../../../common/SuperButton/SuperButton";
-import {NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {setCardPackName, setSearchName} from "../../../../m2-bll/cardsReducer";
-import {setIsFetching, setPackName} from "../../../../m2-bll/learnReducer";
+import React, { useState } from 'react'
+import cls from './TableDataPacks.module.scss'
+import SuperButton from '../../../common/SuperButton/SuperButton'
+import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setCardPackName, setSearchName } from '../../../../m2-bll/cardsReducer'
+import Modal from '../../../common/Modal/Modal'
+import { DeletePackForm } from './DeletePackForm/DeletePackForm'
+import { EditPackForm } from './EditPackform/EditPackForm'
 
 type TableDataPropsType = {
-    _id: string
-    user_id: string
-    name: string
-    cardsCount: number
-    updatedDate: string
-    updatedTime: string
-    removePack: (packId: string) => void
-    appUserId: string
-    createdBy: string
-    editPackHandler: (packId: string) => void
+  _id: string
+  user_id: string
+  name: string
+  cardsCount: number
+  updatedDate: string
+  updatedTime: string
+  appUserId: string
+  createdBy: string
 }
 
 
@@ -26,34 +26,36 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
                                                                  cardsCount,
                                                                  updatedDate,
                                                                  updatedTime,
-                                                                 removePack,
+
                                                                  appUserId,
                                                                  user_id,
                                                                  createdBy,
-                                                                 editPackHandler,
+
                                                                  children
                                                              }) => {
 
+    const [activeDeleteModal, setActiveDeleteModal] = useState<boolean>(false)
+    const [activeEditModal, setActiveEditModal] = useState<boolean>(false)
+
     const dispatch = useDispatch()
+
+    const openDeleteModal = () => {
+        setActiveDeleteModal(true)
+    }
+    const openEditModal = () => {
+        setActiveEditModal(true)
+    }
+
 
     const onPackClickHandler = () => {
         dispatch(setCardPackName(name))
+        dispatch(setCurrentPackUserId(user_id))
         dispatch(setSearchName(''))
-        localStorage.setItem("packName", name)
     }
-
-    const hidden = user_id !== appUserId ? cls.none : ""
-    const justifyContent = user_id !== appUserId ? cls.flexEnd : cls.flexBetween
-
-    const onClickLearnButtonHandler = () => {
-        localStorage.setItem("packName", name)
-        dispatch(setIsFetching(true))
-    }
-
 
     return (
         <div className={cls.tableData}>
-            <NavLink to={`/cardslist/${_id}`} onClick={onPackClickHandler} className={cls.name}>
+            <NavLink to={`/cardslist/${_id}`} onClick={onPackClickHandler}>
                 <div>{name}</div>
             </NavLink>
             <div>{cardsCount}</div>
@@ -62,27 +64,26 @@ export const TableDataPacks: React.FC<TableDataPropsType> = ({
                 <p>Time: {updatedTime}</p>
             </div>
             <div>{createdBy}</div>
-            <div className={`${cls.buttonsContainer} ${justifyContent}` }>
-                <SuperButton className={`${cls.deleteButton} ${hidden}`}
-                             onClick={() => removePack(_id)}
-                             disabled={user_id !== appUserId}
-                ><span>Delete</span></SuperButton>
-                <SuperButton className={`${cls.editLearnButton} ${hidden}`}
-                             onClick={() => editPackHandler(_id)}
-                ><span>Edit</span></SuperButton>
-
-                <SuperButton className={cls.editLearnButton}
-                             onClick={onClickLearnButtonHandler}
-                             disabled={cardsCount === 0}
+            <Modal active={activeDeleteModal} setActive={setActiveDeleteModal}>
+                <DeletePackForm packName={name} packId={_id} setActive={setActiveDeleteModal}/>
+            </Modal>
+            <div className={cls.buttonsContainer}>
+                <SuperButton
+                    className={cls.deleteButton}
+                    onClick={openDeleteModal}
+                    disabled={user_id !== appUserId}
                 >
-                    {
-                        cardsCount === 0
-                            ?
-                            <span>Learn</span>
-                            :
-                            <NavLink to={`/learn/${_id}`}>Learn</NavLink>
-                    }
-
+                    <span>Delete</span>
+                </SuperButton>
+                <Modal active={activeEditModal} setActive={setActiveEditModal}>
+                    <EditPackForm packName={name} packId={_id} setActive={setActiveEditModal}/>
+                </Modal>
+                <SuperButton
+                    className={cls.editButton}
+                    onClick={openEditModal}
+                    disabled={user_id !== appUserId}
+                >
+                    <span>Edit</span>
                 </SuperButton>
             </div>
         </div>

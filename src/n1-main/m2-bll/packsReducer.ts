@@ -15,7 +15,7 @@ export type CardPackType = {
     user_name: string
 }
 
-export type PackRequestParameters = {
+type PackRequestParameters = {
     packName: string
     maxCardsCount: number
     minCardsCount: number
@@ -29,9 +29,9 @@ type InitialStateType = {
     cardPacks: Array<CardPackType>
     cardPacksRequestParameters: PackRequestParameters
     cardPacksTotalCount: number
-    isFetching: boolean
     maxCardsCount: number
     minCardsCount: number
+    isFetching: boolean
 }
 
 const initialState: InitialStateType = {
@@ -45,10 +45,10 @@ const initialState: InitialStateType = {
         packName: "",
         user_id: ""
     },
-    cardPacksTotalCount: 0,
-    isFetching: false,
     maxCardsCount: 0,
-    minCardsCount: 0
+    minCardsCount: 0,
+    cardPacksTotalCount: 0,
+    isFetching: false
 }
 
 //actions
@@ -68,7 +68,7 @@ export const setCardsCountDirection = (direction: CardsCountDirectionType) =>
 const setDataPacks = (dataPacks: PacksResponseType) =>
     ({type: 'packs/SET-PACKS', dataPacks} as const)
 
-const setLoadingPacks = (isFetching: boolean) =>
+export const setLoadingPacks = (isFetching: boolean) =>
     ({type: 'packs/SET-LOADING-PACKS', isFetching} as const)
 
 export const setUserId = (userId: string) =>
@@ -130,6 +130,7 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
     dispatch(setLoadingPacks(true))
 
     try {
+
         const {
             packName,
             minCardsCount,
@@ -139,6 +140,7 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
             pageCount,
             user_id
         } = getState().packs.cardPacksRequestParameters
+        dispatch(setLoadingPacks(true))
         const packs = await packsApi.getPacks(packName, minCardsCount, maxCardsCount, sortPacks, page, pageCount, user_id)
         dispatch(setDataPacks(packs))
     } catch (e) {
@@ -151,6 +153,7 @@ export const getDataPacks = (): AppThunkType => async (dispatch, getState) => {
 export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType => async (dispatch) => {
     dispatch(setLoadingPacks(true))
     try {
+        dispatch(setLoadingPacks(true))
         await packsApi.createNewPack(name, isPrivate)
         dispatch(getDataPacks())
     } catch (e) {
@@ -161,6 +164,7 @@ export const createNewPack = (name: string, isPrivate?: boolean): AppThunkType =
 export const deletePack = (packId: string): AppThunkType => async (dispatch) => {
     dispatch(setLoadingPacks(true))
     try {
+        dispatch(setLoadingPacks(true))
         await packsApi.deletePack(packId)
         dispatch(getDataPacks())
     } catch (e) {

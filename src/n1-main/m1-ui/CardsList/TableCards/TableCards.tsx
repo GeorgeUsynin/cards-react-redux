@@ -7,12 +7,7 @@ import {AppRootStateType} from "../../../m2-bll/store";
 import {CardResponseType} from "../../../m3-dal/apiCards";
 import {Preloader} from "../../common/preloader/Preloader";
 
-type TableCardsPropsType = {
-    removeCard: (cardId: string) => void
-    editCardHandler: (cardId: string) => void
-}
-
-export const TableCards: React.FC<TableCardsPropsType> = ({removeCard, editCardHandler}) => {
+export const TableCards: React.FC = () => {
 
     const cardsData = useSelector<AppRootStateType, Array<CardResponseType>>(state => state.cards.cards)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
@@ -32,25 +27,23 @@ export const TableCards: React.FC<TableCardsPropsType> = ({removeCard, editCardH
                         ?
                         cardsData.map(card => {
 
-                            const updatedDate = card.updated.slice(0, 10)
-                            const updatedTime = card.updated.slice(11, 19)
+                        const updatedDate = card.updated.slice(0, 10)
+                        const updatedTime = card.updated.slice(11, 19)
 
-                            return (
+                        return (
 
-                                <TableDataCards
-                                    key={card._id}
-                                    card_id={card._id}
-                                    question={card.question}
-                                    answer={card.answer}
-                                    updatedDate={updatedDate}
-                                    updatedTime={updatedTime}
-                                    grade={card.grade}
-                                    removeCard={removeCard}
-                                    editCardHandler={editCardHandler}
-                                />
-                            )
-                        })
-                        :
+                            <TableDataCards
+                                key={card._id}
+                                card_id={card._id}
+                                question={card.question}
+                                answer={card.answer}
+                                updatedDate={updatedDate}
+                                updatedTime={updatedTime}
+                                grade={card.grade}
+                            />
+                        )
+                    })
+                    :
                         <>
                             {
                                 appUserId === packUserId

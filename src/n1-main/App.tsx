@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import './App.scss';
+import mainStyles from './App.module.scss';
 import {Header} from './m1-ui/Header/Header';
 import {Login} from "./m1-ui/Login/Login";
 import {Profile} from "./m1-ui/Profile/Profile";
@@ -43,10 +43,10 @@ const App = () => {
             ?
             <Preloader/>
             :
-            <div className='app-wrapper'>
+            <div className={mainStyles.appWrapper}>
                 {/*<Header/>*/}
                 {isLoggedIn && <HeaderMain/>}
-                <div className='app-wrapper-content'>
+                <div className={mainStyles.appWrapperContent}>
                     <Route exact path={'/'} render={() => <Redirect to={PATH.PROFILE}/>}/>
                     <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
                     <Route path={PATH.PROFILE} render={() => <Profile/>}/>

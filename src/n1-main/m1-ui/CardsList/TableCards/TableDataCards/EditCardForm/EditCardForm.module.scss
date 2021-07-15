@@ -1,0 +1,72 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.formContainer {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+.label {
+  width: 100%;
+  display: block;
+  margin-top: 24px;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  opacity: .5;
+}
+
+.inputForm {
+  width: 100%;
+  height: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 4px 8px;
+
+  border-color: transparent;
+  border-bottom: 2px solid grey;
+  outline: none;
+}
+
+.errorContainer {
+  height: 30px;
+
+  .error {
+    color: red;
+    padding-top: 10px;
+  }
+}
+
+
+.buttonWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+
+  .cancelButton {
+    @include primaryButton();
+    width: 120px;
+    height: 36px;
+    background: #D7D8EF;
+
+    span {
+      @include primaryButtonText(9px 36px);
+      color: $elementsColor;
+    }
+  }
+
+  .updateButton {
+    @include primaryButton();
+    width: 120px;
+    height: 36px;
+    color: white;
+
+    span {
+      @include primaryButtonText(9px 64px);
+    }
+  }
+}

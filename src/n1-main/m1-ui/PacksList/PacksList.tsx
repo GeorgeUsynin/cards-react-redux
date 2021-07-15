@@ -7,11 +7,10 @@ import Search from "../common/Search/Search";
 import {useDispatch, useSelector} from "react-redux";
 import {
     createNewPack,
-    deletePack,
-    editPack,
+    deletePack, editPack,
     getDataPacks,
     setCurrentPage,
-    setPageCount, setRangeSort,
+    setPageCount,
     setSearchName,
     setUserId
 } from "../../m2-bll/packsReducer";
@@ -22,6 +21,8 @@ import {PATH} from "../../App";
 import {DoubleRange} from "./DoubleRange/DoubleRange";
 import Paginator from "../common/Paginator/Paginator";
 import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeaderPacks/TableHeaderPacks";
+import Modal from '../common/Modal/Modal'
+import { AddPackForm } from './AddPackForm/AddPackForm'
 
 type ButtonNameType = 'my' | 'all'
 
@@ -42,7 +43,9 @@ export const PacksList = () => {
     const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-    const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
+        const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
+
+    const [activeModal, setActiveModal] = useState<boolean>(false)
 
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
@@ -53,24 +56,12 @@ export const PacksList = () => {
         } else {
             dispatch(getDataPacks())
         }
-    }, [isLoggedIn, dispatch, buttonName, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
+    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
 
 
-    const editPackHandler = useCallback((packId: string) => {
-        const newPackName = prompt('Enter the name of the new pack: ')
-        if (newPackName)
-            dispatch(editPack(packId, newPackName))
-    }, [dispatch])
-
-    const removePack = useCallback((packId: string) => {
-        dispatch(deletePack(packId))
-    }, [dispatch])
-
-    const addPack = useCallback(() => {
-        const newPackName = prompt('Enter the name of the new pack: ')
-        if (newPackName)
-            dispatch(createNewPack(newPackName))
-    }, [dispatch])
+    const openModal = () => {
+        setActiveModal(true)
+    }
 
     const getMyPacksList = useCallback(() => {
         setButtonName('my')
@@ -121,24 +112,22 @@ export const PacksList = () => {
                         >All</SuperButton>
                     </div>
                     <p className={cls.numberTitle}>Number of cards</p>
-                    <DoubleRange
-                        maxCount={maxCount}
-                        minCount={0}
-                    />
+                    <DoubleRange maxCount={maxCount}/>
                 </div>
                 <div className={cls.packslist}>
                     <h2 className={cls.packslistTitle}>Packs list</h2>
                     <div className={cls.search_AddButtonContainer}>
                         <Search className={cls.search} handlePressSearch={handlePressSearch}/>
+                        <Modal active={activeModal} setActive={setActiveModal}>
+                            <AddPackForm active={activeModal} setActive={setActiveModal}/>
+                        </Modal>
                         <div className={cls.addButtonContainer}>
-                            <SuperButton className={cls.addPackButton}
-                                         onClick={addPack}><span>Add new pack</span></SuperButton>
+                            <SuperButton className={cls.addPackButton} onClick={openModal}>
+                                <span>Add new pack</span>
+                            </SuperButton>
                         </div>
                     </div>
-                    <TablePacks
-                        removePack={removePack}
-                        editPackHandler={editPackHandler}
-                    />
+                    <TablePacks/>
                     {!!cardPacksTotalCount && <Paginator
                         pageCount={pageCount}
                         itemsTotalCount={cardPacksTotalCount}

@@ -1,19 +1,19 @@
-import React from "react";
-import cls from "./TableDataCards.module.scss"
-import SuperButton from "../../../common/SuperButton/SuperButton";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../../m2-bll/store";
-import ReactStars from 'react-stars'
+import React, { useState } from 'react'
+import cls from './TableDataCards.module.scss'
+import SuperButton from '../../../common/SuperButton/SuperButton'
+import { useSelector } from 'react-redux'
+import { AppRootStateType } from '../../../../m2-bll/store'
+import Modal from '../../../common/Modal/Modal'
+import { EditCardForm } from './EditCardForm/EditCardForm'
+import { DeleteCardForm } from './DeleteCardForm/DeleteCardForm'
 
 type TableDataCardsPropsType = {
-    question: string
-    answer: string
-    updatedDate: string
-    updatedTime: string
-    grade: number
-    removeCard: (cardId: string) => void
-    editCardHandler: (cardId: string) => void
-    card_id: string
+  question: string
+  answer: string
+  updatedDate: string
+  updatedTime: string
+  grade: number
+  card_id: string
 }
 
 
@@ -23,18 +23,24 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
                                                                       updatedDate,
                                                                       updatedTime,
                                                                       grade,
-                                                                      removeCard,
+
                                                                       card_id,
-                                                                      editCardHandler,
                                                                       children
                                                                   }) => {
-
+    const [activeDeleteModal, setActiveDeleteModal] = useState<boolean>(false)
+    const [activeEditModal, setActiveEditModal] = useState<boolean>(false)
 
     const appUserId = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser._id)
-    const packUserId = useSelector<AppRootStateType, string>(state => state.cards.packUserId)
+    const currentPackUserId = useSelector<AppRootStateType, string>(state => state.cards.currentPackUserId)
 
-    const gridChangeClass = appUserId === packUserId ? cls.gridChangeClass : ""
+    const gridChangeClass = appUserId === currentPackUserId ? cls.gridChangeClass : ""
 
+    const openDeleteModal = () => {
+        setActiveDeleteModal(true)
+    }
+    const openEditModal = () => {
+        setActiveEditModal(true)
+    }
 
     return (
         <div className={`${cls.tableData} ${gridChangeClass}`}>
@@ -44,29 +50,30 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
                 <p>Date: {updatedDate}</p>
                 <p>Time: {updatedTime}</p>
             </div>
-            <div>
-                <ReactStars
-                    count={5}
-                    size={24}
-                    color2={'#ffd700'}
-                    value={grade}
-                    className={cls.stars}
-                    edit={false}
-                />
-            </div>
+            <div>{grade}</div>
 
             {
-                appUserId === packUserId
+                appUserId === currentPackUserId
                 &&
                 <div className={cls.buttonsContainer}>
+                    <Modal active={activeDeleteModal} setActive={setActiveDeleteModal}>
+                        <DeleteCardForm question={question} cardId={card_id} setActive={setActiveDeleteModal}/>
+                    </Modal>
                     <SuperButton
-                        onClick={() => removeCard(card_id)}
+                        onClick={openDeleteModal}
                         className={cls.deleteButton}
-                    ><span>Delete</span></SuperButton>
+                    >
+                        <span>Delete</span>
+                    </SuperButton>
+                    <Modal active={activeEditModal} setActive={setActiveEditModal}>
+                        <EditCardForm question={question} cardId={card_id} setActive={setActiveEditModal}/>
+                    </Modal>
                     <SuperButton
-                        onClick={() => editCardHandler(card_id)}
+                        onClick={openEditModal}
                         className={cls.editButton}
-                    ><span>Edit</span></SuperButton>
+                    >
+                        <span>Edit</span>
+                    </SuperButton>
                 </div>
             }
         </div>
