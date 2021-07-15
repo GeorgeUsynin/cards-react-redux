@@ -19,6 +19,7 @@ import {
     setPageCount,
     setSearchName, setUserId
 } from "../../m2-bll/packsReducer";
+import {CardsCountDirectionType, UpdatedDirectionType} from "../PacksList/TablePacks/TableHeaderPacks/TableHeaderPacks";
 
 
 export const Profile = () => {
@@ -35,15 +36,18 @@ export const Profile = () => {
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.pageCount)
     const minCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.minCardsCount)
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
+    const page = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.page)
+    const packName = useSelector<AppRootStateType, string>(state => state.packs.cardPacksRequestParameters.packName)
+    const updatedDirection = useSelector<AppRootStateType, UpdatedDirectionType | CardsCountDirectionType>(state => state.packs.cardPacksRequestParameters.sortPacks)
 
     useEffect(() => {
         if (!id) {
             dispatch(isLoggedInApp())
-        }else {
+        } else {
             dispatch(setUserId(id))
             dispatch(getDataPacks())
         }
-    }, [id, dispatch, pageCount, minCards, maxCards])
+    }, [id, dispatch, page, pageCount, packName, updatedDirection, minCards, maxCards])
 
     const handlePressSearch = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         dispatch(setSearchName(e.currentTarget.value))
@@ -79,33 +83,33 @@ export const Profile = () => {
     }
 
     return (
-            <div className={cls.profileContainer}>
-                <div className={cls.card}>
-                    <div className={cls.info}>
-                        <UserInfo avatar={avatar} name={name}/>
-                        <UserInfoCards publicCardPacksCount={publicCardPacksCount}/>
-                    </div>
-                    <div className={cls.packslist}>
-                        <h2 className={cls.packslistTitle}>My packs list</h2>
-                        <div className={cls.search_AddButtonContainer}>
-                            <Search className={cls.search} handlePressSearch={handlePressSearch}/>
-                            <div className={cls.addButtonContainer}>
-                                <SuperButton className={cls.addPackButton}
-                                             onClick={addPack}><span>Add new pack</span></SuperButton>
-                            </div>
+        <div className={cls.profileContainer}>
+            <div className={cls.card}>
+                <div className={cls.info}>
+                    <UserInfo avatar={avatar} name={name}/>
+                    <UserInfoCards publicCardPacksCount={publicCardPacksCount}/>
+                </div>
+                <div className={cls.packslist}>
+                    <h2 className={cls.packslistTitle}>My packs list</h2>
+                    <div className={cls.search_AddButtonContainer}>
+                        <Search className={cls.search} handlePressSearch={handlePressSearch}/>
+                        <div className={cls.addButtonContainer}>
+                            <SuperButton className={cls.addPackButton}
+                                         onClick={addPack}><span>Add new pack</span></SuperButton>
                         </div>
-                        <TablePacks
-                            removePack={removePack}
-                            editPackHandler={editPackHandler}
-                        />
-                        {!!cardPacksTotalCount && <Paginator
-                            pageCount={pageCount}
-                            itemsTotalCount={cardPacksTotalCount}
-                            onPageChanges={onPacksPageChanges}
-                            changePageCount={changePacksPageCount}
-                        />}
                     </div>
+                    <TablePacks
+                        removePack={removePack}
+                        editPackHandler={editPackHandler}
+                    />
+                    {!!cardPacksTotalCount && <Paginator
+                        pageCount={pageCount}
+                        itemsTotalCount={cardPacksTotalCount}
+                        onPageChanges={onPacksPageChanges}
+                        changePageCount={changePacksPageCount}
+                    />}
                 </div>
             </div>
+        </div>
     )
 }

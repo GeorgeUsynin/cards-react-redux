@@ -15,7 +15,7 @@ export type CardPackType = {
     user_name: string
 }
 
-type PackRequestParameters = {
+export type PackRequestParameters = {
     packName: string
     maxCardsCount: number
     minCardsCount: number

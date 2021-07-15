@@ -5,6 +5,7 @@ import {PATH} from "../../App";
 import SuperButton from "../common/SuperButton/SuperButton";
 import {logoutTC} from "../../m2-bll/authReducer";
 import {useDispatch} from "react-redux";
+import {setCurrentPage, setPageCount, setRangeSort, setSearchName, setUserId} from "../../m2-bll/packsReducer";
 
 
 export const HeaderMain = () => {
@@ -19,12 +20,21 @@ export const HeaderMain = () => {
         dispatch(logoutTC())
     }
 
+    const clickPackListProfileHandler = () =>{
+        dispatch(setUserId(""))
+        dispatch(setRangeSort([0,0]))
+        dispatch(setCurrentPage(1))
+        dispatch(setSearchName(""))
+        dispatch(setPageCount(6))
+        dispatch(setPageCount(6))
+    }
+
     return (
         <div className={cls.headerContainer}>
             <div className={cls.wrapper}>
                 <h1 className={cls.logo}>It-incubator</h1>
                 <div className={cls.linksContainer}>
-                    <div className={cls.linkContainer}>
+                    <div className={cls.linkContainer} onClick={clickPackListProfileHandler}>
                         <NavLink to={PATH.PACKS_LIST}
                                  className={location.pathname === PATH.PACKS_LIST ? finalClass : ""}
                                  onMouseEnter={() => setFinalClass("")}
@@ -32,7 +42,7 @@ export const HeaderMain = () => {
                                  tabIndex={1}>Packs
                             list</NavLink>
                     </div>
-                    <div className={cls.linkContainer}>
+                    <div className={cls.linkContainer} onClick={clickPackListProfileHandler}>
                         <NavLink to={PATH.PROFILE} tabIndex={2}
                                  className={location.pathname === PATH.PROFILE ? finalClass : ""}
                                  onMouseEnter={() => setFinalClass("")}

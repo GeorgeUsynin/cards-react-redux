@@ -51,12 +51,9 @@ export const PacksList = () => {
         if (!isLoggedIn) {
             if (!error) dispatch(isLoggedInApp())
         } else {
-            if(buttonName === "all"){
-                dispatch(setUserId(""))
-            }
             dispatch(getDataPacks())
         }
-    }, [isLoggedIn, dispatch, buttonName,page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
+    }, [isLoggedIn, dispatch, buttonName, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
 
     const editPackHandler = useCallback((packId: string) => {
         const newPackName = prompt('Enter the name of the new pack: ')
