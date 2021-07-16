@@ -50,6 +50,7 @@ export const Profile = () => {
         } else {
             dispatch(setUserId(id))
             dispatch(getDataPacks())
+            dispatch(setUserId(""))
         }
     }, [id, dispatch, page, pageCount, packName, updatedDirection, minCards, maxCards])
 
