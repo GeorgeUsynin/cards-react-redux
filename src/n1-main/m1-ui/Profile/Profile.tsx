@@ -1,4 +1,4 @@
-import React, {KeyboardEvent, useCallback, useEffect} from 'react'
+import React, {KeyboardEvent, useCallback, useEffect, useState} from 'react'
 import cls from './Profile.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
@@ -20,6 +20,8 @@ import {
     setSearchName, setUserId
 } from "../../m2-bll/packsReducer";
 import {CardsCountDirectionType, UpdatedDirectionType} from "../PacksList/TablePacks/TableHeaderPacks/TableHeaderPacks";
+import {AddPackForm} from "../PacksList/AddPackForm/AddPackForm";
+import Modal from "../common/Modal/Modal";
 
 
 export const Profile = () => {
@@ -27,6 +29,8 @@ export const Profile = () => {
     const dispatch = useDispatch()
 
     const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
+
+    const [activeModal, setActiveModal] = useState<boolean>(false)
 
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
     const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
@@ -49,6 +53,10 @@ export const Profile = () => {
         }
     }, [id, dispatch, page, pageCount, packName, updatedDirection, minCards, maxCards])
 
+    const openModal = () => {
+        setActiveModal(true)
+    }
+
     const handlePressSearch = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         dispatch(setSearchName(e.currentTarget.value))
         e.currentTarget.blur()
@@ -60,15 +68,6 @@ export const Profile = () => {
             dispatch(createNewPack(newPackName))
     }, [dispatch])
 
-    const editPackHandler = useCallback((packId: string) => {
-        const newPackName = prompt('Enter the name of the new pack: ')
-        if (newPackName)
-            dispatch(editPack(packId, newPackName))
-    }, [dispatch])
-
-    const removePack = useCallback((packId: string) => {
-        dispatch(deletePack(packId))
-    }, [dispatch])
 
     const onPacksPageChanges = useCallback((page: number) => {
         dispatch(setCurrentPage(page + 1))
@@ -93,9 +92,13 @@ export const Profile = () => {
                     <h2 className={cls.packslistTitle}>My packs list</h2>
                     <div className={cls.search_AddButtonContainer}>
                         <Search className={cls.search} handlePressSearch={handlePressSearch}/>
+                        <Modal active={activeModal} setActive={setActiveModal}>
+                            <AddPackForm active={activeModal} setActive={setActiveModal}/>
+                        </Modal>
                         <div className={cls.addButtonContainer}>
-                            <SuperButton className={cls.addPackButton}
-                                         onClick={addPack}><span>Add new pack</span></SuperButton>
+                            <SuperButton className={cls.addPackButton} onClick={openModal}>
+                                <span>Add new pack</span>
+                            </SuperButton>
                         </div>
                     </div>
                     <TablePacks/>

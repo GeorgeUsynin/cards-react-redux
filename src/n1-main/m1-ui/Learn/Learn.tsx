@@ -18,6 +18,8 @@ export const Learn = () => {
 
     const [showAnswer, setShowAnswer] = useState(false)
 
+    const [currentGrade, setCurrentGrade] = useState(0)
+
     const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
@@ -61,10 +63,11 @@ export const Learn = () => {
     }
 
     const setGradeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(sendCardGrade(+e.target.defaultValue))
+        setCurrentGrade(+e.target.defaultValue)
     }
 
     const nextHandler = () => {
+        dispatch(sendCardGrade(currentGrade))
         setShowAnswer(false)
         dispatch(setChangeCard(true))
     }
@@ -128,8 +131,8 @@ export const Learn = () => {
                                     return (
                                         <div key={index} className={cls.answers}>
                                             <label className={cls.label}>
-                                            <input type={"radio"} name={"answer"} value={index + 1}
-                                                   onChange={setGradeHandler}/>{`${grade}`}
+                                                <input type={"radio"} name={"answer"} value={index + 1}
+                                                       onChange={setGradeHandler}/>{`${grade}`}
                                             </label>
                                         </div>
                                     )
