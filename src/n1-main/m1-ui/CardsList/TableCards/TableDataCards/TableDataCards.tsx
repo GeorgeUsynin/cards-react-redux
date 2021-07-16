@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import cls from './TableDataCards.module.scss'
 import SuperButton from '../../../common/SuperButton/SuperButton'
-import {useSelector} from 'react-redux'
-import {AppRootStateType} from '../../../../m2-bll/store'
+import { useSelector } from 'react-redux'
+import { AppRootStateType } from '../../../../m2-bll/store'
 import Modal from '../../../common/Modal/Modal'
-import {EditCardForm} from './EditCardForm/EditCardForm'
-import {DeleteCardForm} from './DeleteCardForm/DeleteCardForm'
+import { EditCardForm } from './EditCardForm/EditCardForm'
+import { DeleteCardForm } from './DeleteCardForm/DeleteCardForm'
 import ReactStars from 'react-stars'
 
 type TableDataCardsPropsType = {
@@ -76,7 +76,12 @@ export const TableDataCards: React.FC<TableDataCardsPropsType> = ({
                         <span>Delete</span>
                     </SuperButton>
                     <Modal active={activeEditModal} setActive={setActiveEditModal}>
-                        <EditCardForm question={question} cardId={card_id} setActive={setActiveEditModal}/>
+                        <EditCardForm
+                          question={question}
+                          answer={answer}
+                          cardId={card_id}
+                          setActive={setActiveEditModal}
+                        />
                     </Modal>
                     <SuperButton
                         onClick={openEditModal}

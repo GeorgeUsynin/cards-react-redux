@@ -9,6 +9,7 @@ import styles from './EditCardForm.module.scss'
 type EditCardFormPropsType = {
   cardId: string
   question: string
+  answer: string
   setActive: Dispatch<SetStateAction<boolean>>
 }
 
@@ -17,7 +18,7 @@ type FormValues = {
   answer: string
 }
 
-export const EditCardForm = ({question, cardId, setActive}: EditCardFormPropsType) => {
+export const EditCardForm = ({question,answer, cardId, setActive}: EditCardFormPropsType) => {
   const dispatch = useDispatch()
   const formik = useFormik({
     validate: (values) => {
@@ -35,7 +36,7 @@ export const EditCardForm = ({question, cardId, setActive}: EditCardFormPropsTyp
     },
     initialValues: {
       question: question,
-      answer: '',
+      answer: answer,
     },
     onSubmit: async ({question, answer}: FormValues) => {
       setActive(false)
