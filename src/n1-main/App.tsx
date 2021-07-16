@@ -47,7 +47,7 @@ const App = () => {
                 {/*<Header/>*/}
                 {isLoggedIn && <HeaderMain/>}
                 <div className={mainStyles.appWrapperContent}>
-                    <Route exact path={'/'} render={() => <Redirect to={PATH.PROFILE}/>}/>
+                    <Route exact path={'/'} render={() => <Redirect to={PATH.LOGIN}/>}/>
                     <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
                     <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                     <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
