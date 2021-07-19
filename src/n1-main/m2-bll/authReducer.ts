@@ -1,7 +1,7 @@
-import {authAPI, LoginParamsType} from "../m3-dal/apiLogin";
-import {setInformationAboutUserAC} from "./profileReducer";
-import {AppThunkType} from "./store";
-import {REGISTER_ERROR, REGISTER_LOADING} from "./registerReducer";
+import {authAPI, LoginParamsType} from '../m3-dal/apiLogin';
+import {setInformationAboutUserAC} from './profileReducer';
+import {AppThunkType} from './store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 type InitialStateType = {
     isFetching: boolean
@@ -15,42 +15,27 @@ const initialState: InitialStateType = {
     error: null
 }
 
-// actions
-export const setIsLoggedInAC = (value: boolean) =>
-    ({type: 'login/SET-IS-LOGGED-IN', value} as const)
-
-export const setIsLoggedOutAC = (value: boolean) =>
-    ({type: 'logout/SET-IS-LOGGED-OUT', value} as const)
-
-export const setLoginError = (error: string | null) => {
-    return {
-        type: REGISTER_ERROR,
-        error,
-    } as const
-}
-
-export const setLoginLoading = (isFetching: boolean) => {
-    return {
-        type: REGISTER_LOADING,
-        isFetching,
-    } as const
-}
+const slice = createSlice({
+    name: 'auth',
+    initialState: initialState,
+    reducers: {
+        setIsLoggedIn(state, action: PayloadAction<boolean>) {
+            state.isLoggedIn = action.payload
+        },
+        setLoginError(state, action: PayloadAction<string | null>) {
+            state.error = action.payload
+        },
+        setLoginLoading(state, action: PayloadAction<boolean>) {
+            state.isFetching = action.payload
+        }
+    }
+})
 
 //reducer
+export const authReducer = slice.reducer
 
-export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
-    switch (action.type) {
-        case 'login/SET-IS-LOGGED-IN':
-        case 'logout/SET-IS-LOGGED-OUT':
-            return {...state, isLoggedIn: action.value}
-        case "REGISTER/ERROR":
-            return {...state, error: action.error}
-        case "REGISTER/LOADING":
-            return {...state, isFetching: action.isFetching}
-        default:
-            return state
-    }
-}
+//actions
+export const {setIsLoggedIn, setLoginError, setLoginLoading} = slice.actions
 
 // thunks
 export const loginTC = (data: LoginParamsType): AppThunkType => (dispatch) => {
@@ -58,7 +43,7 @@ export const loginTC = (data: LoginParamsType): AppThunkType => (dispatch) => {
     authAPI.login(data)
         .then(res => {
             dispatch(setInformationAboutUserAC(res.data))
-            dispatch(setIsLoggedInAC(true))
+            dispatch(setIsLoggedIn(true))
         })
         .catch((e) => {
             const error = e.response
@@ -75,8 +60,8 @@ export const logoutTC = (): AppThunkType => (dispatch) => {
     dispatch(setLoginLoading(true))
     authAPI.logout()
         .then(res => {
-            dispatch(setIsLoggedOutAC(false))
-            dispatch(setLoginError("logout"))//why this dispatch in then ????? may be in catch
+            dispatch(setIsLoggedIn(false))
+            dispatch(setLoginError('logout'))//why this dispatch in then ????? may be in catch
         })
         .catch((e) => {
             const error = e.response
@@ -93,7 +78,7 @@ export const isLoggedInApp = (): AppThunkType => (dispatch) => {
     authAPI.isAuthorized()
         .then(res => {
             dispatch(setInformationAboutUserAC(res.data))
-            dispatch(setIsLoggedInAC(true))
+            dispatch(setIsLoggedIn(true))
         })
         .catch((e) => {
             const error = e.response
@@ -106,9 +91,7 @@ export const isLoggedInApp = (): AppThunkType => (dispatch) => {
         })
 }
 
-export type AuthActionsType = ReturnType<typeof setIsLoggedInAC
-    | typeof setInformationAboutUserAC
-    | typeof setIsLoggedOutAC
+export type AuthActionsType = ReturnType<
+    | typeof setIsLoggedIn
     | typeof setLoginError
-    | typeof setLoginLoading
-    > // изменили запись в одну строчку !!
+    | typeof setLoginLoading> // изменили запись в одну строчку !!

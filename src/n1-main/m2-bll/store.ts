@@ -8,6 +8,7 @@ import {RestorePasswordActionsType, restorePasswordReducer} from "./restorePassw
 import {PacksActionType, packsReducer} from "./packsReducer";
 import {CardsActionType, cardsReducer} from "./cardsReducer";
 import {LearnActionsType, learnReducer} from "./learnReducer";
+import {configureStore} from "@reduxjs/toolkit";
 
 
 const rootReducer = combineReducers({
@@ -25,7 +26,9 @@ export type AppActionsType = RestorePasswordActionsType | RegisterActions | Auth
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = configureStore({
+    reducer: rootReducer
+})
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
