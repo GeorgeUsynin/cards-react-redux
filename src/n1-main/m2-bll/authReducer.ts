@@ -84,6 +84,11 @@ const slice = createSlice({
         builder.addCase(loginTC.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn
         })
+        builder.addCase(loginTC.rejected, (state, action) => {
+            if(action.payload?.error){
+                state.error = action.payload.error
+            }
+        })
         builder.addCase(logoutTC.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn
             state.isFetching = false

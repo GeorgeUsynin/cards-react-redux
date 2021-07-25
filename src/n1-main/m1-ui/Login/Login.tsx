@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import cls from './Login.module.scss'
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AppRootStateType, useAppDispatch} from '../../m2-bll/store';
 import {NavLink, Redirect} from 'react-router-dom';
 import SuperInputText from '../common/SuperInput/SuperInputText';
@@ -53,15 +53,16 @@ export const Login = () => {
             }
         },
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            const action = await dispatch(loginTC(values))
-            if (loginTC.rejected.match(action)) {
-                if (action.payload?.error.match(/user/)) {
-                    debugger
-                    formikHelpers.setFieldError('email', action.payload?.error)
-                } else if (action.payload?.error.match(/password/)) {
-                    formikHelpers.setFieldError('password', action.payload?.error)
-                }
-            }
+            dispatch(loginTC(values))
+            // const action = await dispatch(loginTC(values))
+            // if (loginTC.rejected.match(action)) {
+            //     if (action.payload?.error.match(/user/)) {
+            //         debugger
+            //         formikHelpers.setFieldError('email', action.payload?.error)
+            //     } else if (action.payload?.error.match(/password/)) {
+            //         formikHelpers.setFieldError('password', action.payload?.error)
+            //     }
+            // }
         }
     })
 
