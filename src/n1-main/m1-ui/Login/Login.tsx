@@ -1,27 +1,27 @@
 import React, {useState} from 'react'
 import cls from './Login.module.scss'
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../m2-bll/store";
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType, useAppDispatch} from '../../m2-bll/store';
 import {NavLink, Redirect} from 'react-router-dom';
-import SuperInputText from "../common/SuperInput/SuperInputText";
-import SuperButton from "../common/SuperButton/SuperButton";
+import SuperInputText from '../common/SuperInput/SuperInputText';
+import SuperButton from '../common/SuperButton/SuperButton';
 import eye from '../../../assets/images/eye.svg'
-import {InputTypeType} from "../NewPassword/NewPassword";
-import closedEye from "../../../assets/images/closedEye.svg";
-import {PATH} from "../../App";
-import {useFormik} from "formik";
-import {loginTC, setLoginError} from "../../m2-bll/authReducer";
-import {Preloader} from "../common/preloader/Preloader";
+import {InputTypeType} from '../NewPassword/NewPassword';
+import closedEye from '../../../assets/images/closedEye.svg';
+import {PATH} from '../../App';
+import {FormikHelpers, useFormik} from 'formik';
+import {loginTC, setLoginError} from '../../m2-bll/authReducer';
+import {Preloader} from '../common/preloader/Preloader';
 
-type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
+type FormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
 }
 
 export const Login = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)
 
@@ -29,7 +29,7 @@ export const Login = () => {
 
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
 
-    const [type, setType] = useState<InputTypeType>("password")
+    const [type, setType] = useState<InputTypeType>('password')
 
 
     const formik = useFormik({
@@ -39,23 +39,29 @@ export const Login = () => {
             rememberMe: false
         },
         validate: (values) => {
-            const errors: FormikErrorType = {}
             if (!values.email) {
-                errors.email = 'Required';
+                return {email: 'Required'}
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
+                return {email: 'Invalid email address'}
             }
             if (!values.password) {
-                errors.password = 'Required';
+                return {password: 'Required'}
             } else if (values.password.length < 8) {
-                errors.password = 'Password must contain from 8 to 15 characters';
+                return {password: 'Password must contain from 8 to 15 characters'}
             } else if (values.password.length > 15) {
-                errors.password = 'Password must contain from 8 to 15 characters';
+                return {password: 'Password must contain from 8 to 15 characters'}
             }
-            return errors
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const action = await dispatch(loginTC(values))
+            if (loginTC.rejected.match(action)) {
+                if (action.payload?.error.match(/user/)) {
+                    debugger
+                    formikHelpers.setFieldError('email', action.payload?.error)
+                } else if (action.payload?.error.match(/password/)) {
+                    formikHelpers.setFieldError('password', action.payload?.error)
+                }
+            }
         }
     })
 
@@ -84,7 +90,7 @@ export const Login = () => {
                                     <SuperInputText
                                         {...formik.getFieldProps('email')}
                                         className={cls.inputEmailPassword}
-                                        type={"text"}
+                                        type={'text'}
                                         onClick={() => dispatch(setLoginError(null))}
                                         // name={'email'}
                                         // onChange={formik.handleChange}

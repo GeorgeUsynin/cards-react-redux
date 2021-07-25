@@ -1,7 +1,7 @@
 import {authAPI, LoginParamsType} from '../m3-dal/apiLogin';
 import {setInformationAboutUserAC} from './profileReducer';
-import {AppThunkType} from './store';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {AppRootDispatch, AppThunkType} from './store';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 type InitialStateType = {
     isFetching: boolean
@@ -14,6 +14,57 @@ const initialState: InitialStateType = {
     isLoggedIn: false,
     error: null
 }
+
+export const loginTC = createAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType, {
+    dispatch: AppRootDispatch, rejectValue: { error: string }
+}>('auth/login', async (param: LoginParamsType, thunkAPI) => {
+    thunkAPI.dispatch(setLoginLoading(true))
+    try {
+        const res = (await authAPI.login(param)).data
+        thunkAPI.dispatch(setInformationAboutUserAC(res))
+        return {isLoggedIn: true}
+    } catch (e) {
+        const error: string = e.response
+            ? e.response.data.error
+            : (e.messages + ', more details in the console')
+        return thunkAPI.rejectWithValue({error})
+    } finally {
+        thunkAPI.dispatch(setLoginLoading(false))
+    }
+})
+
+export const logoutTC = createAsyncThunk<{ isLoggedIn: false }>('auth/logout', async (arg, thunkAPI) => {
+    thunkAPI.dispatch(setLoginLoading(true))
+    try {
+        await authAPI.logout()
+        return {isLoggedIn: false}
+    } catch (e) {
+        const error: string = e.response
+            ? e.response.data.error
+            : (e.messages + ', more details in the console')
+        return thunkAPI.rejectWithValue({error})
+    } finally {
+        // thunkAPI.dispatch(setLoginLoading(false))
+    }
+})
+
+// export const loginTC_ = (data: LoginParamsType): AppThunkType => (dispatch) => {
+//     dispatch(setLoginLoading(true))
+//     authAPI.login(data)
+//         .then(res => {
+//             dispatch(setInformationAboutUserAC(res.data))
+//             dispatch(setIsLoggedIn(true))
+//         })
+//         .catch((e) => {
+//             const error = e.response
+//                 ? e.response.data.error
+//                 : (e.messages + ', more details in the console')
+//             dispatch(setLoginError(error))
+//         })
+//         .finally(() => {
+//             dispatch(setLoginLoading(false))
+//         })
+// }
 
 const slice = createSlice({
     name: 'auth',
@@ -28,6 +79,15 @@ const slice = createSlice({
         setLoginLoading(state, action: PayloadAction<boolean>) {
             state.isFetching = action.payload
         }
+    },
+    extraReducers: builder => {
+        builder.addCase(loginTC.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn
+        })
+        builder.addCase(logoutTC.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn
+            state.isFetching = false
+        })
     }
 })
 
@@ -38,40 +98,7 @@ export const authReducer = slice.reducer
 export const {setIsLoggedIn, setLoginError, setLoginLoading} = slice.actions
 
 // thunks
-export const loginTC = (data: LoginParamsType): AppThunkType => (dispatch) => {
-    dispatch(setLoginLoading(true))
-    authAPI.login(data)
-        .then(res => {
-            dispatch(setInformationAboutUserAC(res.data))
-            dispatch(setIsLoggedIn(true))
-        })
-        .catch((e) => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.messages + ', more details in the console')
-            dispatch(setLoginError(error))
-        })
-        .finally(() => {
-            dispatch(setLoginLoading(false))
-        })
-}
 
-export const logoutTC = (): AppThunkType => (dispatch) => {
-    dispatch(setLoginLoading(true))
-    authAPI.logout()
-        .then(res => {
-            dispatch(setIsLoggedIn(false))
-            dispatch(setLoginError('logout'))//why this dispatch in then ????? may be in catch
-        })
-        .catch((e) => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.messages + ', more details in the console')
-        })
-        .finally(() => {
-            dispatch(setLoginLoading(false))
-        })
-}
 
 export const isLoggedInApp = (): AppThunkType => (dispatch) => {
     dispatch(setLoginLoading(true))
@@ -91,7 +118,6 @@ export const isLoggedInApp = (): AppThunkType => (dispatch) => {
         })
 }
 
-export type AuthActionsType = ReturnType<
-    | typeof setIsLoggedIn
+export type AuthActionsType = ReturnType<| typeof setIsLoggedIn
     | typeof setLoginError
     | typeof setLoginLoading> // изменили запись в одну строчку !!

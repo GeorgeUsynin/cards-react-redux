@@ -9,6 +9,7 @@ import {PacksActionType, packsReducer} from "./packsReducer";
 import {CardsActionType, cardsReducer} from "./cardsReducer";
 import {LearnActionsType, learnReducer} from "./learnReducer";
 import {configureStore} from "@reduxjs/toolkit";
+import {useDispatch} from 'react-redux';
 
 
 const rootReducer = combineReducers({
@@ -32,6 +33,9 @@ export const store = configureStore({
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
+export type AppRootDispatch = typeof store.dispatch
+
+export const useAppDispatch = () => useDispatch<AppRootDispatch>()
 
 //@ts-ignore
 window.store = store

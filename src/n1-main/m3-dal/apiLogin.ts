@@ -32,8 +32,8 @@ export type LoginResponseType = {
     name: string
     avatar: string
     publicCardPacksCount: number
-    created: DateConstructor
-    updated: DateConstructor
+    created: string
+    updated: string
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean

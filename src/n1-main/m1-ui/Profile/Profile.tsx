@@ -1,16 +1,16 @@
 import React, {KeyboardEvent, useCallback, useEffect, useState} from 'react'
 import cls from './Profile.module.scss'
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../m2-bll/store";
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
-import {isLoggedInApp} from "../../m2-bll/authReducer";
-import {UserInfo} from "./UserInfo/UserInfo";
-import {UserInfoCards} from "./UserInfoCards/UserInfoCards";
-import {PATH} from "../../App";
-import Search from "../common/Search/Search";
-import SuperButton from "../common/SuperButton/SuperButton";
-import {TablePacks} from "../PacksList/TablePacks/TablePacks";
-import Paginator from "../common/Paginator/Paginator";
+import {isLoggedInApp} from '../../m2-bll/authReducer';
+import {UserInfo} from './UserInfo/UserInfo';
+import {UserInfoCards} from './UserInfoCards/UserInfoCards';
+import {PATH} from '../../App';
+import Search from '../common/Search/Search';
+import SuperButton from '../common/SuperButton/SuperButton';
+import {TablePacks} from '../PacksList/TablePacks/TablePacks';
+import Paginator from '../common/Paginator/Paginator';
 import {
     createNewPack,
     deletePack,
@@ -18,13 +18,15 @@ import {
     setCurrentPage,
     setPageCount,
     setSearchName, setUserId
-} from "../../m2-bll/packsReducer";
-import {CardsCountDirectionType, UpdatedDirectionType} from "../PacksList/TablePacks/TableHeaderPacks/TableHeaderPacks";
-import {AddPackForm} from "../PacksList/AddPackForm/AddPackForm";
-import Modal from "../common/Modal/Modal";
+} from '../../m2-bll/packsReducer';
+import {CardsCountDirectionType, UpdatedDirectionType} from '../PacksList/TablePacks/TableHeaderPacks/TableHeaderPacks';
+import {AddPackForm} from '../PacksList/AddPackForm/AddPackForm';
+import Modal from '../common/Modal/Modal';
 
 
 export const Profile = () => {
+
+    console.log("profile")
 
     const dispatch = useDispatch()
 
@@ -32,6 +34,8 @@ export const Profile = () => {
 
     const [activeModal, setActiveModal] = useState<boolean>(false)
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.avatar)
     const name = useSelector<AppRootStateType, string>(state => state.profile.informationAboutUser.name)
     const publicCardPacksCount = useSelector<AppRootStateType, number>(state => state.profile.informationAboutUser.publicCardPacksCount)
@@ -45,14 +49,15 @@ export const Profile = () => {
     const updatedDirection = useSelector<AppRootStateType, UpdatedDirectionType | CardsCountDirectionType>(state => state.packs.cardPacksRequestParameters.sortPacks)
 
     useEffect(() => {
+
         if (!id) {
             dispatch(isLoggedInApp())
-        } else {
+        } else if (!error && isLoggedIn && !isFetching){
             dispatch(setUserId(id))
             dispatch(getDataPacks())
-            dispatch(setUserId(""))
+            dispatch(setUserId(''))
         }
-    }, [id, dispatch, page, pageCount, packName, updatedDirection, minCards, maxCards])
+    }, [id, dispatch, page, pageCount, packName, updatedDirection, minCards, maxCards, isLoggedIn, error])
 
     const openModal = () => {
         setActiveModal(true)
@@ -78,7 +83,8 @@ export const Profile = () => {
         dispatch(setPageCount(count))
     }, [dispatch])
 
-    if (error) {
+
+    if (error || !isLoggedIn) {
         return <Redirect to={PATH.LOGIN}/>
     }
 

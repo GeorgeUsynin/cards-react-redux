@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useHistory, useLocation} from 'react-router-dom';
 import cls from "./HeaderMain.module.scss"
 import {PATH} from "../../App";
 import SuperButton from "../common/SuperButton/SuperButton";
@@ -20,6 +20,7 @@ export const HeaderMain = () => {
     const dispatch = useDispatch()
 
     const [finalClass, setFinalClass] = useState(cls.active)
+
 
     let location = useLocation()
 
