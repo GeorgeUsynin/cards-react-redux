@@ -30,7 +30,8 @@ export const PATH = {
     TEST_COMPONENTS: '/test_components',
     PAGE_NOT_FOUND: '/404',
     RESTORE_PASSWORD: '/restore_password',
-    NEW_PASSWORD: "/new_password/:token?"
+    NEW_PASSWORD: "/new_password/:token?",
+    CHAT: "/chat"
 }
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
                     <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                     <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
                     <Route path={PATH.CARDS_LIST} render={() => <CardsList/>}/>
+                    <Route path={PATH.CHAT} render={() => <div/>}/>
                     <Route path={PATH.LEARN} render={() => <Learn/>}/>
                     <Route path={PATH.USER_INFO} render={() => <PersonalInfo/>}/>
                     <Route path={PATH.REGISTRATION} render={() => <Register/>}/>

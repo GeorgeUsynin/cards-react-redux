@@ -57,6 +57,8 @@ export const HeaderMain = () => {
                                  onMouseOut={() => setFinalClass(cls.active)}
                         >Profile</NavLink>
                     </div>
+                        <NavLink to={PATH.CHAT} tabIndex={3}
+                        >Chat</NavLink>
                 </div>
                 <div className={cls.buttonContainer}>
                     <SuperButton onClick={onClickHandler} className={cls.logoutBtn}><span>Logout</span></SuperButton>
