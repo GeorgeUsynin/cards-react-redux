@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/cards-react-redux/static/css/main.5bdf2c74.chunk.css",
-    "main.js": "/cards-react-redux/static/js/main.54a168cb.chunk.js",
-    "main.js.map": "/cards-react-redux/static/js/main.54a168cb.chunk.js.map",
-    "runtime-main.js": "/cards-react-redux/static/js/runtime-main.eb6b2658.js",
-    "runtime-main.js.map": "/cards-react-redux/static/js/runtime-main.eb6b2658.js.map",
+    "main.css": "/cards-react-redux/static/css/main.4bbac660.chunk.css",
+    "main.js": "/cards-react-redux/static/js/main.e2c98137.chunk.js",
+    "main.js.map": "/cards-react-redux/static/js/main.e2c98137.chunk.js.map",
+    "runtime-main.js": "/cards-react-redux/static/js/runtime-main.20a9e3bc.js",
+    "runtime-main.js.map": "/cards-react-redux/static/js/runtime-main.20a9e3bc.js.map",
     "static/css/2.4a35ef0a.chunk.css": "/cards-react-redux/static/css/2.4a35ef0a.chunk.css",
-    "static/js/2.6accb5aa.chunk.js": "/cards-react-redux/static/js/2.6accb5aa.chunk.js",
-    "static/js/2.6accb5aa.chunk.js.map": "/cards-react-redux/static/js/2.6accb5aa.chunk.js.map",
-    "static/js/3.ab90fcc9.chunk.js": "/cards-react-redux/static/js/3.ab90fcc9.chunk.js",
-    "static/js/3.ab90fcc9.chunk.js.map": "/cards-react-redux/static/js/3.ab90fcc9.chunk.js.map",
+    "static/js/2.46332008.chunk.js": "/cards-react-redux/static/js/2.46332008.chunk.js",
+    "static/js/2.46332008.chunk.js.map": "/cards-react-redux/static/js/2.46332008.chunk.js.map",
+    "static/js/3.4d082fb2.chunk.js": "/cards-react-redux/static/js/3.4d082fb2.chunk.js",
+    "static/js/3.4d082fb2.chunk.js.map": "/cards-react-redux/static/js/3.4d082fb2.chunk.js.map",
     "index.html": "/cards-react-redux/index.html",
     "static/css/2.4a35ef0a.chunk.css.map": "/cards-react-redux/static/css/2.4a35ef0a.chunk.css.map",
-    "static/css/main.5bdf2c74.chunk.css.map": "/cards-react-redux/static/css/main.5bdf2c74.chunk.css.map",
-    "static/js/2.6accb5aa.chunk.js.LICENSE.txt": "/cards-react-redux/static/js/2.6accb5aa.chunk.js.LICENSE.txt",
+    "static/css/main.4bbac660.chunk.css.map": "/cards-react-redux/static/css/main.4bbac660.chunk.css.map",
+    "static/js/2.46332008.chunk.js.LICENSE.txt": "/cards-react-redux/static/js/2.46332008.chunk.js.LICENSE.txt",
     "static/media/DownSort.f30a3c93.svg": "/cards-react-redux/static/media/DownSort.f30a3c93.svg",
     "static/media/LeftArrow.54207b29.svg": "/cards-react-redux/static/media/LeftArrow.54207b29.svg",
     "static/media/UpSort.944c187f.svg": "/cards-react-redux/static/media/UpSort.944c187f.svg",
@@ -23,10 +23,10 @@
     "static/media/letter.bc3a4042.svg": "/cards-react-redux/static/media/letter.bc3a4042.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.eb6b2658.js",
+    "static/js/runtime-main.20a9e3bc.js",
     "static/css/2.4a35ef0a.chunk.css",
-    "static/js/2.6accb5aa.chunk.js",
-    "static/css/main.5bdf2c74.chunk.css",
-    "static/js/main.54a168cb.chunk.js"
+    "static/js/2.46332008.chunk.js",
+    "static/css/main.4bbac660.chunk.css",
+    "static/js/main.e2c98137.chunk.js"
   ]
 }
