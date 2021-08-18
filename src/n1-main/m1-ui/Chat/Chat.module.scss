@@ -1,0 +1,129 @@
+@import "src/n1-main/m1-ui/common/styles/sass/mixins";
+@import "src/n1-main/m1-ui/common/styles/sass/variables";
+
+.chatContainer {
+
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+
+  .chatScreenContainer {
+    margin: 50px;
+    width: 60%;
+    border: solid $elementsColor;
+    border-radius: 40px;
+
+    .chatScreen {
+      padding: 0 50px;
+      margin: 20px 0;
+      height: 400px;
+      overflow: auto;
+
+      .messageContainer {
+        padding: 10px;
+        display: flex;
+
+        .nickName {
+          @include text($fontFamilyTitle, 22px, 600, 30px, $textColor, center);
+          padding: 0px 10px;
+          color: $elementsColor;
+        }
+
+        .message{
+          @include text($fontFamilyText, 16px, 400, 30px, $textColor, center);
+        }
+      }
+
+    }
+
+    .bar {
+      display: flex;
+      padding: 20px 0px;
+      margin: 0 auto;
+      border-top: solid $elementsColor;
+
+      .text {
+        padding-left: 50px;
+        flex-grow: 10;
+
+        textarea {
+          width: 100%;
+          border: solid $elementsColor 1px;
+          border-radius: 20px;
+          outline: none;
+          padding: 10px;
+          resize: none;
+        }
+
+      }
+
+      .buttonContainer {
+        text-align: center;
+        flex-grow: 2;
+        padding: 10px;
+
+        button {
+          @include primaryButton();
+
+          span {
+            @include primaryButtonText(9px 25px);
+          }
+        }
+      }
+    }
+
+  }
+
+  .nameBox {
+    text-align: center;
+    width: 40vw;
+
+    .buttonContainer {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 50px 0 50px 0;
+
+      .cancelButton {
+        @include primaryButton();
+        width: 120px;
+        height: 36px;
+        background: #D7D8EF;
+
+        span {
+          @include primaryButtonText(9px 36px);
+          color: $elementsColor;
+        }
+      }
+
+      .saveButton {
+        @include primaryButton();
+        width: 120px;
+        height: 36px;
+        color: aliceblue;
+
+        span {
+          @include primaryButtonText(9px 64px);
+        }
+      }
+    }
+
+    p {
+      font-weight: 600;
+      font-family: $fontFamilyTitle;
+      font-size: 22px;
+      line-height: 33px;
+    }
+
+    input {
+      width: 250px;
+      height: 20px;
+      border-color: transparent;
+      border-bottom: 1.5px solid gray;
+      margin-top: 5px;
+      padding: 4px 6px;
+      outline: none;
+    }
+
+  }
+
+}

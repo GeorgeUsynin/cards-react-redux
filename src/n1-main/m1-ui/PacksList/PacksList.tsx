@@ -1,28 +1,20 @@
-import React, {KeyboardEvent, useCallback, useEffect, useState} from "react";
-import cls from "./PacksList.module.scss"
-import SuperButton from "../common/SuperButton/SuperButton";
-import {TablePacks} from "./TablePacks/TablePacks";
-import Search from "../common/Search/Search";
+import React, {KeyboardEvent, useCallback, useEffect, useState} from 'react';
+import cls from './PacksList.module.scss'
+import SuperButton from '../common/SuperButton/SuperButton';
+import {TablePacks} from './TablePacks/TablePacks';
+import Search from '../common/Search/Search';
 
-import {useDispatch, useSelector} from "react-redux";
-import {
-    createNewPack,
-    deletePack, editPack,
-    getDataPacks,
-    setCurrentPage,
-    setPageCount,
-    setSearchName,
-    setUserId
-} from "../../m2-bll/packsReducer";
-import {AppRootStateType} from "../../m2-bll/store";
-import {isLoggedInApp} from "../../m2-bll/authReducer";
-import {Redirect} from "react-router-dom";
-import {PATH} from "../../App";
-import {DoubleRange} from "./DoubleRange/DoubleRange";
-import Paginator from "../common/Paginator/Paginator";
-import {CardsCountDirectionType, UpdatedDirectionType} from "./TablePacks/TableHeaderPacks/TableHeaderPacks";
+import {useDispatch, useSelector} from 'react-redux';
+import {getDataPacks, setCurrentPage, setPageCount, setSearchName, setUserId} from '../../m2-bll/packsReducer';
+import {AppRootStateType} from '../../m2-bll/store';
+import {isLoggedInApp} from '../../m2-bll/authReducer';
+import {Redirect} from 'react-router-dom';
+import {PATH} from '../../App';
+import {DoubleRange} from './DoubleRange/DoubleRange';
+import Paginator from '../common/Paginator/Paginator';
+import {CardsCountDirectionType, UpdatedDirectionType} from './TablePacks/TableHeaderPacks/TableHeaderPacks';
 import Modal from '../common/Modal/Modal'
-import { AddPackForm } from './AddPackForm/AddPackForm'
+import {AddPackForm} from './AddPackForm/AddPackForm'
 
 type ButtonNameType = 'my' | 'all'
 
@@ -44,21 +36,30 @@ export const PacksList = () => {
     const maxCards = useSelector<AppRootStateType, number>(state => state.packs.cardPacksRequestParameters.maxCardsCount)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const maxCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
-    const isFetchingPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isFetching)
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.auth.isFetching)
 
     const [activeModal, setActiveModal] = useState<boolean>(false)
 
     const [activeClass, setActiveClass] = useState(cls.active)
     const [buttonName, setButtonName] = useState<ButtonNameType>('all')
 
+
     useEffect(() => {
-        if (!isLoggedIn) {
-            if (!error) dispatch(isLoggedInApp())
-        } else {
+
+        if (!id) {
+            dispatch(isLoggedInApp())
+        } else if (!error && isLoggedIn && !isFetching) {
             dispatch(getDataPacks())
         }
-    }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
+    }, [id, dispatch, page, pageCount, packName, updatedDirection, minCards, maxCards, isLoggedIn, error, currentUserId])
 
+    // useEffect(() => {
+    //     if (!isLoggedIn) {
+    //         if (!error) dispatch(isLoggedInApp())
+    //     } else {
+    //         dispatch(getDataPacks())
+    //     }
+    // }, [isLoggedIn, dispatch, page, pageCount, packName, currentUserId, updatedDirection, minCards, maxCards])
 
     const openModal = () => {
         setActiveModal(true)
@@ -71,7 +72,7 @@ export const PacksList = () => {
 
     const getAllPacksList = useCallback(() => {
         setButtonName('all')
-        dispatch(setUserId(""))
+        dispatch(setUserId(''))
     }, [dispatch])
 
     const onPacksPageChanges = useCallback((page: number) => {
@@ -88,10 +89,9 @@ export const PacksList = () => {
     }, [dispatch])
 
 
-    if (error) {
+    if (error || !isLoggedIn) {
         return <Redirect to={PATH.LOGIN}/>
     }
-
 
     return (
         <div className={cls.packlistContainer}>
@@ -102,18 +102,18 @@ export const PacksList = () => {
                         <SuperButton
                             className={buttonName === 'my' ? `${cls.myButton} ${activeClass}` : cls.myButton}
                             onClick={getMyPacksList}
-                            onMouseEnter={() => setActiveClass("")}
+                            onMouseEnter={() => setActiveClass('')}
                             onMouseOut={() => setActiveClass(cls.active)}
                         >My</SuperButton>
                         <SuperButton
-                            className={buttonName === "all" ? `${cls.allButton} ${activeClass}` : cls.allButton}
+                            className={buttonName === 'all' ? `${cls.allButton} ${activeClass}` : cls.allButton}
                             onClick={getAllPacksList}
-                            onMouseEnter={() => setActiveClass("")}
+                            onMouseEnter={() => setActiveClass('')}
                             onMouseOut={() => setActiveClass(cls.active)}
                         >All</SuperButton>
                     </div>
                     <p className={cls.numberTitle}>Number of cards</p>
-                    {!isFetchingPacks && <DoubleRange maxCount={maxCount}/>}
+                    <DoubleRange maxCount={maxCount}/>
                 </div>
                 <div className={cls.packslist}>
                     <h2 className={cls.packslistTitle}>Packs list</h2>

@@ -26,8 +26,6 @@ import Modal from '../common/Modal/Modal';
 
 export const Profile = () => {
 
-    console.log("profile")
-
     const dispatch = useDispatch()
 
     const error = useSelector<AppRootStateType, string | null>(state => state.auth.error)

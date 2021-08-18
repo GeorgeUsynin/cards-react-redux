@@ -1,23 +1,23 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import mainStyles from './App.module.scss';
-import {Header} from './m1-ui/Header/Header';
-import {Login} from "./m1-ui/Login/Login";
-import {Profile} from "./m1-ui/Profile/Profile";
-import {PageNotFound} from "./m1-ui/PageNotFound/PageNotFound";
-import {RestorePassword} from "./m1-ui/RestorePassword/RestorePassword";
-import {NewPassword} from "./m1-ui/NewPassword/NewPassword";
-import {TestComponents} from "./m1-ui/TestComponents/TestComponents";
-import {PersonalInfo} from "./m1-ui/Profile/PersonalInfo/PersonalInfo";
-import {Register} from "./m1-ui/Registration/Register";
-import {HeaderMain} from "./m1-ui/HeaderMain/HeaderMain";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "./m2-bll/store";
-import {PacksList} from "./m1-ui/PacksList/PacksList";
-import {Redirect} from "react-router";
-import {Preloader} from "./m1-ui/common/preloader/Preloader";
-import {CardsList} from "./m1-ui/CardsList/CardsList";
-import {Learn} from "./m1-ui/Learn/Learn";
+import {Login} from './m1-ui/Login/Login';
+import {Profile} from './m1-ui/Profile/Profile';
+import {PageNotFound} from './m1-ui/PageNotFound/PageNotFound';
+import {RestorePassword} from './m1-ui/RestorePassword/RestorePassword';
+import {NewPassword} from './m1-ui/NewPassword/NewPassword';
+import {TestComponents} from './m1-ui/TestComponents/TestComponents';
+import {PersonalInfo} from './m1-ui/Profile/PersonalInfo/PersonalInfo';
+import {Register} from './m1-ui/Registration/Register';
+import {HeaderMain} from './m1-ui/HeaderMain/HeaderMain';
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from './m2-bll/store';
+import {PacksList} from './m1-ui/PacksList/PacksList';
+import {Redirect} from 'react-router';
+import {Preloader} from './m1-ui/common/preloader/Preloader';
+import {CardsList} from './m1-ui/CardsList/CardsList';
+import {Learn} from './m1-ui/Learn/Learn';
+import {Chat} from './m1-ui/Chat/Chat';
 
 export const PATH = {
     PROFILE: '/profile',
@@ -30,8 +30,8 @@ export const PATH = {
     TEST_COMPONENTS: '/test_components',
     PAGE_NOT_FOUND: '/404',
     RESTORE_PASSWORD: '/restore_password',
-    NEW_PASSWORD: "/new_password/:token?",
-    CHAT: "/chat"
+    NEW_PASSWORD: '/new_password/:token?',
+    CHAT: '/chat'
 }
 
 const App = () => {
@@ -53,7 +53,7 @@ const App = () => {
                     <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                     <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
                     <Route path={PATH.CARDS_LIST} render={() => <CardsList/>}/>
-                    <Route path={PATH.CHAT} render={() => <div/>}/>
+                    <Route path={PATH.CHAT} render={() => <Chat/>}/>
                     <Route path={PATH.LEARN} render={() => <Learn/>}/>
                     <Route path={PATH.USER_INFO} render={() => <PersonalInfo/>}/>
                     <Route path={PATH.REGISTRATION} render={() => <Register/>}/>

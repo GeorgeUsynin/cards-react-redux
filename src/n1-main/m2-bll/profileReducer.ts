@@ -68,9 +68,6 @@ export const editUserProfileTC = (name: string, avatar: string): AppThunkType =>
             (err.message + ', more details in the console')
         console.log(`error: ${error}`)
     } finally {
-        console.log('finally')
-        debugger
-
         dispatch(setLoginLoading(false))
     }
     console.log('yes')

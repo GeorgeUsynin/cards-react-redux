@@ -34,6 +34,7 @@
     "react-stars": "^2.2.5",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
@@ -64,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@types/socket.io-client": "^1.4.36",
     "gh-pages": "^3.2.2"
   }
 }

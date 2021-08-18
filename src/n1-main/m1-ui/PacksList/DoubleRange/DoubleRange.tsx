@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import SuperDoubleRange from '../../common/SuperDoubleRange/SuperDoubleRange'
 import styles from './DoubleRange.module.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import { setRangeSort } from '../../../m2-bll/packsReducer'
-import {AppRootStateType} from "../../../m2-bll/store";
+import {useDispatch} from 'react-redux'
+import {setRangeSort} from '../../../m2-bll/packsReducer'
 
 type DoubleRangeType = {
   maxCount: number
